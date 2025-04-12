@@ -20,7 +20,7 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function DrivingTypesTable({ drivingTypes }: any) {
+export default function DrivingTypesTable({ drivingTypes, onEditOpen, onDeleteOpen, setSelectedDrivingType }: any) {
   const renderCell = (drivingType: any, columnKey: any) => {
     const cellValue = drivingType[columnKey];
 
@@ -36,11 +36,25 @@ export default function DrivingTypesTable({ drivingTypes }: any) {
       case "actions":
         return (
           <div className="flex justify-center items-center gap-2">
-            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-              <EditIcon />
+            <span 
+              onClick={()=>{
+                setSelectedDrivingType(drivingType);
+                onEditOpen();
+              }} 
+              title="Edit" 
+              className="text-lg text-default-400 cursor-pointer active:opacity-50"
+            >
+                <EditIcon />
             </span>
-            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-              <DeleteIcon onClick={() => alert("Delete logic here")} />
+            <span 
+              onClick={()=>{
+                setSelectedDrivingType(drivingType);
+                onDeleteOpen();
+              }} 
+              title="Delete" 
+              className="text-lg cursor-pointer active:opacity-50 text-red-500"
+            >
+              <DeleteIcon />
             </span>
           </div>
         );

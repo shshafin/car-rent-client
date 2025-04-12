@@ -150,11 +150,11 @@ export default function AdminCategoryPage() {
       {/* error handling */}
       {isLoading && <p>Loading categories...</p>}
       {isError && <p>Failed to load categories.</p>}
-      {!categories && categories?.data?.length === 0 && (
+      {categories?.data?.length === 0 && (
         <p>No categories found.</p>
       )}
       {/* category table */}
-      {!isLoading && categories?.data?.length > 0 && 
+      {categories?.data?.length > 0 && 
         <CategoriesTable 
           categories={categories} 
           onEditOpen={onEditOpen} 
