@@ -57,4 +57,5 @@ export interface IInput {
   label?: React.ReactNode;
   name: string;
   isClearable?: boolean;
+  defaultValue?: string;
 }
