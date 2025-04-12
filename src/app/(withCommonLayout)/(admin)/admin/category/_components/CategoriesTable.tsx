@@ -7,6 +7,7 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/table";
+import { Tooltip } from "@heroui/tooltip";
 import { DeleteIcon, EditIcon } from "@/src/icons";
 
 export const columns = [
@@ -45,14 +46,18 @@ export default function CategoriesTable({ categories }: any) {
       case "actions":
         return (
           <div className="flex justify-center items-center gap-2">
-            {/* <Tooltip content="Edit user"> */}
-            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-              <EditIcon />
-            </span>
-            {/* </Tooltip> */}
-            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-              <DeleteIcon onClick={() => alert("Delete logic here")} />
-            </span>
+            <Tooltip content="Edit">
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <EditIcon />
+              </span>
+            </Tooltip>
+            <Tooltip
+              content="Delete"
+              className="bg-rose-600">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                <DeleteIcon onClick={() => alert("Delete logic here")} />
+              </span>
+            </Tooltip>
           </div>
         );
       default:

@@ -7,33 +7,25 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/table";
-import { DeleteIcon, EditIcon } from "@/src/icons";
 import { Tooltip } from "@heroui/tooltip";
+import { DeleteIcon, EditIcon } from "@/src/icons";
 
 export const columns = [
-  { name: "TITLE", uid: "title" },
-  { name: "SUB TITLE", uid: "subTitle" },
-  {
-    name: "OPTIONS",
-    uid: "options",
-    render: (drivingType: any) => drivingType.options.join(", "),
-  },
+  { name: "MAKE", uid: "make" },
+  { name: "LOGO", uid: "logo" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function DrivingTypesTable({ drivingTypes }: any) {
-  const renderCell = (drivingType: any, columnKey: any) => {
-    const cellValue = drivingType[columnKey];
+export default function MakesTable({ makes }: any) {
+  const renderCell = (make: any, columnKey: any) => {
+    const cellValue = make[columnKey];
 
     switch (columnKey) {
-      case "title":
-        return drivingType.title;
-      case "subTitle":
-        return drivingType.subTitle;
-      case "options":
-        return drivingType.options?.length
-          ? drivingType.options.join(", ")
-          : "—";
+      case "make":
+        return make.make;
+      case "logo":
+        return make.logo;
+
       case "actions":
         return (
           <div className="flex justify-center items-center gap-2">
@@ -58,7 +50,7 @@ export default function DrivingTypesTable({ drivingTypes }: any) {
 
   return (
     <div className="overflow-x-auto shadow-md rounded-lg">
-      <Table aria-label="drivingTypes Table">
+      <Table aria-label="makes Table">
         <TableHeader columns={columns}>
           {(column: any) => (
             <TableColumn
@@ -68,7 +60,7 @@ export default function DrivingTypesTable({ drivingTypes }: any) {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={drivingTypes.data}>
+        <TableBody items={makes.data}>
           {(item: any) => (
             <TableRow key={item._id}>
               {(columnKey: any) => (
