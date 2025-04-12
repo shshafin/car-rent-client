@@ -8,6 +8,7 @@ import {
   TableCell,
 } from "@heroui/table";
 import { DeleteIcon, EditIcon } from "@/src/icons";
+import { Tooltip } from "@heroui/tooltip";
 
 export const columns = [
   { name: "TITLE", uid: "title" },
@@ -36,26 +37,18 @@ export default function DrivingTypesTable({ drivingTypes, onEditOpen, onDeleteOp
       case "actions":
         return (
           <div className="flex justify-center items-center gap-2">
-            <span 
-              onClick={()=>{
-                setSelectedDrivingType(drivingType);
-                onEditOpen();
-              }} 
-              title="Edit" 
-              className="text-lg text-default-400 cursor-pointer active:opacity-50"
-            >
+            <Tooltip content="Edit">
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <EditIcon />
-            </span>
-            <span 
-              onClick={()=>{
-                setSelectedDrivingType(drivingType);
-                onDeleteOpen();
-              }} 
-              title="Delete" 
-              className="text-lg cursor-pointer active:opacity-50 text-red-500"
-            >
-              <DeleteIcon />
-            </span>
+              </span>
+            </Tooltip>
+            <Tooltip
+              content="Delete"
+              className="bg-rose-600">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50">
+                <DeleteIcon onClick={() => alert("Delete logic here")} />
+              </span>
+            </Tooltip>
           </div>
         );
       default:

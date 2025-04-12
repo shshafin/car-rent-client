@@ -11,65 +11,33 @@ import { Tooltip } from "@heroui/tooltip";
 import { DeleteIcon, EditIcon } from "@/src/icons";
 
 export const columns = [
-  { name: "NAME", uid: "name" },
-  { name: "SLUG", uid: "slug" },
-  { name: "DESCRIPTION", uid: "description" },
-  { name: "IMAGE", uid: "image" },
+  { name: "MAKE", uid: "make" },
+  { name: "LOGO", uid: "logo" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function CategoriesTable({
-  categories,
-  onEditOpen,
-  onDeleteOpen,
-  setSelectedCategory,
-}: any) {
-  const renderCell = (category: any, columnKey: any) => {
-    const cellValue = category[columnKey];
+export default function MakesTable({ makes }: any) {
+  const renderCell = (make: any, columnKey: any) => {
+    const cellValue = make[columnKey];
 
     switch (columnKey) {
-      case "name":
-        return category.name;
-      case "slug":
-        return category.slug;
-      case "description":
-        return category.description;
-      case "image":
-        return (
-          <div>
-            {category.image ? (
-              <img
-                src={category.image}
-                alt={category.name}
-                className="w-12 h-12 rounded-full"
-              />
-            ) : (
-              <span>No Image</span>
-            )}
-          </div>
-        );
+      case "make":
+        return make.make;
+      case "logo":
+        return make.logo;
+
       case "actions":
         return (
           <div className="flex justify-center items-center gap-2">
             <Tooltip content="Edit">
-              <span
-                onClick={() => {
-                  setSelectedCategory(category);
-                  onEditOpen();
-                }}
-                className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <EditIcon />
               </span>
             </Tooltip>
             <Tooltip
               content="Delete"
               className="bg-rose-600">
-              <span
-                onClick={() => {
-                  setSelectedCategory(category);
-                  onDeleteOpen();
-                }}
-                className="text-lg text-danger cursor-pointer active:opacity-50">
+              <span className="text-lg text-danger cursor-pointer active:opacity-50">
                 <DeleteIcon onClick={() => alert("Delete logic here")} />
               </span>
             </Tooltip>
@@ -82,7 +50,7 @@ export default function CategoriesTable({
 
   return (
     <div className="overflow-x-auto shadow-md rounded-lg">
-      <Table aria-label="Categories Table">
+      <Table aria-label="makes Table">
         <TableHeader columns={columns}>
           {(column: any) => (
             <TableColumn
@@ -92,7 +60,7 @@ export default function CategoriesTable({
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={categories.data}>
+        <TableBody items={makes.data}>
           {(item: any) => (
             <TableRow key={item._id}>
               {(columnKey: any) => (

@@ -23,15 +23,10 @@ export const adminLinks = [
   {
     label: "Vehicle Management",
     links: [
-      { href: "/admin/create-makes", label: "Create Makes" },
-      { href: "/admin/create-model", label: "Create Model" },
-    ],
-  },
-  {
-    label: "Product Management",
-    links: [
-      { href: "/admin/create-product", label: "Create Product" },
-      { href: "/admin/create-tyre-size", label: "Create Tyre Size" },
+      { href: "/admin/make", label: "Make" },
+      { href: "/admin/model", label: "Model" },
+      { href: "/admin/year", label: "Year" },
+      { href: "/admin/tyre-size", label: "Tyre Size" },
     ],
   },
 ];

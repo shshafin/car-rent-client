@@ -21,7 +21,10 @@ export const createCategory = async (categoryData: any): Promise<any> => {
   }
 };
 
-export const updateCategory = async (id: string, categoryData: any): Promise<any> => {
+export const updateCategory = async (
+  id: string,
+  categoryData: any
+): Promise<any> => {
   try {
     const { data } = await axiosInstance.patch(
       `/categories/${id}`,
