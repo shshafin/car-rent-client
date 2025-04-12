@@ -43,21 +43,17 @@ export const logoutUser = async () => {
 // get user by decoding the access token
 export const getCurrentUser = async () => {
   const accessToken = (await cookies()).get("access_token")?.value;
-  console.log("Access Token:", accessToken);
 
   if (!accessToken) return null;
 
   const decodedToken = jwtDecode<any>(accessToken);
-  console.log("Decoded Token:", decodedToken);
 
   if (!decodedToken?.userEmail) {
-    console.error("No valid email found in token");
     return null;
   }
 
   // Use email to fetch user
   const { data } = await axiosInstance.get(`/users/${decodedToken.userEmail}`);
-  console.log("User data:", data);
 
   return data?.data;
 };
