@@ -25,6 +25,7 @@ export const adminLinks = [
     links: [
       { href: "/admin/make", label: "Make" },
       { href: "/admin/model", label: "Model" },
+      { href: "/admin/year", label: "Year" },
       { href: "/admin/tyre-size", label: "Tyre Size" },
     ],
   },
