@@ -27,7 +27,7 @@ const Sidebar = () => {
   return (
     <div className="space-y-3">
       <div className="rounded-xl bg-default-100 p-4">
-        <div className="relative h-64 w-full overflow-hidden rounded-md">
+        {/* <div className="relative h-64 w-full overflow-hidden rounded-md">
           {user?.profilePhoto ? (
             <Image
               alt="User profile photo"
@@ -40,24 +40,17 @@ const Sidebar = () => {
               <p className="text-xl font-semibold text-default-500">No Image</p>
             </div>
           )}
-        </div>
+        </div> */}
 
-        <div className="mt-4 text-center">
-          <h1 className="text-xl font-semibold">{user?.name}</h1>
+        <div className="text-center">
+          <h1 className="text-xl font-semibold">{user?.firstName}</h1>
           <p className="break-words text-sm text-default-500">{user?.email}</p>
         </div>
-
-        <Button
-          as={Link}
-          href="/profile/create-post"
-          className="mt-4 w-full rounded-md">
-          Create a Post
-        </Button>
       </div>
 
       <div className="rounded-xl bg-default-100 p-4 border-t-2 border-t-default-200">
         <SidebarOptions
-          links={user?.role === "USER" ? userLinks : adminLinks}
+          groups={user?.role === "USER" ? userLinks : adminLinks}
         />
       </div>
     </div>

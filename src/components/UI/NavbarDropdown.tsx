@@ -16,6 +16,7 @@ const NavbarDropdown = () => {
   const router = useRouter();
   const pathName = usePathname();
   const { setIsLoading: userLoading, user } = useUser();
+  console.log("user", user);
   const handleLogout = () => {
     logoutUser();
     userLoading(true);
@@ -31,10 +32,10 @@ const NavbarDropdown = () => {
   return (
     <Dropdown>
       <DropdownTrigger>
-        {user?.profilePhoto && (
+        {user?.firstName && (
           <Avatar
             className="cursor-pointer"
-            src={user?.profilePhoto}
+            name={user?.firstName}
           />
         )}
       </DropdownTrigger>

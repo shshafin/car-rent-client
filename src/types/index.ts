@@ -25,16 +25,20 @@ export interface IPost {
 export interface ICategory {
   _id: string;
   name: string;
-  postCount: number;
-  isDeleted: boolean;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-}
+  slug: string;
+  description?: string;
+  image?: string;
+  parentCategory?: {
+    _id: string;
+    name: string;
+  } | null;
+};
 
 export interface IUser {
   _id: string;
   name: string;
+  firstName: string;
+  lastName: string;
   role: string;
   email: string;
   status: string;
