@@ -17,8 +17,7 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function CategoriesTable({ categories }: any) {
-
+export default function CategoriesTable({ categories, onEditOpen, onDeleteOpen, setSelectedCategory }: any) {
   const renderCell = (category: any, columnKey: any) => {
     const cellValue = category[columnKey];
 
@@ -47,13 +46,26 @@ export default function CategoriesTable({ categories }: any) {
         return (
           <div className="flex justify-center items-center gap-2">
             {/* <Tooltip content="Edit user"> */}
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+            <span 
+              onClick={()=>{
+                setSelectedCategory(category);
+                onEditOpen();
+              }} 
+              title="Edit" 
+              className="text-lg text-default-400 cursor-pointer active:opacity-50"
+            >
                 <EditIcon />
-              </span>
+            </span>
             {/* </Tooltip> */}
-            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
-
-            <DeleteIcon onClick={() => alert("Delete logic here")} />
+            <span 
+              onClick={()=>{
+                setSelectedCategory(category);
+                onDeleteOpen();
+              }} 
+              title="Delete" 
+              className="text-lg cursor-pointer active:opacity-50 text-red-500"
+            >
+              <DeleteIcon />
             </span>
           </div>
         );

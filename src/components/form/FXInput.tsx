@@ -15,6 +15,7 @@ export default function FXInput({
   label,
   name,
   isClearable = true,
+  defaultValue = "",
 }: IProps) {
   const {
     register,
@@ -36,6 +37,7 @@ export default function FXInput({
         isClearable={isClearable}
         isInvalid={!!errorMessage}
         errorMessage={errorMessage}
+        defaultValue={defaultValue}
       />
     </div>
   );

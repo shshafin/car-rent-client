@@ -16,7 +16,6 @@ const NavbarDropdown = () => {
   const router = useRouter();
   const pathName = usePathname();
   const { setIsLoading: userLoading, user } = useUser();
-  console.log("user", user);
   const handleLogout = () => {
     logoutUser();
     userLoading(true);

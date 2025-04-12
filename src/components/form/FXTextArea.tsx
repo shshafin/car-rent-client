@@ -13,6 +13,7 @@ export default function FXTextArea({
   name,
   label,
   variant = "bordered",
+  defaultValue = "",
 }: IProps) {
   const {
     register,
@@ -25,6 +26,7 @@ export default function FXTextArea({
       label={label}
       minRows={6}
       variant={variant}
+      defaultValue={defaultValue}
     />
   );
 }

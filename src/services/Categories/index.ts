@@ -21,6 +21,35 @@ export const createCategory = async (categoryData: any): Promise<any> => {
   }
 };
 
+export const updateCategory = async (id: string, categoryData: any): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.patch(
+      `/categories/${id}`,
+      categoryData,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to update category");
+  }
+};
+
+export const deleteCategory = async (id: string): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.delete(`/categories/${id}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to delete category");
+  }
+};
+
 export const getCategories = async () => {
   try {
     const { data } = await axiosInstance.get("/categories");
