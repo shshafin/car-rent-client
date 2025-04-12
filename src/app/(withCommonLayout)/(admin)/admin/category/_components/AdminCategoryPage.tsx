@@ -37,17 +37,15 @@ export default function AdminCategoryPage() {
   const methods = useForm(); // Hook form methods
   const { handleSubmit } = methods;
 
-  const {
-    mutate: handleCreateCategory,
-    isPending: createCategoryPending,
-  } = useCreateCategory({
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["GET_CATEGORIES"] });
-      toast.success("Category created successfully");
-      methods.reset();
-      onClose();
-    },
-  }); // Category creation handler
+  const { mutate: handleCreateCategory, isPending: createCategoryPending } =
+    useCreateCategory({
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: ["GET_CATEGORIES"] });
+        toast.success("Category created successfully");
+        methods.reset();
+        onClose();
+      },
+    }); // Category creation handler
   const { data: categories, isLoading, isError, refetch } = useGetCategories(); // Get existing categories
 
   // Handle form submission
@@ -103,7 +101,9 @@ export default function AdminCategoryPage() {
         <p>No categories found.</p>
       )}
 
-      {!isLoading && categories?.data?.length > 0 && <CategoriesTable categories={categories} />}
+      {!isLoading && categories?.data?.length > 0 && (
+        <CategoriesTable categories={categories} />
+      )}
 
       {/* Modal for adding a new category */}
       <AddCategoryModal
@@ -129,73 +129,72 @@ const AddCategoryModal = ({
   handleImageChange,
   imagePreviews,
   createCategoryPending,
-}: any) =>{
+}: any) => {
   return (
     <Modal
-        isOpen={isOpen}
-        onOpenChange={onOpenChange}>
-        <ModalContent>
-          {() => (
-            <>
-              <ModalHeader className="flex flex-col gap-1">
-                Category
-              </ModalHeader>
-              <ModalBody className="mb-5">
-                <FormProvider {...methods}>
-                  <form
-                    onSubmit={handleSubmit(onSubmit)}
-                    className="max-w-xl mx-auto space-y-6">
-                    <div className="flex flex-wrap gap-4 py-2">
-                      {/* Name & Slug Inputs */}
-                      <div className="flex flex-wrap gap-2 w-full">
-                        <div className="flex-1 min-w-[150px]">
-                          <FXInput
-                            label="Name"
-                            name="name"
-                          />
-                        </div>
-                        <div className="flex-1 min-w-[150px]">
-                          <FXInput
-                            label="Slug"
-                            name="slug"
-                          />
-                        </div>
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}>
+      <ModalContent>
+        {() => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">Category</ModalHeader>
+            <ModalBody className="mb-5">
+              <FormProvider {...methods}>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="max-w-xl mx-auto space-y-6">
+                  <div className="flex flex-wrap gap-4 py-2">
+                    {/* Name & Slug Inputs */}
+                    <div className="flex flex-wrap gap-2 w-full">
+                      <div className="flex-1 min-w-[150px]">
+                        <FXInput
+                          label="Name"
+                          name="name"
+                        />
                       </div>
-
-                      {/* Description TextArea */}
-                      <div className="flex w-full">
-                        <div className="flex-1 min-w-[150px]">
-                          <FXTextArea
-                            label="Description"
-                            name="description"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Image Upload */}
-                      <div className="w-full">
-                        <label
-                          htmlFor="image"
-                          className="flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-default-200 bg-default-50 text-default-500 shadow-sm transition hover:border-default-400 hover:bg-default-100">
-                          <span className="text-md font-medium">
-                            Upload Images
-                          </span>
-                          <UploadCloud className="size-6" />
-                        </label>
-                        <input
-                          multiple
-                          className="hidden"
-                          id="image"
-                          type="file"
-                          onChange={handleImageChange}
+                      <div className="flex-1 min-w-[150px]">
+                        <FXInput
+                          label="Slug"
+                          name="slug"
                         />
                       </div>
                     </div>
 
-                    {/* Image previews */}
-                    {imagePreviews.length > 0 && (
-                      <div className="flex gap-5 my-5 flex-wrap">
-                        {imagePreviews.map((imageDataUrl: string, index: number) => (
+                    {/* Description TextArea */}
+                    <div className="flex w-full">
+                      <div className="flex-1 min-w-[150px]">
+                        <FXTextArea
+                          label="Description"
+                          name="description"
+                        />
+                      </div>
+                    </div>
+
+                    {/* Image Upload */}
+                    <div className="w-full">
+                      <label
+                        htmlFor="image"
+                        className="flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-default-200 bg-default-50 text-default-500 shadow-sm transition hover:border-default-400 hover:bg-default-100">
+                        <span className="text-md font-medium">
+                          Upload Images
+                        </span>
+                        <UploadCloud className="size-6" />
+                      </label>
+                      <input
+                        multiple
+                        className="hidden"
+                        id="image"
+                        type="file"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Image previews */}
+                  {imagePreviews.length > 0 && (
+                    <div className="flex gap-5 my-5 flex-wrap">
+                      {imagePreviews.map(
+                        (imageDataUrl: string, index: number) => (
                           <div
                             key={index}
                             className="relative size-32 rounded-xl border-2 border-dashed border-default-300 p-2">
@@ -205,29 +204,26 @@ const AddCategoryModal = ({
                               src={imageDataUrl}
                             />
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        )
+                      )}
+                    </div>
+                  )}
 
-                    <Divider className="my-6" />
+                  <Divider className="my-6" />
 
-                    <Button
-                      color="primary"
-                      type="submit"
-                      className="w-full rounded"
-                      disabled={createCategoryPending}>
-                        {
-                          createCategoryPending ? 
-                            "Creating..." : "Create Category"
-                          
-                        }
-                    </Button>
-                  </form>
-                </FormProvider>
-              </ModalBody>
-            </>
-          )}
-        </ModalContent>
-      </Modal>
-  )
-}
+                  <Button
+                    color="primary"
+                    type="submit"
+                    className="w-full rounded"
+                    disabled={createCategoryPending}>
+                    {createCategoryPending ? "Creating..." : "Create Category"}
+                  </Button>
+                </form>
+              </FormProvider>
+            </ModalBody>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  );
+};

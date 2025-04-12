@@ -10,46 +10,35 @@ import {
 import { DeleteIcon, EditIcon } from "@/src/icons";
 
 export const columns = [
-  { name: "NAME", uid: "name" },
-  { name: "SLUG", uid: "slug" },
-  { name: "DESCRIPTION", uid: "description" },
-  { name: "IMAGE", uid: "image" },
+  { name: "TITLE", uid: "title" },
+  { name: "SUB TITLE", uid: "subTitle" },
+  {
+    name: "OPTIONS",
+    uid: "options",
+    render: (drivingType: any) => drivingType.options.join(", "),
+  },
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function CategoriesTable({ categories }: any) {
-  const renderCell = (category: any, columnKey: any) => {
-    const cellValue = category[columnKey];
+export default function DrivingTypesTable({ drivingTypes }: any) {
+  const renderCell = (drivingType: any, columnKey: any) => {
+    const cellValue = drivingType[columnKey];
 
     switch (columnKey) {
-      case "name":
-        return category.name;
-      case "slug":
-        return category.slug;
-      case "description":
-        return category.description;
-      case "image":
-        return (
-          <div>
-            {category.image ? (
-              <img
-                src={category.image}
-                alt={category.name}
-                className="w-12 h-12 rounded-full"
-              />
-            ) : (
-              <span>No Image</span>
-            )}
-          </div>
-        );
+      case "title":
+        return drivingType.title;
+      case "subTitle":
+        return drivingType.subTitle;
+      case "options":
+        return drivingType.options?.length
+          ? drivingType.options.join(", ")
+          : "—";
       case "actions":
         return (
           <div className="flex justify-center items-center gap-2">
-            {/* <Tooltip content="Edit user"> */}
             <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
               <EditIcon />
             </span>
-            {/* </Tooltip> */}
             <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
               <DeleteIcon onClick={() => alert("Delete logic here")} />
             </span>
@@ -62,7 +51,7 @@ export default function CategoriesTable({ categories }: any) {
 
   return (
     <div className="overflow-x-auto shadow-md rounded-lg">
-      <Table aria-label="Categories Table">
+      <Table aria-label="drivingTypes Table">
         <TableHeader columns={columns}>
           {(column: any) => (
             <TableColumn
@@ -72,7 +61,7 @@ export default function CategoriesTable({ categories }: any) {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={categories.data}>
+        <TableBody items={drivingTypes.data}>
           {(item: any) => (
             <TableRow key={item._id}>
               {(columnKey: any) => (
