@@ -19,6 +19,9 @@ import { useGetCategories } from "@/src/hooks/categories.hook";
 import { ChangeEvent, useState } from "react";
 import FXTextArea from "@/src/components/form/FXTextArea";
 import { useUser } from "@/src/context/user.provider";
+import { useCreatePost } from "@/src/hooks/post.hook";
+import Loading from "@/src/components/UI/Loading";
+import { useRouter } from "next/navigation";
 
 const cityOptions = allDistict()
   .sort()
@@ -37,7 +40,15 @@ export default function CreatePostPage() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]);
 
+  const {
+    mutate: handleCreatePost,
+    isPending: createPostPending,
+    isSuccess: createPostSuccess,
+  } = useCreatePost();
+
   const { user } = useUser();
+
+  const router = useRouter();
 
   let categoryOptions: { key: string; label: string }[] = [];
 
@@ -72,8 +83,8 @@ export default function CreatePostPage() {
     for (let image of imageFiles) {
       formData.append("itemImages", image);
     }
-    console.log(formData.get("itemImages"));
-    console.log(formData.get("data"));
+
+    handleCreatePost(formData);
   };
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -89,151 +100,158 @@ export default function CreatePostPage() {
     }
   };
 
+  if (!createPostPending && createPostSuccess) {
+    router.push("/");
+  }
+
   return (
-    <div className="h-full rounded-xl bg-gradient-to-b from-default-100 px-4  py-12">
-      <h1 className="text-2xl font-semibold text-center pb-8">
-        Post a found item
-      </h1>
-      <FormProvider {...methods}>
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="max-w-xl mx-auto space-y-6">
-          <div className="flex flex-wrap gap-4 py-2">
-            {/* Title & Found Date */}
-            <div className="flex flex-wrap gap-2 w-full">
-              <div className="flex-1 min-w-[150px]">
-                <FXInput
-                  label="Title"
-                  name="title"
-                />
-              </div>
-              <div className="flex-1 min-w-[150px]">
-                <FXDatePicker
-                  label="Found date"
-                  name="dateFound"
-                />
-              </div>
-            </div>
-
-            {/* Location & City */}
-            <div className="flex flex-wrap gap-2 w-full">
-              <div className="flex-1 min-w-[150px]">
-                <FXInput
-                  label="Location"
-                  name="location"
-                />
-              </div>
-              <div className="flex-1 min-w-[150px]">
-                <FXSelect
-                  label="City"
-                  name="city"
-                  options={cityOptions}
-                />
-              </div>
-            </div>
-
-            {/* Category & Image */}
-            <div className="flex flex-wrap gap-2 w-full">
-              <div className="flex-1 min-w-[150px]">
-                <FXSelect
-                  label="Category"
-                  name="category"
-                  options={categoryOptions}
-                  disabled={!categoriesSuccess}
-                />
-              </div>
-              <div className="flex-1 min-w-[150px]">
-                <label
-                  htmlFor="image"
-                  className="flex h-14 w-full cursor-pointer  items-center justify-center gap-2 rounded-xl border-2 border-default-200 bg-default-50 text-default-500 shadow-sm transition-all duration-150 hover:border-default-400 hover:bg-default-100">
-                  <span className="text-md font-medium">Upload Image</span>
-                  <UploadCloud className="size-6" />
-                </label>
-
-                <input
-                  multiple
-                  className="hidden"
-                  id="image"
-                  type="file"
-                  onChange={(e) => handleImageChange(e)}
-                />
-              </div>
-            </div>
-          </div>
-
-          {imagePreviews.length > 0 && (
-            <div className="flex gap-5 my-5 flex-wrap">
-              {imagePreviews.map((imageDataUrl) => (
-                <div
-                  key={imageDataUrl}
-                  className="relative size-32 rounded-xl border-2 border-dashed border-default-300 p-2">
-                  <img
-                    alt="item"
-                    className="h-full w-full object-cover object-center rounded-md"
-                    src={imageDataUrl}
+    <>
+      {createPostPending && <Loading />}
+      <div className="h-full rounded-xl bg-gradient-to-b from-default-100 px-4  py-12">
+        <h1 className="text-2xl font-semibold text-center pb-8">
+          Post a found item
+        </h1>
+        <FormProvider {...methods}>
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="max-w-xl mx-auto space-y-6">
+            <div className="flex flex-wrap gap-4 py-2">
+              {/* Title & Found Date */}
+              <div className="flex flex-wrap gap-2 w-full">
+                <div className="flex-1 min-w-[150px]">
+                  <FXInput
+                    label="Title"
+                    name="title"
                   />
                 </div>
-              ))}
+                <div className="flex-1 min-w-[150px]">
+                  <FXDatePicker
+                    label="Found date"
+                    name="dateFound"
+                  />
+                </div>
+              </div>
+
+              {/* Location & City */}
+              <div className="flex flex-wrap gap-2 w-full">
+                <div className="flex-1 min-w-[150px]">
+                  <FXInput
+                    label="Location"
+                    name="location"
+                  />
+                </div>
+                <div className="flex-1 min-w-[150px]">
+                  <FXSelect
+                    label="City"
+                    name="city"
+                    options={cityOptions}
+                  />
+                </div>
+              </div>
+
+              {/* Category & Image */}
+              <div className="flex flex-wrap gap-2 w-full">
+                <div className="flex-1 min-w-[150px]">
+                  <FXSelect
+                    label="Category"
+                    name="category"
+                    options={categoryOptions}
+                    disabled={!categoriesSuccess}
+                  />
+                </div>
+                <div className="flex-1 min-w-[150px]">
+                  <label
+                    htmlFor="image"
+                    className="flex h-14 w-full cursor-pointer  items-center justify-center gap-2 rounded-xl border-2 border-default-200 bg-default-50 text-default-500 shadow-sm transition-all duration-150 hover:border-default-400 hover:bg-default-100">
+                    <span className="text-md font-medium">Upload Image</span>
+                    <UploadCloud className="size-6" />
+                  </label>
+
+                  <input
+                    multiple
+                    className="hidden"
+                    id="image"
+                    type="file"
+                    onChange={(e) => handleImageChange(e)}
+                  />
+                </div>
+              </div>
             </div>
-          )}
 
-          <div className="flex flex-wrap-reverse gap-2 py-2">
-            <div className="min-w-fit flex-1">
-              <FXTextArea
-                label="Description"
-                name="description"
-              />
-            </div>
-          </div>
-
-          <Divider className="my-6" />
-
-          <div>
-            <h2 className="text-lg font-medium mb-3">
-              Owner Verification Questions
-            </h2>
-
-            <div className="space-y-4 border p-4 rounded-xl bg-muted/30">
-              {fields.length ? (
-                fields.map((field, index) => (
+            {imagePreviews.length > 0 && (
+              <div className="flex gap-5 my-5 flex-wrap">
+                {imagePreviews.map((imageDataUrl) => (
                   <div
-                    key={field.id}
-                    className="flex gap-2 items-center">
-                    <FXInput
-                      label="Question"
-                      name={`questions.${index}.value`}
+                    key={imageDataUrl}
+                    className="relative size-32 rounded-xl border-2 border-dashed border-default-300 p-2">
+                    <img
+                      alt="item"
+                      className="h-full w-full object-cover object-center rounded-md"
+                      src={imageDataUrl}
                     />
-                    <Button
-                      isIconOnly
-                      className="h-14 w-16"
-                      onPress={() => remove(index)}>
-                      <Trash2 />
-                    </Button>
                   </div>
-                ))
-              ) : (
-                <p className="text-sm text-muted-foreground">
-                  No questions added yet.
-                </p>
-              )}
+                ))}
+              </div>
+            )}
 
-              <Button
-                className="w-full"
-                onPress={() => append({ name: "questions" })}>
-                + Add Question
-              </Button>
+            <div className="flex flex-wrap-reverse gap-2 py-2">
+              <div className="min-w-fit flex-1">
+                <FXTextArea
+                  label="Description"
+                  name="description"
+                />
+              </div>
             </div>
-          </div>
 
-          <Divider className="my-6" />
+            <Divider className="my-6" />
 
-          <Button
-            type="submit"
-            className="w-full">
-            Publish Post
-          </Button>
-        </form>
-      </FormProvider>
-    </div>
+            <div>
+              <h2 className="text-lg font-medium mb-3">
+                Owner Verification Questions
+              </h2>
+
+              <div className="space-y-4 border p-4 rounded-xl bg-muted/30">
+                {fields.length ? (
+                  fields.map((field, index) => (
+                    <div
+                      key={field.id}
+                      className="flex gap-2 items-center">
+                      <FXInput
+                        label="Question"
+                        name={`questions.${index}.value`}
+                      />
+                      <Button
+                        isIconOnly
+                        className="h-14 w-16"
+                        onPress={() => remove(index)}>
+                        <Trash2 />
+                      </Button>
+                    </div>
+                  ))
+                ) : (
+                  <p className="text-sm text-muted-foreground">
+                    No questions added yet.
+                  </p>
+                )}
+
+                <Button
+                  className="w-full"
+                  onPress={() => append({ name: "questions" })}>
+                  + Add Question
+                </Button>
+              </div>
+            </div>
+
+            <Divider className="my-6" />
+
+            <Button
+              type="submit"
+              className="w-full">
+              Publish Post
+            </Button>
+          </form>
+        </FormProvider>
+      </div>
+    </>
   );
 }

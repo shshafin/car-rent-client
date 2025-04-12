@@ -1,5 +1,4 @@
 import { Spinner } from "@heroui/spinner";
-import Image from "next/image";
 
 const LoadingPage = () => {
   return (

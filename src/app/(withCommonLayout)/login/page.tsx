@@ -5,7 +5,9 @@ import FXInput from "@/src/components/form/FXInput";
 import Loading from "@/src/components/UI/Loading";
 import { useUser } from "@/src/context/user.provider";
 import { useUserLogin } from "@/src/hooks/auth.hook";
+import loginValidationSchema from "@/src/schemas/login.schema";
 import { Button } from "@heroui/button";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
@@ -33,10 +35,12 @@ const LoginPage = () => {
     <>
       {isPending && <Loading />}
       <div className="flex h-[calc(100vh-200px)] w-full flex-col items-center justify-center px-4">
-        <h3 className="my-2 text-2xl font-bold">Login with FoundX</h3>
+        <h3 className="my-2 text-2xl font-bold">Login with TyreDash</h3>
         <p className="mb-4">Welcome Back! Let&lsquo;s Get Started</p>
         <div className="w-full max-w-md">
-          <FXForm onSubmit={onSubmit}>
+          <FXForm
+            onSubmit={onSubmit}
+            resolver={zodResolver(loginValidationSchema)}>
             <div className="py-3">
               <FXInput
                 name="email"

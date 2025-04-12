@@ -5,7 +5,7 @@ const withCommonLayout = ({ children }: { children: React.ReactNode }) => {
   return (
     <div className="relative flex flex-col h-screen">
       <Navbar />
-      <main>{children}</main>
+      <main>{children}</main> {/* Make sure this is a single child */}
     </div>
   );
 };

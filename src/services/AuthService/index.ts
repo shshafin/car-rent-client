@@ -1,7 +1,6 @@
 "use server";
 
 import { axiosInstance } from "@/src/lib/AxiosInstance";
-import { IUser } from "@/src/types";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -9,7 +8,7 @@ import { FieldValues } from "react-hook-form";
 // ! Register User
 export const registerUser = async (userData: FieldValues) => {
   try {
-    const { data } = await axiosInstance.post("/auth/register", userData);
+    const { data } = await axiosInstance.post("/users/create", userData);
     if (data?.success) {
       (await cookies()).set("access_token", data?.data?.accessToken);
       (await cookies()).set("refresh_token", data?.data?.refreshToken);
@@ -24,6 +23,7 @@ export const registerUser = async (userData: FieldValues) => {
 export const loginUser = async (userData: FieldValues) => {
   try {
     const { data } = await axiosInstance.post("/auth/login", userData);
+
     if (data?.success) {
       (await cookies()).set("access_token", data?.data?.accessToken);
       (await cookies()).set("refresh_token", data?.data?.refreshToken);
@@ -35,7 +35,6 @@ export const loginUser = async (userData: FieldValues) => {
 };
 
 // ! Logout User
-
 export const logoutUser = async () => {
   (await cookies()).delete("access_token");
   (await cookies()).delete("refresh_token");
@@ -44,12 +43,21 @@ export const logoutUser = async () => {
 // get user by decoding the access token
 export const getCurrentUser = async () => {
   const accessToken = (await cookies()).get("access_token")?.value;
+  console.log("Access Token:", accessToken);
 
   if (!accessToken) return null;
 
-  const decodedToken = jwtDecode<IUser>(accessToken);
-  // Fetch latest user data from DB
-  const { data } = await axiosInstance.get(`/users/${decodedToken?._id}`);
+  const decodedToken = jwtDecode<any>(accessToken);
+  console.log("Decoded Token:", decodedToken);
+
+  if (!decodedToken?.userEmail) {
+    console.error("No valid email found in token");
+    return null;
+  }
+
+  // Use email to fetch user
+  const { data } = await axiosInstance.get(`/users/${decodedToken.userEmail}`);
+  console.log("User data:", data);
 
   return data?.data;
 };

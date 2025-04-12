@@ -21,15 +21,22 @@ export default function FXInput({
     formState: { errors },
   } = useFormContext();
 
+  // Get the error message (handle nested errors like body.password if needed)
+  const errorMessage = errors?.[name]?.message as string | undefined;
+
   return (
-    <Input
-      {...register(name)}
-      variant={variant}
-      size={size}
-      required={required}
-      type={type}
-      label={label}
-      isClearable={isClearable}
-    />
+    <div className="flex flex-col gap-1">
+      <Input
+        {...register(name)}
+        variant={variant}
+        size={size}
+        required={required}
+        type={type}
+        label={label}
+        isClearable={isClearable}
+        isInvalid={!!errorMessage}
+        errorMessage={errorMessage}
+      />
+    </div>
   );
 }

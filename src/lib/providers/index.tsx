@@ -37,7 +37,10 @@ export function Providers({ children, themeProps }: ProvidersProps) {
             position="top-center"
             closeButton
           />
-          <NextThemesProvider {...themeProps}>{children}</NextThemesProvider>
+          <NextThemesProvider {...themeProps}>
+            {/* Wrap children with a fragment */}
+            <>{children}</>
+          </NextThemesProvider>
         </HeroUIProvider>
       </UserProvider>
     </QueryClientProvider>

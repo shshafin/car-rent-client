@@ -10,7 +10,7 @@ const loginValidationSchema = z.object({
     .string()
     .trim()
     .nonempty("Password is required")
-    .min(6, "Password needs to be at least 6 characters"),
+    .min(8, "Password needs to be at least 8 characters"),
 });
 
 export default loginValidationSchema;
