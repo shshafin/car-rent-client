@@ -3,16 +3,6 @@
 import { ChangeEvent, useState } from "react";
 import { Button } from "@heroui/button";
 import {
-  Table,
-  TableHeader,
-  TableRow,
-  TableCell,
-  TableBody,
-  TableColumn,
-} from "@heroui/table";
-import { Trash2, Pencil, UploadCloud } from "lucide-react";
-import { ICategory } from "@/src/types";
-import {
   useCreateCategory,
   useGetCategories,
 } from "@/src/hooks/categories.hook";
@@ -34,10 +24,14 @@ import {
 import FXTextArea from "@/src/components/form/FXTextArea";
 
 import { toBase64 } from "@/src/helper/toBase64";
-import CategoriesTable from "./AdminGetCategory";
+import CategoriesTable from "./CategoriesTable";
+import { UploadCloud } from "lucide-react";
+import { toast } from "sonner";
+import { useQueryClient } from "@tanstack/react-query";
 
 export default function AdminCategoryPage() {
-  const { isOpen, onOpen, onOpenChange } = useDisclosure(); // Modal open state
+  const queryClient = useQueryClient();
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure(); // Modal open state
   const [imageFiles, setImageFiles] = useState<File[] | []>([]); // Track selected images
   const [imagePreviews, setImagePreviews] = useState<string[] | []>([]); // Track image previews
   const methods = useForm(); // Hook form methods
@@ -46,9 +40,15 @@ export default function AdminCategoryPage() {
   const {
     mutate: handleCreateCategory,
     isPending: createCategoryPending,
-    isSuccess: createCategorySuccess,
-  } = useCreateCategory(); // Category creation handler
-  const { data: categories, isLoading, isError } = useGetCategories(); // Get existing categories
+  } = useCreateCategory({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["GET_CATEGORIES"] });
+      toast.success("Category created successfully");
+      methods.reset();
+      onClose();
+    },
+  }); // Category creation handler
+  const { data: categories, isLoading, isError, refetch } = useGetCategories(); // Get existing categories
 
   // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -64,7 +64,6 @@ export default function AdminCategoryPage() {
       const base64 = await toBase64(file);
       categoryData.images.push(base64);
     }
-
     handleCreateCategory(categoryData); // Send category data
   };
 
@@ -100,18 +99,43 @@ export default function AdminCategoryPage() {
 
       {isLoading && <p>Loading categories...</p>}
       {isError && <p>Failed to load categories.</p>}
-      {categories && categories?.data?.length === 0 && (
+      {!categories && categories?.data?.length === 0 && (
         <p>No categories found.</p>
       )}
 
-      {!isLoading && categories?.data?.length > 0 && <CategoriesTable />}
+      {!isLoading && categories?.data?.length > 0 && <CategoriesTable categories={categories} />}
 
       {/* Modal for adding a new category */}
-      <Modal
+      <AddCategoryModal
+        isOpen={isOpen}
+        onOpenChange={onOpenChange}
+        methods={methods}
+        handleSubmit={handleSubmit}
+        onSubmit={onSubmit}
+        handleImageChange={handleImageChange}
+        imagePreviews={imagePreviews}
+        createCategoryPending={createCategoryPending}
+      />
+    </div>
+  );
+}
+
+const AddCategoryModal = ({
+  isOpen,
+  onOpenChange,
+  methods,
+  handleSubmit,
+  onSubmit,
+  handleImageChange,
+  imagePreviews,
+  createCategoryPending,
+}: any) =>{
+  return (
+    <Modal
         isOpen={isOpen}
         onOpenChange={onOpenChange}>
         <ModalContent>
-          {(onClose) => (
+          {() => (
             <>
               <ModalHeader className="flex flex-col gap-1">
                 Category
@@ -171,7 +195,7 @@ export default function AdminCategoryPage() {
                     {/* Image previews */}
                     {imagePreviews.length > 0 && (
                       <div className="flex gap-5 my-5 flex-wrap">
-                        {imagePreviews.map((imageDataUrl, index) => (
+                        {imagePreviews.map((imageDataUrl: string, index: number) => (
                           <div
                             key={index}
                             className="relative size-32 rounded-xl border-2 border-dashed border-default-300 p-2">
@@ -188,9 +212,15 @@ export default function AdminCategoryPage() {
                     <Divider className="my-6" />
 
                     <Button
+                      color="primary"
                       type="submit"
-                      className="w-full">
-                      Create Category
+                      className="w-full rounded"
+                      disabled={createCategoryPending}>
+                        {
+                          createCategoryPending ? 
+                            "Creating..." : "Create Category"
+                          
+                        }
                     </Button>
                   </form>
                 </FormProvider>
@@ -199,6 +229,5 @@ export default function AdminCategoryPage() {
           )}
         </ModalContent>
       </Modal>
-    </div>
-  );
+  )
 }

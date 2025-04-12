@@ -7,10 +7,7 @@ import {
   TableRow,
   TableCell,
 } from "@heroui/table";
-import { Button } from "@heroui/button";
-import { Trash2 } from "react-feather"; // Importing icons for the actions
-import { useGetCategories } from "@/src/hooks/categories.hook";
-import { Pencil } from "lucide-react";
+import { DeleteIcon, EditIcon } from "@/src/icons";
 
 export const columns = [
   { name: "NAME", uid: "name" },
@@ -20,8 +17,7 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function CategoriesTable() {
-  const { data: categories, isLoading, isError } = useGetCategories(); // Get existing categories
+export default function CategoriesTable({ categories }: any) {
 
   const renderCell = (category: any, columnKey: any) => {
     const cellValue = category[columnKey];
@@ -35,29 +31,30 @@ export default function CategoriesTable() {
         return category.description;
       case "image":
         return (
-          <img
-            src={category.image}
-            alt={category.name}
-            className="w-16 h-16 object-cover rounded"
-          />
+          <div>
+            {category.image ? (
+              <img
+                src={category.image}
+                alt={category.name}
+                className="w-12 h-12 rounded-full"
+              />
+            ) : (
+              <span>No Image</span>
+            )}
+          </div>
         );
       case "actions":
         return (
-          <div className="flex gap-2">
-            <Button
-              size="sm"
-              variant="ghost"
-              onPress={() => alert("Edit logic here")}
-              className="text-blue-500">
-              <Pencil size={16} />
-            </Button>
-            <Button
-              size="sm"
-              variant="ghost"
-              color="danger"
-              className="text-red-500">
-              <Trash2 size={16} />
-            </Button>
+          <div className="flex justify-center items-center gap-2">
+            {/* <Tooltip content="Edit user"> */}
+              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+                <EditIcon />
+              </span>
+            {/* </Tooltip> */}
+            <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+
+            <DeleteIcon onClick={() => alert("Delete logic here")} />
+            </span>
           </div>
         );
       default:
@@ -65,19 +62,11 @@ export default function CategoriesTable() {
     }
   };
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  if (isError) {
-    return <div>Error loading categories</div>;
-  }
-
   return (
     <div className="overflow-x-auto shadow-md rounded-lg">
       <Table aria-label="Categories Table">
         <TableHeader columns={columns}>
-          {(column) => (
+          {(column: any) => (
             <TableColumn
               key={column.uid}
               align={column.uid === "actions" ? "center" : "start"}>
@@ -85,10 +74,10 @@ export default function CategoriesTable() {
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={categories}>
+        <TableBody items={categories.data}>
           {(item: any) => (
             <TableRow key={item._id}>
-              {(columnKey) => (
+              {(columnKey: any) => (
                 <TableCell>{renderCell(item, columnKey)}</TableCell>
               )}
             </TableRow>
