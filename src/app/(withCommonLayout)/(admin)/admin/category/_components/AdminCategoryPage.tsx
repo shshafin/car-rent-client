@@ -205,7 +205,7 @@ const AddCategoryModal = ({
   handleImageChange,
   imagePreviews,
   createCategoryPending,
-}: any) =>{
+}: any) => {
   return (
     <Modal
         isOpen={isOpen}
@@ -238,40 +238,41 @@ const AddCategoryModal = ({
                         </div>
                       </div>
 
-                      {/* Description TextArea */}
-                      <div className="flex w-full">
-                        <div className="flex-1 min-w-[150px]">
-                          <FXTextArea
-                            label="Description"
-                            name="description"
-                          />
-                        </div>
-                      </div>
-
-                      {/* Image Upload */}
-                      <div className="w-full">
-                        <label
-                          htmlFor="image"
-                          className="flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-default-200 bg-default-50 text-default-500 shadow-sm transition hover:border-default-400 hover:bg-default-100">
-                          <span className="text-md font-medium">
-                            Upload Images
-                          </span>
-                          <UploadCloud className="size-6" />
-                        </label>
-                        <input
-                          multiple
-                          className="hidden"
-                          id="image"
-                          type="file"
-                          onChange={handleImageChange}
+                    {/* Description TextArea */}
+                    <div className="flex w-full">
+                      <div className="flex-1 min-w-[150px]">
+                        <FXTextArea
+                          label="Description"
+                          name="description"
                         />
                       </div>
                     </div>
 
-                    {/* Image previews */}
-                    {imagePreviews.length > 0 && (
-                      <div className="flex gap-5 my-5 flex-wrap">
-                        {imagePreviews.map((imageDataUrl: string, index: number) => (
+                    {/* Image Upload */}
+                    <div className="w-full">
+                      <label
+                        htmlFor="image"
+                        className="flex h-14 w-full cursor-pointer items-center justify-center gap-2 rounded-xl border-2 border-default-200 bg-default-50 text-default-500 shadow-sm transition hover:border-default-400 hover:bg-default-100">
+                        <span className="text-md font-medium">
+                          Upload Images
+                        </span>
+                        <UploadCloud className="size-6" />
+                      </label>
+                      <input
+                        multiple
+                        className="hidden"
+                        id="image"
+                        type="file"
+                        onChange={handleImageChange}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Image previews */}
+                  {imagePreviews.length > 0 && (
+                    <div className="flex gap-5 my-5 flex-wrap">
+                      {imagePreviews.map(
+                        (imageDataUrl: string, index: number) => (
                           <div
                             key={index}
                             className="relative size-32 rounded-xl border-2 border-dashed border-default-300 p-2">
@@ -281,11 +282,12 @@ const AddCategoryModal = ({
                               src={imageDataUrl}
                             />
                           </div>
-                        ))}
-                      </div>
-                    )}
+                        )
+                      )}
+                    </div>
+                  )}
 
-                    <Divider className="my-6" />
+                  <Divider className="my-6" />
 
                     <Button
                       color="primary"

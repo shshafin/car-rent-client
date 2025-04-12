@@ -5,21 +5,19 @@ export const userLinks = [
       { href: "/profile", label: "Profile" },
       { href: "/profile/settings", label: "Settings" },
     ],
-  }
+  },
 ];
 
 export const adminLinks = [
   {
     label: "Dashboard",
-    links: [
-      { href: "/admin", label: "Admin Home" },
-    ],
+    links: [{ href: "/admin", label: "Admin Home" }],
   },
   {
     label: "Category Management",
     links: [
       { href: "/admin/category", label: "Category" },
-      { href: "/admin/create-driving-type", label: "Driving Type" },
+      { href: "/admin/driving-type", label: "Driving Type" },
     ],
   },
   {
