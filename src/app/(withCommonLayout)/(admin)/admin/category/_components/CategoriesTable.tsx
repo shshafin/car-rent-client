@@ -33,7 +33,11 @@ export default function CategoriesTable({
       case "slug":
         return category.slug;
       case "description":
-        return category.description;
+        return (
+          <div className="max-w-[200px] truncate text-ellipsis">
+            {category.description}
+          </div>
+        );
       case "image":
         return (
           <div>
@@ -41,10 +45,10 @@ export default function CategoriesTable({
               <img
                 src={category.image}
                 alt={category.name}
-                className="w-12 h-12 rounded-full"
+                className="w-10 h-10 rounded-full object-cover"
               />
             ) : (
-              <span>No Image</span>
+              <span className="text-sm text-gray-400">No Image</span>
             )}
           </div>
         );
@@ -70,7 +74,7 @@ export default function CategoriesTable({
                   onDeleteOpen();
                 }}
                 className="text-lg text-danger cursor-pointer active:opacity-50">
-                <DeleteIcon onClick={() => alert("Delete logic here")} />
+                <DeleteIcon />
               </span>
             </Tooltip>
           </div>
@@ -81,27 +85,33 @@ export default function CategoriesTable({
   };
 
   return (
-    <div className="overflow-x-auto shadow-md rounded-lg">
-      <Table aria-label="Categories Table">
-        <TableHeader columns={columns}>
-          {(column: any) => (
-            <TableColumn
-              key={column.uid}
-              align={column.uid === "actions" ? "center" : "start"}>
-              {column.name}
-            </TableColumn>
-          )}
-        </TableHeader>
-        <TableBody items={categories.data}>
-          {(item: any) => (
-            <TableRow key={item._id}>
-              {(columnKey: any) => (
-                <TableCell>{renderCell(item, columnKey)}</TableCell>
-              )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+    <div className="w-full overflow-x-auto rounded-xl shadow-md">
+      <div className="min-w-[600px]">
+        <Table
+          aria-label="Categories Table"
+          isStriped>
+          <TableHeader columns={columns}>
+            {(column: any) => (
+              <TableColumn
+                key={column.uid}
+                align={column.uid === "actions" ? "center" : "start"}>
+                {column.name}
+              </TableColumn>
+            )}
+          </TableHeader>
+          <TableBody items={categories.data}>
+            {(item: any) => (
+              <TableRow
+                key={item._id}
+                className="bg-default-50">
+                {(columnKey: any) => (
+                  <TableCell>{renderCell(item, columnKey)}</TableCell>
+                )}
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }

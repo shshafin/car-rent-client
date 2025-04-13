@@ -1,19 +1,15 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Link from "next/link";
 import { SidebarOptions } from "./SidebarOptions";
 import { useUser } from "@/src/context/user.provider";
-import { Button } from "@heroui/button";
 import { adminLinks, userLinks } from "./constants";
-import Image from "next/image";
 import SidebarLoading from "./Loading";
 
 const Sidebar = () => {
-  const { user, isLoading } = useUser(); // Assuming isLoading is being returned from your context
+  const { user, isLoading } = useUser();
   const [loading, setLoading] = useState(true);
 
-  // Simulate data loading for this example
   useEffect(() => {
     if (!isLoading) {
       setLoading(false);
@@ -24,36 +20,50 @@ const Sidebar = () => {
     return <SidebarLoading />;
   }
 
-  return (
-    <div className="space-y-3">
-      <div className="rounded-xl bg-default-100 p-4">
-        {/* <div className="relative h-64 w-full overflow-hidden rounded-md">
-          {user?.profilePhoto ? (
-            <Image
-              alt="User profile photo"
-              src={user.profilePhoto}
-              fill
-              className="object-cover"
-            />
-          ) : (
-            <div className="flex h-full w-full items-center justify-center rounded-md bg-default-200">
-              <p className="text-xl font-semibold text-default-500">No Image</p>
-            </div>
-          )}
-        </div> */}
+  const getInitials = () => {
+    const first = user?.firstName?.[0] || "";
+    const last = user?.lastName?.[0] || "";
+    return `${first}${last}`.toUpperCase();
+  };
 
-        <div className="text-center">
-          <h1 className="text-xl font-semibold">{user?.firstName}</h1>
-          <p className="break-words text-sm text-default-500">{user?.email}</p>
+  return (
+    <aside className="space-y-6 p-4">
+      {/* User Card */}
+      <div className="relative overflow-hidden rounded-2xl border border-purple-300 dark:border-purple-700 bg-white dark:bg-zinc-900 shadow-md p-6 text-center transition-all duration-300">
+        <div className="absolute inset-0 z-0 opacity-10 bg-gradient-to-br from-purple-200 to-purple-500 rounded-2xl pointer-events-none" />
+
+        <div className="relative z-10 flex flex-col items-center">
+          {/* Avatar with Initials */}
+          <div className="w-20 h-20 mb-4 rounded-full bg-gradient-to-br from-purple-500 to-indigo-600 text-white text-3xl font-bold flex items-center justify-center shadow-md">
+            {getInitials()}
+          </div>
+
+          {/* Name */}
+          <h2 className="text-xl font-semibold text-zinc-800 dark:text-white capitalize">
+            {user?.firstName} {user?.lastName}
+          </h2>
+
+          {/* Email */}
+          <a
+            href={`mailto:${user?.email}`}
+            className="text-sm text-zinc-500 hover:text-purple-600 transition break-words">
+            {user?.email}
+          </a>
+
+          {/* Role Badge */}
+          <span className="mt-3 inline-block backdrop-blur-sm bg-purple-300/30 dark:bg-purple-300/20 border border-purple-400 text-purple-800 dark:text-purple-300 text-xs font-semibold px-4 py-1 rounded-full uppercase tracking-wider shadow-sm">
+            {user?.role || "Guest"}
+          </span>
         </div>
       </div>
 
-      <div className="rounded-xl bg-default-100 p-4 border-t-2 border-t-default-200">
+      {/* Navigation */}
+      <div className="rounded-2xl bg-white dark:bg-zinc-900 shadow-md p-4 border border-gray-200 dark:border-zinc-700 transition-all duration-300">
         <SidebarOptions
-          groups={user?.role === "USER" ? userLinks : adminLinks}
+          groups={user?.role === "user" ? userLinks : adminLinks}
         />
       </div>
-    </div>
+    </aside>
   );
 };
 

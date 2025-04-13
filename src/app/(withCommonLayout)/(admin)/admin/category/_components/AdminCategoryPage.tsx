@@ -142,34 +142,46 @@ export default function AdminCategoryPage() {
     });
   };
   return (
-    <div className="p-6">
-      {/* add category button */}
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Category Management</h1>
-        <Button
-          color="primary"
-          className="rounded"
-          onPress={onOpen}>
-          + Add Category
-        </Button>
+    <div className="p-4 sm:p-6">
+      {/* Header section with title and button */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
+        <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
+          Category Management
+        </h1>
+        <div className="w-full md:w-auto">
+          <Button
+            color="primary"
+            className="w-full md:w-auto px-6 py-2 rounded-full text-sm font-medium transition-all transform bg-gradient-to-r from-purple-500 to-indigo-600 hover:scale-105 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+            onPress={onOpen}>
+            + Add Category
+          </Button>
+        </div>
       </div>
-      {/* error handling */}
-      {isLoading && <p>Loading categories...</p>}
-      {isError && <p>Failed to load categories.</p>}
-      {!categories && categories?.data?.length === 0 && (
-        <p>No categories found.</p>
+
+      {/* Loading and error messages */}
+      {isLoading && (
+        <p className="text-sm text-gray-500">Loading categories...</p>
       )}
-      {/* category table */}
-      {!isLoading && categories?.data?.length > 0 && (
-        <CategoriesTable
-          categories={categories}
-          onEditOpen={onEditOpen}
-          onDeleteOpen={onDeleteOpen}
-          setSelectedCategory={setSelectedCategory}
-        />
+      {isError && (
+        <p className="text-sm text-red-600">Failed to load categories.</p>
+      )}
+      {!isLoading && (!categories || categories?.data?.length === 0) && (
+        <p className="text-sm text-gray-500">No categories found.</p>
       )}
 
-      {/* Modal for adding a new category */}
+      {/* Category table */}
+      {!isLoading && categories?.data?.length > 0 && (
+        <div className="w-full overflow-x-auto">
+          <CategoriesTable
+            categories={categories}
+            onEditOpen={onEditOpen}
+            onDeleteOpen={onDeleteOpen}
+            setSelectedCategory={setSelectedCategory}
+          />
+        </div>
+      )}
+
+      {/* Add Category Modal */}
       <AddCategoryModal
         isOpen={isOpen}
         onOpenChange={onOpenChange}
@@ -180,7 +192,8 @@ export default function AdminCategoryPage() {
         imagePreviews={imagePreviews}
         createCategoryPending={createCategoryPending}
       />
-      {/* Modal for editing a category */}
+
+      {/* Edit Category Modal */}
       <EditCategoryModal
         isOpen={isEditOpen}
         onOpenChange={onEditOpenChange}
@@ -192,7 +205,8 @@ export default function AdminCategoryPage() {
         updateCategoryPending={updateCategoryPending}
         defaultValues={selectedCategory}
       />
-      {/* Modal for deleting a category */}
+
+      {/* Delete Category Modal */}
       <DeleteCategoryModal
         isOpen={isDeleteOpen}
         onOpenChange={onDeleteOpenChange}

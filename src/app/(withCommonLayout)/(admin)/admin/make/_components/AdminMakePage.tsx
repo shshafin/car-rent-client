@@ -18,7 +18,6 @@ import {
 
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { Trash2 } from "lucide-react";
 import { useCreateMake, useGetMakes } from "@/src/hooks/makes.hook";
 import MakesTable from "./MakesTable";
 
@@ -37,7 +36,7 @@ export default function AdminMakePage() {
         onClose();
       },
     }); // make creation handler
-  const { data: makes, isLoading, isError, refetch } = useGetMakes(); // Get existing makes
+  const { data: makes, isLoading, isError } = useGetMakes(); // Get existing makes
 
   // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -51,11 +50,13 @@ export default function AdminMakePage() {
 
   return (
     <div className="p-6">
-      <div className="flex justify-between items-center mb-4">
-        <h1 className="text-2xl font-bold">Make</h1>
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-md md:text-3xl font-semibold text-gray-900 dark:text-white">
+          Make
+        </h1>
         <Button
           color="primary"
-          className="rounded"
+          className="px-6 py-2 rounded-full text-sm font-medium transition-all transform bg-gradient-to-r from-purple-500 to-indigo-600 hover:scale-105 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
           onPress={onOpen}>
           + Add Make
         </Button>
