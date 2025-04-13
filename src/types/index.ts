@@ -33,7 +33,12 @@ export interface ICategory {
     name: string;
   } | null;
 };
-
+export interface IDrivingType {
+  _id: string;
+  title: string;
+  subTitle: string;
+  options: string[];
+}
 export interface IUser {
   _id: string;
   name: string;

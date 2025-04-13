@@ -5,6 +5,7 @@ import {
   Modal,
   ModalBody,
   ModalContent,
+  ModalFooter,
   ModalHeader,
   useDisclosure,
 } from "@heroui/modal";
@@ -23,18 +24,49 @@ import DrivingTypesTable from "./DrivingTypesTable";
 import {
   useCreateDrivingType,
   useGetDrivingTypes,
+  useUpdateDrivingType,
+  useDeleteDrivingType,
 } from "@/src/hooks/drivingTypes.hook";
 import { Trash2 } from "lucide-react";
+import { IDrivingType } from "@/src/types";
+import { useEffect, useState } from "react";
+import { Input } from "@heroui/input";
 
 export default function AdminDrivingTypePage() {
   const queryClient = useQueryClient();
-  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure(); // Modal open state
+  const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onOpenChange: onEditOpenChange,
+    onClose: onEditClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onOpenChange: onDeleteOpenChange,
+    onClose: onDeleteClose,
+  } = useDisclosure();
+  const [selectedDrivingType, setSelectedDrivingType] =
+    useState<IDrivingType | null>(null);
   const methods = useForm(); // Hook form methods
   const { control, handleSubmit } = methods;
   const { fields, append, remove } = useFieldArray({
     control,
     name: "options",
   });
+  const {
+    mutate: handleDeleteDrivingType,
+    isPending: deleteDrivingTypePending,
+  } = useDeleteDrivingType({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["GET_DRIVING_TYPES"] });
+      toast.success("Driving type deleted successfully");
+      setSelectedDrivingType(null);
+      onDeleteClose();
+    },
+    id: selectedDrivingType?._id,
+  }); // DrivingType deletion handler
   const {
     mutate: handleCreateDrivingType,
     isPending: createDrivingTypePending,
@@ -46,6 +78,19 @@ export default function AdminDrivingTypePage() {
       onClose();
     },
   }); // DrivingType creation handler
+  const {
+    mutate: handleUpdateDrivingType,
+    isPending: updateDrivingTypePending,
+  } = useUpdateDrivingType({
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["GET_DRIVING_TYPES"] });
+      toast.success("Driving type updated successfully");
+      methods.reset();
+      setSelectedDrivingType(null);
+      onEditClose();
+    },
+    id: selectedDrivingType?._id,
+  }); // DrivingType update handler
   const {
     data: drivingTypes,
     isLoading,
@@ -61,6 +106,14 @@ export default function AdminDrivingTypePage() {
     };
 
     handleCreateDrivingType(drivingTypeData); // Send DrivingType data
+  };
+  const onEditSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const drivingTypeData: any = {
+      ...data,
+      options: data?.fields.map((opt: { value: string }) => opt.value),
+    };
+    console.log({ drivingTypeData });
+    handleUpdateDrivingType(drivingTypeData); // Send DrivingType data
   };
 
   return (
@@ -78,12 +131,15 @@ export default function AdminDrivingTypePage() {
       </div>
       {isLoading && <p>Loading driving-types...</p>}
       {isError && <p>Failed to load driving-types.</p>}
-      {!drivingTypes && drivingTypes?.data?.length === 0 && (
-        <p>No driving-types found.</p>
-      )}
+      {drivingTypes?.data?.length === 0 && <p>No driving-types found.</p>}
 
-      {!isLoading && drivingTypes?.data?.length > 0 && (
-        <DrivingTypesTable drivingTypes={drivingTypes} />
+      {drivingTypes?.data?.length > 0 && (
+        <DrivingTypesTable
+          drivingTypes={drivingTypes}
+          onEditOpen={onEditOpen}
+          onDeleteOpen={onDeleteOpen}
+          setSelectedDrivingType={setSelectedDrivingType}
+        />
       )}
 
       {/* Modal for adding a new drivingType */}
@@ -97,6 +153,27 @@ export default function AdminDrivingTypePage() {
         fields={fields}
         append={append}
         remove={remove}
+      />
+      {/* Modal for editing a drivingType */}
+      <EditDrivingTypeModal
+        isOpen={isEditOpen}
+        onOpenChange={onEditOpenChange}
+        methods={methods}
+        handleSubmit={handleSubmit}
+        onSubmit={onEditSubmit}
+        updateDrivingTypePending={updateDrivingTypePending}
+        append={append}
+        remove={remove}
+        fields={fields}
+        defaultValues={selectedDrivingType}
+        setSelectedDrivingType={setSelectedDrivingType}
+      />
+      {/* Modal for deleting a drivingType */}
+      <DeleteDrivingTypeModal
+        isOpen={isDeleteOpen}
+        onOpenChange={onDeleteOpenChange}
+        handleDeleteDrivingType={handleDeleteDrivingType}
+        deleteDrivingTypePending={deleteDrivingTypePending}
       />
     </div>
   );
@@ -113,15 +190,19 @@ const AddDrivingTypeModal = ({
   append,
   remove,
 }: any) => {
+  console.log({ fields });
   return (
     <Modal
       isOpen={isOpen}
-      onOpenChange={onOpenChange}>
+      onOpenChange={() => {
+        onOpenChange();
+        methods.reset();
+      }}>
       <ModalContent>
         {() => (
           <>
             <ModalHeader className="flex flex-col gap-1">
-              Driving Type
+              Add Driving Type
             </ModalHeader>
             <ModalBody className="mb-5">
               <FormProvider {...methods}>
@@ -190,6 +271,167 @@ const AddDrivingTypeModal = ({
                 </form>
               </FormProvider>
             </ModalBody>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  );
+};
+const EditDrivingTypeModal = ({
+  isOpen,
+  onOpenChange,
+  methods,
+  handleSubmit,
+  onSubmit,
+  updateDrivingTypePending,
+  append,
+  remove,
+  defaultValues,
+  setSelectedDrivingType,
+}: any) => {
+  if (!defaultValues) return null;
+  console.log({ defaultValues });
+  return (
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={() => {
+        onOpenChange();
+        methods.reset();
+      }}>
+      <ModalContent>
+        {() => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">
+              Edit Driving Type
+            </ModalHeader>
+            <ModalBody className="mb-5">
+              <FormProvider {...methods}>
+                <form
+                  onSubmit={handleSubmit(onSubmit)}
+                  className="max-w-xl mx-auto space-y-6">
+                  <div className="flex flex-wrap gap-4 py-2">
+                    {/* Title & subTitle Inputs */}
+                    <div className="flex flex-wrap gap-2 w-full">
+                      <div className="flex-1 min-w-[150px]">
+                        <FXInput
+                          label="Title"
+                          name="title"
+                          defaultValue={defaultValues.title}
+                        />
+                      </div>
+                      <div className="flex-1 min-w-[150px]">
+                        <FXInput
+                          label="Sub Title"
+                          name="subTitle"
+                          defaultValue={defaultValues.subTitle}
+                        />
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Options */}
+                  <div className="space-y-4 border p-4 rounded-xl bg-muted/30">
+                    {defaultValues?.options.length ? (
+                      defaultValues?.options?.map(
+                        (field: any, index: number) => (
+                          <div
+                            key={field}
+                            className="flex gap-2 items-center">
+                            {/* <FXInput
+                            label="Option"
+                            name={`fields.${index}.value`}
+                            defaultValue={field.value}
+                          /> */}
+                            <Input
+                              onChange={(e) => {
+                                const val = e.target.value;
+                                defaultValues.options[index] = val;
+                                setSelectedDrivingType(defaultValues);
+                              }}
+                              label="Option"
+                              name={field}
+                              defaultValue={field}
+                            />
+                            <Button
+                              isIconOnly
+                              className="h-14 w-16"
+                              onPress={() => remove(index)}>
+                              <Trash2 />
+                            </Button>
+                          </div>
+                        )
+                      )
+                    ) : (
+                      <p className="text-sm text-muted-foreground">
+                        No options added yet.
+                      </p>
+                    )}
+
+                    <Button
+                      className="w-full"
+                      onPress={() => append({ name: "options" })}>
+                      + Add Option
+                    </Button>
+                  </div>
+
+                  <Button
+                    color="primary"
+                    type="submit"
+                    className="w-full rounded"
+                    disabled={updateDrivingTypePending}>
+                    {updateDrivingTypePending
+                      ? "Updating..."
+                      : "Update Driving Type"}
+                  </Button>
+                </form>
+              </FormProvider>
+            </ModalBody>
+          </>
+        )}
+      </ModalContent>
+    </Modal>
+  );
+};
+
+const DeleteDrivingTypeModal = ({
+  isOpen,
+  onOpenChange,
+  handleDeleteDrivingType,
+  deleteDrivingTypePending,
+}: any) => {
+  return (
+    <Modal
+      isOpen={isOpen}
+      onOpenChange={onOpenChange}>
+      <ModalContent>
+        {() => (
+          <>
+            <ModalHeader className="flex flex-col gap-1">
+              Confirm Delete
+            </ModalHeader>
+
+            <ModalBody>
+              <p className="text-sm text-red-500">
+                ⚠️ Are you sure you want to delete this driving type? This
+                action cannot be undone.
+              </p>
+            </ModalBody>
+
+            <ModalFooter className="flex justify-end gap-2">
+              <Button
+                variant="bordered"
+                className="rounded"
+                onPress={onOpenChange}>
+                Cancel
+              </Button>
+              <Button
+                color="danger"
+                onPress={handleDeleteDrivingType}
+                disabled={deleteDrivingTypePending}
+                className="rounded">
+                {deleteDrivingTypePending ? "Deleting..." : "Delete"}
+              </Button>
+            </ModalFooter>
           </>
         )}
       </ModalContent>

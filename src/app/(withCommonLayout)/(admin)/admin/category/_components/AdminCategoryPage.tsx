@@ -158,16 +158,10 @@ export default function AdminCategoryPage() {
         </div>
       </div>
 
-      {/* Loading and error messages */}
-      {isLoading && (
-        <p className="text-sm text-gray-500">Loading categories...</p>
-      )}
-      {isError && (
-        <p className="text-sm text-red-600">Failed to load categories.</p>
-      )}
-      {!isLoading && (!categories || categories?.data?.length === 0) && (
-        <p className="text-sm text-gray-500">No categories found.</p>
-      )}
+      {/* error handling */}
+      {isLoading && <p>Loading categories...</p>}
+      {isError && <p>Failed to load categories.</p>}
+      {categories?.data?.length === 0 && <p>No categories found.</p>}
 
       {/* Category table */}
       {!isLoading && categories?.data?.length > 0 && (
