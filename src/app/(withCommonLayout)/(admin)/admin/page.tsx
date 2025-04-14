@@ -7,7 +7,6 @@ import {
   BarChart3,
   Users,
   Layers3,
-  DollarSign,
   Car,
   Calendar,
 } from "lucide-react";

@@ -1,13 +1,14 @@
 import { Metadata } from "next";
-import AdminMakePage from "./_components/AdminMakePage";
+import AdminModelPage from "./_components/AdminModelPage";
+
 export const metadata: Metadata = {
-  title: "Make - Admin",
+  title: "Model - Admin",
 };
 
 const page = () => {
   return (
     <div>
-      <AdminMakePage />
+      <AdminModelPage />
     </div>
   );
 };

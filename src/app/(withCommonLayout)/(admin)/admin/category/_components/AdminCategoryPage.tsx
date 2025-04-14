@@ -31,6 +31,7 @@ import { UploadCloud } from "lucide-react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { ICategory } from "@/src/types";
+import { DataEmpty, DataError, DataLoading } from "../../_components/DataFetchingStates";
 
 export default function AdminCategoryPage() {
   const queryClient = useQueryClient();
@@ -159,9 +160,9 @@ export default function AdminCategoryPage() {
       </div>
 
       {/* error handling */}
-      {isLoading && <p>Loading categories...</p>}
-      {isError && <p>Failed to load categories.</p>}
-      {categories?.data?.length === 0 && <p>No categories found.</p>}
+      {isLoading && <DataLoading />}
+      {isError && <DataError />}
+      {categories?.data?.length === 0 && <DataEmpty />}
 
       {/* Category table */}
       {!isLoading && categories?.data?.length > 0 && (

@@ -31,6 +31,7 @@ import { Trash2 } from "lucide-react";
 import { IDrivingType } from "@/src/types";
 import { useEffect, useState } from "react";
 import { Input } from "@heroui/input";
+import { DataEmpty, DataError, DataLoading } from "../../_components/DataFetchingStates";
 
 export default function AdminDrivingTypePage() {
   const queryClient = useQueryClient();
@@ -129,9 +130,9 @@ export default function AdminDrivingTypePage() {
           + Add Driving Type
         </Button>
       </div>
-      {isLoading && <p>Loading driving-types...</p>}
-      {isError && <p>Failed to load driving-types.</p>}
-      {drivingTypes?.data?.length === 0 && <p>No driving-types found.</p>}
+      {isLoading && <DataLoading />}
+      {isError && <DataError />}
+      {drivingTypes?.data?.length === 0 && <DataEmpty />}
 
       {drivingTypes?.data?.length > 0 && (
         <DrivingTypesTable

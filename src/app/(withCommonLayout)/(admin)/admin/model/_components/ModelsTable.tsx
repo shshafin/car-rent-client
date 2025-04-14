@@ -9,23 +9,26 @@ import {
 } from "@heroui/table";
 import { Tooltip } from "@heroui/tooltip";
 import { DeleteIcon, EditIcon } from "@/src/icons";
-import { IMake } from "@/src/types";
+import { IModel } from "@/src/types";
 
 export const columns = [
+  { name: "MODEL", uid: "model" },
   { name: "MAKE", uid: "make" },
-  { name: "LOGO", uid: "logo" },
+  { name: "YEAR", uid: "year" },
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function MakesTable({ makes, setSelectedMake, onDeleteOpen, onEditOpen }: any) {
-  const renderCell = (make: any, columnKey: any) => {
-    const cellValue = make[columnKey];
+export default function ModelsTable({ models, setSelectedModel, onDeleteOpen, onEditOpen }: any) {
+  const renderCell = (model: any, columnKey: any) => {
+    const cellValue = model[columnKey];
 
     switch (columnKey) {
+      case "model":
+        return model.model;
       case "make":
-        return make.make;
-      case "logo":
-        return make.logo;
+        return model.make.make;
+      case "year":
+        return model.year.year.numeric;
 
       case "actions":
         return (
@@ -33,7 +36,7 @@ export default function MakesTable({ makes, setSelectedMake, onDeleteOpen, onEdi
             <Tooltip content="Edit">
               <span
                 onClick={() => {
-                  setSelectedMake(make);
+                  setSelectedModel(model);
                   onEditOpen();
                 }}
                 className="text-lg text-default-400 cursor-pointer active:opacity-50">
@@ -45,7 +48,7 @@ export default function MakesTable({ makes, setSelectedMake, onDeleteOpen, onEdi
               className="bg-rose-600">
               <span
                 onClick={() => {
-                  setSelectedMake(make);
+                  setSelectedModel(model);
                   onDeleteOpen();
                 }}
                 className="text-lg text-danger cursor-pointer active:opacity-50">
@@ -61,7 +64,7 @@ export default function MakesTable({ makes, setSelectedMake, onDeleteOpen, onEdi
 
   return (
     <div className="overflow-x-auto shadow-md rounded-lg">
-      <Table aria-label="makes Table">
+      <Table aria-label="models Table">
         <TableHeader columns={columns}>
           {(column: any) => (
             <TableColumn
@@ -71,7 +74,7 @@ export default function MakesTable({ makes, setSelectedMake, onDeleteOpen, onEdi
             </TableColumn>
           )}
         </TableHeader>
-        <TableBody items={makes.data}>
+        <TableBody items={models.data}>
           {(item: any) => (
             <TableRow key={item._id}>
               {(columnKey: any) => (

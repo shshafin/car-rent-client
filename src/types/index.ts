@@ -32,12 +32,18 @@ export interface ICategory {
     _id: string;
     name: string;
   } | null;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 };
 export interface IDrivingType {
   _id: string;
   title: string;
   subTitle: string;
   options: string[];
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }
 export interface IUser {
   _id: string;
@@ -63,4 +69,35 @@ export interface IInput {
   name: string;
   isClearable?: boolean;
   defaultValue?: string;
+}
+
+export interface IMake {
+  _id: string;
+  make: string;
+  // year?: string;
+  logo: string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IYear {
+  _id: string;
+  year: {
+    numeric: number;
+    display: string;
+  };
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
+
+export interface IModel {
+  _id: string;
+  model: string;
+  make: IMake | string;
+  year: IYear | string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
 }

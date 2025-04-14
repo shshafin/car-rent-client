@@ -16,29 +16,39 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function YearsTable({ years }: any) {
+export default function YearsTable({ years, setSelectedYear, onDeleteOpen, onEditOpen }: any) {
   const renderCell = (year: any, columnKey: any) => {
     const cellValue = year[columnKey];
 
     switch (columnKey) {
       case "year":
-        return year.year;
+        return year.year.numeric;
       case "display":
-        return year.display;
+        return year.year.display;
 
       case "actions":
         return (
           <div className="flex justify-center items-center gap-2">
             <Tooltip content="Edit">
-              <span className="text-lg text-default-400 cursor-pointer active:opacity-50">
+              <span
+                onClick={() => {
+                  setSelectedYear(year);
+                  onEditOpen();
+                }}
+                className="text-lg text-default-400 cursor-pointer active:opacity-50">
                 <EditIcon />
               </span>
             </Tooltip>
             <Tooltip
               content="Delete"
               className="bg-rose-600">
-              <span className="text-lg text-danger cursor-pointer active:opacity-50">
-                <DeleteIcon onClick={() => alert("Delete logic here")} />
+              <span
+                onClick={() => {
+                  setSelectedYear(year);
+                  onDeleteOpen();
+                }}
+                className="text-lg text-danger cursor-pointer active:opacity-50">
+                <DeleteIcon />
               </span>
             </Tooltip>
           </div>

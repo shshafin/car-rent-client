@@ -17,6 +17,31 @@ export const createMake = async (makeData: any): Promise<any> => {
   }
 };
 
+export const updateMake = async (id: string, makeData: any): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.patch(`/makes/${id}`, makeData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to update make");
+  }
+};
+
+export const deleteMake = async (id: string): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.delete(`/makes/${id}`);
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to delete make");
+  }
+};
+
 export const getMakes = async () => {
   try {
     const { data } = await axiosInstance.get("/makes");
