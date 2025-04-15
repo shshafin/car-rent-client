@@ -9,6 +9,7 @@ import {
   CalendarCog,
   ScissorsLineDashed,
   Grid2X2Plus,
+  LoaderPinwheel,
 } from "lucide-react"; // Import necessary icons
 import React from "react";
 
@@ -78,6 +79,11 @@ export const adminLinks = [
         href: "/admin/trim",
         label: "Trim",
         icon: React.createElement(ScissorsLineDashed, { className: "w-5 h-5" }), // File icon for tyre size
+      },
+      {
+        href: "/admin/tyre-size",
+        label: "Tyre Size",
+        icon: React.createElement(LoaderPinwheel, { className: "w-5 h-5" }), // File icon for tyre size
       },
     ],
   },

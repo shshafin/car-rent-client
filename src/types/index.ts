@@ -112,3 +112,15 @@ export interface ITrim {
   updatedAt: string;
   __v: number;
 }
+
+export interface ITyreSize {
+  _id: string;
+  tireSize: string;
+  make: IMake | string;
+  model: IModel | string;
+  year: IYear | string;
+  trim: ITrim | string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
