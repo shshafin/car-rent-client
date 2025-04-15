@@ -18,6 +18,7 @@ import { ThemeSwitch } from "@/src/components/UI/theme-switch";
 import { Logo } from "@/src/components/icons";
 import { NavbarLogin, NavbarLoginMobile } from "./NavbarLogin";
 import { Car, Phone, Search, ShoppingCart } from "lucide-react";
+import Image from "next/image";
 
 export const Navbar = () => {
   return (
@@ -26,7 +27,7 @@ export const Navbar = () => {
       position="sticky"
       height={150}>
       {/* Main navbar layout using flexbox for better alignment */}
-      <div className="flex items-center justify-between w-full px-4">
+      <div className="hidden md:flex items-center justify-between w-full px-4">
         {/* Left: Logo */}
         <div className="flex items-center justify-start">
           <NavbarBrand
@@ -105,11 +106,32 @@ export const Navbar = () => {
 
       {/* Mobile nav (only visible on small devices) */}
       <NavbarContent
-        className="sm:hidden basis-1 pl-4"
-        justify="end">
-        <ThemeSwitch /> {/* This will show only on mobile */}
-        <NavbarLoginMobile />
-        <NavbarMenuToggle />
+        className="md:hidden "
+      >
+        <div className="w-full flex justify-between">
+
+        <div>
+          <NavbarBrand
+            as="li"
+            className="gap-3 max-w-fit">
+            <NextLink
+              href="/"
+              className="flex items-center gap-1">
+              <Image
+                    src={"/logo.png"}
+                    height={100}
+                    width={100}
+                    alt="logo"
+                  />
+            </NextLink>
+          </NavbarBrand>
+        </div>
+        <div className="flex gap-2 items-center">
+          <ThemeSwitch /> 
+          <NavbarLoginMobile />
+          <NavbarMenuToggle />
+        </div>
+        </div>
       </NavbarContent>
 
       {/* Mobile menu list */}
