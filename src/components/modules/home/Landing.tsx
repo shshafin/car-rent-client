@@ -42,9 +42,20 @@ export default function Landing() {
 
         {/* Action Area */}
         <div className="max-w-5xl mx-auto px-4 pt-12 text-center">
-          <h2 className="text-2xl md:text-4xl font-bold text-default-900 mb-6">
-            What can we help you with today?
-          </h2>
+          <div className="mb-8 text-center">
+            <h3 className="text-[#FF141D] font-semibold uppercase">
+              Need Assistance?
+            </h3>
+            <h2 className="downtext-gradient text-3xl md:text-5xl font-bold tracking-tight mb-4">
+              What Can We Help You With Today?
+            </h2>
+            <p className="downtext-gradient max-w-2xl mx-auto text-base md:text-lg">
+              Whether you're looking for the perfect product or expert support,
+              <span className="font-bold">
+                we're here to guide you every step of the way.
+              </span>
+            </p>
+          </div>
 
           <div className="flex flex-col md:flex-row justify-center gap-6 mt-6">
             {/* Shop Products */}

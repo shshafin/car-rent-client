@@ -20,7 +20,12 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function TyreSizesTable({ tyreSizes, setSelectedTyreSize, onDeleteOpen, onEditOpen }: any) {
+export default function TyreSizesTable({
+  tyreSizes,
+  setSelectedTyreSize,
+  onDeleteOpen,
+  onEditOpen,
+}: any) {
   const renderCell = (tyreSize: any, columnKey: any) => {
     const cellValue = tyreSize[columnKey];
 
@@ -34,7 +39,8 @@ export default function TyreSizesTable({ tyreSizes, setSelectedTyreSize, onDelet
       case "year":
         return tyreSize.year.year.numeric;
       case "trim":
-        return tyreSize.trim.trim;
+        console.log(tyreSize.trim);
+        return tyreSize?.trim?.trim;
 
       case "actions":
         return (

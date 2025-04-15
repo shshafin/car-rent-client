@@ -20,12 +20,21 @@ const dummyData = [
     cta: "SEE PRODUCTS",
     image: "/deals.jpg",
   },
+  {
+    id: 3,
+    discount: "Up to $80 Instant Savings on Michelin tires",
+    description:
+      "On tires and wheels with any $599+ total purchase (after discounts)",
+    expires: "05/14/2025",
+    cta: "SEE PRODUCTS",
+    image: "/deals.jpg",
+  },
   // ... more items
 ];
 
 const Deals = () => {
   return (
-    <section className="bg-default-50">
+    <section className="">
       {/* Green Bar */}
       <div className="bg-green-700 text-white py-3 px-4 text-sm">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center">
