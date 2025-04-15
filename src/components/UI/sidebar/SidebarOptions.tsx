@@ -80,7 +80,8 @@ const Folder = ({
                         : "text-gray-600 dark:text-zinc-400 hover:text-purple-600 hover:bg-purple-50 dark:hover:bg-zinc-700"
                     }`}>
                     {link.icon && (
-                      <span className="text-sm text-purple-600 dark:text-purple-300">
+                      <span
+                        className={`text-sm  ${isActive ? "text-white" : "text-purple-600 dark:text-purple-300"}`}>
                         {link.icon}
                       </span>
                     )}

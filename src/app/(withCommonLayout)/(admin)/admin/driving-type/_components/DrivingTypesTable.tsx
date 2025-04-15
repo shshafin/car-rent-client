@@ -21,7 +21,12 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function DrivingTypesTable({ drivingTypes, onEditOpen, onDeleteOpen, setSelectedDrivingType }: any) {
+export default function DrivingTypesTable({
+  drivingTypes,
+  onEditOpen,
+  onDeleteOpen,
+  setSelectedDrivingType,
+}: any) {
   const renderCell = (drivingType: any, columnKey: any) => {
     const cellValue = drivingType[columnKey];
 

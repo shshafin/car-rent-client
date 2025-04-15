@@ -1,34 +1,67 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "TyreDash",
-  description: "TyreDash is a website that helps people find their lost tyres.",
+  name: "TIRESDASH",
+  description:
+    "TiresDash is a website that helps people find their lost tyres.",
   navItems: [
     {
-      label: "Home",
-      href: "/",
+      label: "TIRES",
+      href: "/tires",
     },
     {
-      label: "About",
-      href: "/about",
+      label: "WHEELS",
+      href: "/wheels",
     },
     {
-      label: "Found Items",
-      href: "/found-items",
+      label: "APPOINTMENTS",
+      href: "/appointments",
+    },
+    {
+      label: "TIPS & GUIDE",
+      href: "/tips-guide",
+    },
+    {
+      label: "FINANCING",
+      href: "/financing",
+    },
+    {
+      label: "FLEET",
+      href: "/fleet",
+    },
+    {
+      label: "DEALS",
+      href: "/deals",
     },
   ],
   navMenuItems: [
     {
-      label: "Home",
-      href: "/",
+      label: "TIRES",
+      href: "/tires",
     },
     {
-      label: "About",
-      href: "/about",
+      label: "WHEELS",
+      href: "/wheels",
     },
     {
-      label: "Found Items",
-      href: "/found-items",
+      label: "APPOINTMENTS",
+      href: "/appointments",
+    },
+    {
+      label: "TIPS & GUIDE",
+      href: "/tips-guide",
+    },
+    {
+      label: "FINANCING",
+      href: "/financing",
+    },
+    {
+      label: "FLEET",
+      href: "/fleet",
+    },
+    {
+      label: "DEALS",
+      href: "/deals",
     },
   ],
   links: {

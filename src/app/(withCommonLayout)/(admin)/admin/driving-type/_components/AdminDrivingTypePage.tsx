@@ -31,7 +31,11 @@ import { Trash2 } from "lucide-react";
 import { IDrivingType } from "@/src/types";
 import { useEffect, useState } from "react";
 import { Input } from "@heroui/input";
-import { DataEmpty, DataError, DataLoading } from "../../_components/DataFetchingStates";
+import {
+  DataEmpty,
+  DataError,
+  DataLoading,
+} from "../../_components/DataFetchingStates";
 
 export default function AdminDrivingTypePage() {
   const queryClient = useQueryClient();

@@ -31,7 +31,11 @@ import { UploadCloud } from "lucide-react";
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
 import { ICategory } from "@/src/types";
-import { DataEmpty, DataError, DataLoading } from "../../_components/DataFetchingStates";
+import {
+  DataEmpty,
+  DataError,
+  DataLoading,
+} from "../../_components/DataFetchingStates";
 
 export default function AdminCategoryPage() {
   const queryClient = useQueryClient();
@@ -143,20 +147,18 @@ export default function AdminCategoryPage() {
     });
   };
   return (
-    <div className="p-4 sm:p-6">
+    <div className="p-6">
       {/* Header section with title and button */}
-      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-6">
-        <h1 className="text-2xl md:text-3xl font-semibold text-gray-900 dark:text-white">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-md md:text-3xl font-semibold text-gray-900 dark:text-white">
           Category Management
         </h1>
-        <div className="w-full md:w-auto">
-          <Button
-            color="primary"
-            className="w-full md:w-auto px-6 py-2 rounded-full text-sm font-medium transition-all transform bg-gradient-to-r from-purple-500 to-indigo-600 hover:scale-105 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
-            onPress={onOpen}>
-            + Add Category
-          </Button>
-        </div>
+        <Button
+          color="primary"
+          className="px-7 py-2 rounded-full text-sm font-medium transition-all transform bg-gradient-to-r from-purple-500 to-indigo-600 hover:scale-105 focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
+          onPress={onOpen}>
+          + Add Category
+        </Button>
       </div>
 
       {/* error handling */}
