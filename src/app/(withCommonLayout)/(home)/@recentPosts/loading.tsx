@@ -13,8 +13,8 @@ export default function loading() {
         </p>
       </div>
       <div className="my-8 grid justify-center gap-10 grid-cols-1 md:grid-cols-4">
-        {[...Array(8)].map(() => (
-          <CardSkeleton />
+        {[...Array(8)].map((index) => (
+          <CardSkeleton key={index} />
         ))}
       </div>
       <div className="flex justify-center">

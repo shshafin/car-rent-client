@@ -10,6 +10,7 @@ import {
   Car,
   Calendar,
 } from "lucide-react";
+import { DataEmpty, DataError, DataLoading } from "./_components/DataFetchingStates";
 
 const Page = () => {
   const {
@@ -48,9 +49,9 @@ const Page = () => {
       </h1>
 
       {isLoading ? (
-        <p className="text-sm text-gray-500">Loading dashboard data...</p>
+        <DataLoading />
       ) : isError ? (
-        <p className="text-sm text-red-500">Failed to load dashboard data.</p>
+        <DataError />
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
           <GlassCard
@@ -90,7 +91,7 @@ const Page = () => {
         <h2 className="text-xl font-bold mb-4 text-gray-800 dark:text-white">
           Latest System Activities
         </h2>
-        <p className="text-gray-500 text-sm">No recent activity available.</p>
+        <DataEmpty />
       </div>
     </div>
   );
