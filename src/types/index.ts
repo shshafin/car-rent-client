@@ -101,3 +101,14 @@ export interface IModel {
   updatedAt: string;
   __v: number;
 }
+
+export interface ITrim {
+  _id: string;
+  trim: string;
+  make: IMake | string;
+  model: IModel | string;
+  year: IYear | string;
+  createdAt: string;
+  updatedAt: string;
+  __v: number;
+}
