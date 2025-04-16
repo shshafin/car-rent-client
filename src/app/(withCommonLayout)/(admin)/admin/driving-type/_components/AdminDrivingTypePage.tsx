@@ -54,6 +54,7 @@ export default function AdminDrivingTypePage() {
   } = useDisclosure();
   const [selectedDrivingType, setSelectedDrivingType] =
     useState<IDrivingType | null>(null);
+  const [options, setOptions] = useState<string[]>([]);
   const methods = useForm(); // Hook form methods
   const { control, handleSubmit } = methods;
   const { fields, append, remove } = useFieldArray({
@@ -92,6 +93,7 @@ export default function AdminDrivingTypePage() {
       toast.success("Driving type updated successfully");
       methods.reset();
       setSelectedDrivingType(null);
+      setOptions([]);
       onEditClose();
     },
     id: selectedDrivingType?._id,
@@ -115,11 +117,11 @@ export default function AdminDrivingTypePage() {
   const onEditSubmit: SubmitHandler<FieldValues> = async (data) => {
     const drivingTypeData: any = {
       ...data,
-      options: data?.fields.map((opt: { value: string }) => opt.value),
+      options,
     };
-    console.log({ drivingTypeData });
     handleUpdateDrivingType(drivingTypeData); // Send DrivingType data
   };
+  console.log(options, 'options')
 
   return (
     <div className="p-6">
@@ -144,6 +146,7 @@ export default function AdminDrivingTypePage() {
           onEditOpen={onEditOpen}
           onDeleteOpen={onDeleteOpen}
           setSelectedDrivingType={setSelectedDrivingType}
+          setOptions={setOptions}
         />
       )}
 
@@ -167,11 +170,9 @@ export default function AdminDrivingTypePage() {
         handleSubmit={handleSubmit}
         onSubmit={onEditSubmit}
         updateDrivingTypePending={updateDrivingTypePending}
-        append={append}
-        remove={remove}
-        fields={fields}
+        options={options}
+        setOptions={setOptions}
         defaultValues={selectedDrivingType}
-        setSelectedDrivingType={setSelectedDrivingType}
       />
       {/* Modal for deleting a drivingType */}
       <DeleteDrivingTypeModal
@@ -282,6 +283,7 @@ const AddDrivingTypeModal = ({
     </Modal>
   );
 };
+
 const EditDrivingTypeModal = ({
   isOpen,
   onOpenChange,
@@ -289,19 +291,18 @@ const EditDrivingTypeModal = ({
   handleSubmit,
   onSubmit,
   updateDrivingTypePending,
-  append,
-  remove,
+  options,
   defaultValues,
-  setSelectedDrivingType,
+  setOptions,
 }: any) => {
   if (!defaultValues) return null;
-  console.log({ defaultValues });
   return (
     <Modal
       isOpen={isOpen}
       onOpenChange={() => {
         onOpenChange();
         methods.reset();
+        setOptions([]);
       }}>
       <ModalContent>
         {() => (
@@ -336,31 +337,32 @@ const EditDrivingTypeModal = ({
 
                   {/* Options */}
                   <div className="space-y-4 border p-4 rounded-xl bg-muted/30">
-                    {defaultValues?.options.length ? (
-                      defaultValues?.options?.map(
+                    {options.length ? (
+                      options?.map(
                         (field: any, index: number) => (
                           <div
-                            key={field}
+                            key={index}
                             className="flex gap-2 items-center">
-                            {/* <FXInput
-                            label="Option"
-                            name={`fields.${index}.value`}
-                            defaultValue={field.value}
-                          /> */}
                             <Input
                               onChange={(e) => {
                                 const val = e.target.value;
-                                defaultValues.options[index] = val;
-                                setSelectedDrivingType(defaultValues);
+                                const newOptions = options.map((opt: string, i: number) =>
+                                  i === index ? val : opt
+                                );
+                                console.log({val: e.target.value })
+                                setOptions(newOptions);
                               }}
                               label="Option"
-                              name={field}
+                              // value={field}
                               defaultValue={field}
                             />
                             <Button
                               isIconOnly
                               className="h-14 w-16"
-                              onPress={() => remove(index)}>
+                              onPress={() => {
+                                const newOptions = options.filter((_: any, i: number) => i !== index);
+                                setOptions(newOptions);
+                              }}>
                               <Trash2 />
                             </Button>
                           </div>
@@ -374,7 +376,10 @@ const EditDrivingTypeModal = ({
 
                     <Button
                       className="w-full"
-                      onPress={() => append({ name: "options" })}>
+                      onPress={() => {
+                        const newOptions = [...options, ""];
+                        setOptions(newOptions);
+                      }}>
                       + Add Option
                     </Button>
                   </div>
