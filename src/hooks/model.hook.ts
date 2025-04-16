@@ -1,6 +1,11 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { createModel, deleteModel, getModels, updateModel } from "../services/Models";
+import {
+  createModel,
+  deleteModel,
+  getModels,
+  updateModel,
+} from "../services/Models";
 
 export const useCreateModel = ({ onSuccess }: any) => {
   return useMutation<any, Error, FormData>({

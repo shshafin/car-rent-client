@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { Button } from "@heroui/button";
 
 export default function Landing() {
   return (
@@ -109,9 +110,9 @@ export default function Landing() {
                 Schedule an in-store visit for consultation, repair, inspection
                 and more.
               </p>
-              <button className="w-full bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded font-semibold text-sm sm:text-base">
+              <Button className="w-full bg-red-500 hover:bg-red-600 text-white px-6 py-2 rounded font-semibold text-sm sm:text-base">
                 SCHEDULE SERVICE
-              </button>
+              </Button>
             </div>
           </div>
         </div>
