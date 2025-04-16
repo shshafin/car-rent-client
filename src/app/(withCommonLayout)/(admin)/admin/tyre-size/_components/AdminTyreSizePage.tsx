@@ -89,7 +89,7 @@ export default function AdminTyreSizePage() {
       },
       id: selectedTyreSize?._id,
     }); // TyreSize deletion handler
-  const { data: tyreSizes, isLoading, isError } = useGetTyreSizes(); // Get existing TyreSizes
+  const { data: tyreSizes, isLoading, isError } = useGetTyreSizes({}); // Get existing TyreSizes
   console.log(tyreSizes);
 
   // Handle form submission
@@ -369,7 +369,7 @@ const DeleteTyreSizeModal = ({
 };
 
 const MakeSelectForTyreSize = ({ defaultValue, register }: any) => {
-  const { data: makes, isLoading, isError } = useGetMakes();
+  const { data: makes, isLoading, isError } = useGetMakes({});
 
   return (
     <div className="flex-1 min-w-[150px]">
@@ -399,7 +399,7 @@ const MakeSelectForTyreSize = ({ defaultValue, register }: any) => {
 };
 
 const YearSelectForTyreSize = ({ defaultValue, register }: any) => {
-  const { data: year, isLoading, isError } = useGetYears();
+  const { data: year, isLoading, isError } = useGetYears({});
 
   return (
     <div className="flex-1 min-w-[150px]">
@@ -424,7 +424,7 @@ const YearSelectForTyreSize = ({ defaultValue, register }: any) => {
 };
 
 const ModelSelectForTyreSize = ({ defaultValue, register }: any) => {
-  const { data: model, isLoading, isError } = useGetModels();
+  const { data: model, isLoading, isError } = useGetModels({});
 
   return (
     <div className="flex-1 min-w-[150px]">
@@ -449,7 +449,7 @@ const ModelSelectForTyreSize = ({ defaultValue, register }: any) => {
 };
 
 const TrimSelectForTyreSize = ({ defaultValue, register }: any) => {
-  const { data: trim, isLoading, isError } = useGetTrims();
+  const { data: trim, isLoading, isError } = useGetTrims({});
 
   return (
     <div className="flex-1 min-w-[150px]">

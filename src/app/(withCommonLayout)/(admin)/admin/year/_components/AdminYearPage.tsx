@@ -65,7 +65,7 @@ export default function AdminYearPage() {
       },
       id: selectedYear?._id,
     }); // Year deletion handler
-  const { data: years, isLoading, isError, refetch } = useGetYears(); // Get existing Years
+  const { data: years, isLoading, isError, refetch } = useGetYears({}); // Get existing Years
 
   // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {

@@ -86,7 +86,7 @@ export default function AdminTrimPage() {
       },
       id: selectedTrim?._id,
     }); // Trim deletion handler
-  const { data: trims, isLoading, isError } = useGetTrims(); // Get existing Trims
+  const { data: trims, isLoading, isError } = useGetTrims({}); // Get existing Trims
 
   // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -348,7 +348,7 @@ const DeleteTrimModal = ({
 };
 
 const MakeSelectForTrim = ({ defaultValue, register }: any) => {
-  const { data: makes, isLoading, isError } = useGetMakes();
+  const { data: makes, isLoading, isError } = useGetMakes({});
 
   return (
     <div className="flex-1 min-w-[150px]">
@@ -378,7 +378,7 @@ const MakeSelectForTrim = ({ defaultValue, register }: any) => {
 };
 
 const YearSelectForTrim = ({ defaultValue, register }: any) => {
-  const { data: year, isLoading, isError } = useGetYears();
+  const { data: year, isLoading, isError } = useGetYears({});
 
   return (
     <div className="flex-1 min-w-[150px]">
@@ -403,7 +403,7 @@ const YearSelectForTrim = ({ defaultValue, register }: any) => {
 };
 
 const ModelSelectForTrim = ({ defaultValue, register }: any) => {
-  const { data: model, isLoading, isError } = useGetModels();
+  const { data: model, isLoading, isError } = useGetModels({});
 
   return (
     <div className="flex-1 min-w-[150px]">

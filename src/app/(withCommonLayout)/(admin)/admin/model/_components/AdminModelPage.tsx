@@ -67,7 +67,7 @@ export default function AdminModelPage() {
       },
       id: selectedModel?._id,
     }); // Model deletion handler
-  const { data: models, isLoading, isError } = useGetModels(); // Get existing Models
+  const { data: models, isLoading, isError } = useGetModels({}); // Get existing Models
 
   // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -316,7 +316,7 @@ const DeleteModelModal = ({
 };
 
 const MakeSelectForModel = ({ defaultValue, register }: any) => {
-  const { data: makes, isLoading, isError } = useGetMakes();
+  const { data: makes, isLoading, isError } = useGetMakes({});
 
   return (
     <div className="flex-1 min-w-[150px]">
@@ -354,7 +354,7 @@ const MakeSelectForModel = ({ defaultValue, register }: any) => {
 };
 
 const YearSelectForModel = ({ defaultValue, register }: any) => {
-  const { data: year, isLoading, isError } = useGetYears();
+  const { data: year, isLoading, isError } = useGetYears({});
 
   return (
     <div className="flex-1 min-w-[150px]">

@@ -19,7 +19,12 @@ import {
 
 import { toast } from "sonner";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCreateMake, useDeleteMake, useGetMakes, useUpdateMake } from "@/src/hooks/makes.hook";
+import {
+  useCreateMake,
+  useDeleteMake,
+  useGetMakes,
+  useUpdateMake,
+} from "@/src/hooks/makes.hook";
 import MakesTable from "./MakesTable";
 import { IMake } from "@/src/types";
 import { useState } from "react";
@@ -64,7 +69,7 @@ export default function AdminMakePage() {
       },
       id: selectedMake?._id,
     }); // make deletion handler
-  const { data: makes, isLoading, isError } = useGetMakes(); // Get existing makes
+  const { data: makes, isLoading, isError } = useGetMakes({}); // Get existing makes
 
   // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
