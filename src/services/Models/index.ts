@@ -42,9 +42,11 @@ export const deleteModel = async (id: string): Promise<any> => {
   }
 };
 
-export const getModels = async () => {
+export const getModels = async (params: any) => {
   try {
-    const { data } = await axiosInstance.get("/models");
+    const { data } = await axiosInstance.get("/models", {
+      params,
+    });
 
     return data;
   } catch (error: any) {

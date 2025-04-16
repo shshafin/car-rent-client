@@ -40,9 +40,9 @@ export const useDeleteTyreSize = ({ onSuccess, id }: any) => {
   });
 };
 
-export const useGetTyreSizes = () => {
+export const useGetTyreSizes = (params: any) => {
   return useQuery({
     queryKey: ["GET_TYRE_SIZES"],
-    queryFn: async () => await getTyreSizes(),
+    queryFn: async () => await getTyreSizes(params),
   });
 };

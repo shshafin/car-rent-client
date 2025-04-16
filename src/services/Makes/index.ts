@@ -42,9 +42,11 @@ export const deleteMake = async (id: string): Promise<any> => {
   }
 };
 
-export const getMakes = async () => {
+export const getMakes = async (params: any) => {
   try {
-    const { data } = await axiosInstance.get("/makes");
+    const { data } = await axiosInstance.get("/makes", {
+      params,
+    });
 
     return data;
   } catch (error: any) {

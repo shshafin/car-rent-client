@@ -35,9 +35,9 @@ export const useDeleteYear = ({ onSuccess, id }: any) => {
   });
 };
 
-export const useGetYears = () => {
+export const useGetYears = (params: any) => {
   return useQuery({
     queryKey: ["GET_YEARS"],
-    queryFn: async () => await getYears(),
+    queryFn: async () => await getYears(params),
   });
 };

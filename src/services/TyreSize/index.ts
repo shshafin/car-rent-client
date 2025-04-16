@@ -42,9 +42,11 @@ export const deleteTyreSize = async (id: string): Promise<any> => {
   }
 };
 
-export const getTyreSizes = async () => {
+export const getTyreSizes = async (params: any) => {
   try {
-    const { data } = await axiosInstance.get("/tire-size");
+    const { data } = await axiosInstance.get("/tire-size", {
+      params,
+    });
 
     return data;
   } catch (error: any) {

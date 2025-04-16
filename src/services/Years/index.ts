@@ -42,9 +42,11 @@ export const deleteYear = async (id: string): Promise<any> => {
   }
 };
 
-export const getYears = async () => {
+export const getYears = async (params: any) => {
   try {
-    const { data } = await axiosInstance.get("/years");
+    const { data } = await axiosInstance.get("/years", {
+      params,
+    });
 
     return data;
   } catch (error: any) {

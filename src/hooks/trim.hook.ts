@@ -35,9 +35,9 @@ export const useDeleteTrim = ({ onSuccess, id }: any) => {
   });
 };
 
-export const useGetTrims = () => {
+export const useGetTrims = (params: any) => {
   return useQuery({
     queryKey: ["GET_TRIMS"],
-    queryFn: async () => await getTrims(),
+    queryFn: async () => await getTrims(params),
   });
 };

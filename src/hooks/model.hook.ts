@@ -35,9 +35,9 @@ export const useDeleteModel = ({ onSuccess, id }: any) => {
   });
 };
 
-export const useGetModels = () => {
+export const useGetModels = (params: any) => {
   return useQuery({
     queryKey: ["GET_MODELS"],
-    queryFn: async () => await getModels(),
+    queryFn: async () => await getModels(params),
   });
 };

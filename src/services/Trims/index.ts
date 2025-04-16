@@ -42,9 +42,11 @@ export const deleteTrim = async (id: string): Promise<any> => {
   }
 };
 
-export const getTrims = async () => {
+export const getTrims = async (params: any) => {
   try {
-    const { data } = await axiosInstance.get("/trims");
+    const { data } = await axiosInstance.get("/trims", {
+      params,
+    });
 
     return data;
   } catch (error: any) {
