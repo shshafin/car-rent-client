@@ -10,9 +10,9 @@ const FinancingSection = () => {
 
       <div className="w-full max-w-4xl grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Left Section - Discount Tire Credit Card */}
-        <div className="rounded-lg border border-gray-300 p-5 shadow-md hover:shadow-lg transition-shadow duration-300 ">
+        <div className="rounded-lg border border-red-500 p-5 shadow-md hover:shadow-lg transition-shadow duration-300 ">
           <div className="mb-3">
-            <span className="bg-red-600  text-xs uppercase px-2 py-1 rounded-full inline-block">
+            <span className="bg-red-600 text-white  text-xs uppercase px-2 py-1 rounded-full inline-block">
               Limited Time Offer
             </span>
           </div>
@@ -36,15 +36,15 @@ const FinancingSection = () => {
               className="object-contain"
             />
           </div>
-          <button className="bg-gradient-to-r from-red-500 to-red-600  text-sm font-semibold py-2 px-5 rounded shadow hover:shadow-lg hover:bg-red-700 transition duration-200">
+          <button className="bg-gradient-to-r from-red-500 to-red-600 text-white  text-sm font-semibold py-2 px-5 rounded shadow hover:shadow-lg hover:bg-red-700 transition duration-200">
             SEE IF YOU PREQUALIFY
           </button>
         </div>
 
         {/* Right Section - Affirm */}
-        <div className="rounded-lg border border-gray-300 p-5 shadow-md hover:shadow-lg transition-shadow duration-300 ">
+        <div className="rounded-lg border border-[#4D48F4] p-5 shadow-md hover:shadow-lg transition-shadow duration-300 ">
           <div className="mb-3">
-            <span className="bg-[#4D48F4]  text-xs uppercase px-2 py-1 rounded-full inline-block">
+            <span className="bg-[#4D48F4] text-white  text-xs uppercase px-2 py-1 rounded-full inline-block">
               Trusted by Millions
             </span>
           </div>

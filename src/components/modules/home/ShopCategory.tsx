@@ -50,7 +50,7 @@ const ShopCategory = () => {
                   className="object-contain w-full h-full transition-transform duration-300 group-hover:scale-105"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-white text-center">
+              <h3 className="text-xl font-semibold  text-center">
                 {category.name}
               </h3>
             </div>

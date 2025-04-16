@@ -4,6 +4,7 @@ import Landing from "@/src/components/modules/home/Landing";
 import ShopByBrandSection from "@/src/components/modules/home/ShopBrand";
 import ShopCategory from "@/src/components/modules/home/ShopCategory";
 import TreadWellSection from "@/src/components/modules/home/Treadwall";
+import BlogSection from "@/src/components/UI/Blog";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <TreadWellSection />
       <ShopByBrandSection />
       <FinancingSection />
+      <BlogSection />
     </>
   );
 }
