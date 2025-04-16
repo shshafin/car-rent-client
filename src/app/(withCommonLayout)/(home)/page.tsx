@@ -1,4 +1,5 @@
 import Deals from "@/src/components/modules/home/Deals";
+import FinancingSection from "@/src/components/modules/home/Financing";
 import Landing from "@/src/components/modules/home/Landing";
 import ShopByBrandSection from "@/src/components/modules/home/ShopBrand";
 import ShopCategory from "@/src/components/modules/home/ShopCategory";
@@ -12,6 +13,7 @@ export default function Home() {
       <ShopCategory />
       <TreadWellSection />
       <ShopByBrandSection />
+      <FinancingSection />
     </>
   );
 }

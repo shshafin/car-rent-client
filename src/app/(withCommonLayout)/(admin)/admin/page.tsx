@@ -15,15 +15,17 @@ import { getDrivingTypes } from "@/src/services/DrivingTypes";
 import { getYears } from "@/src/services/Years";
 import GlassCard from "./_components/GlassCard";
 import { getTrims } from "@/src/services/Trims";
+import { getUsers } from "@/src/services/Users";
 
 const Page = async () => {
   try {
-    const [categories, makes, drivingTypes, years] = await Promise.all([
+    const [categories, makes, users, drivingTypes, years] = await Promise.all([
       getCategories(),
       getMakes(),
       getDrivingTypes(),
       getYears(),
       getTrims(),
+      getUsers(),
     ]);
 
     return (
@@ -35,7 +37,7 @@ const Page = async () => {
         <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-6">
           <GlassCard
             title="Registered Users"
-            value="1,204" // Replace with dynamic value later
+            value={`${users?.data?.length || 0}`}
             icon={<Users className="w-6 h-6 text-white" />}
             color="from-indigo-500 to-purple-600"
           />
