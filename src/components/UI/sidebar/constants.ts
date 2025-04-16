@@ -10,6 +10,7 @@ import {
   ScissorsLineDashed,
   Grid2X2Plus,
   LoaderPinwheel,
+  User,
 } from "lucide-react"; // Import necessary icons
 import React from "react";
 
@@ -39,6 +40,16 @@ export const adminLinks = [
         href: "/admin",
         label: "Admin Home",
         icon: React.createElement(HomeIcon, { className: "w-5 h-5" }), // Home icon for dashboard
+      },
+    ],
+  },
+  {
+    label: "User Management",
+    links: [
+      {
+        href: "/admin/users",
+        label: "Users",
+        icon: React.createElement(User, { className: "w-5 h-5" }), // File icon for category
       },
     ],
   },

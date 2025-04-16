@@ -9,7 +9,6 @@ import {
 } from "@heroui/table";
 import { Tooltip } from "@heroui/tooltip";
 import { DeleteIcon, EditIcon } from "@/src/icons";
-import { ITyreSize } from "@/src/types";
 
 export const columns = [
   { name: "TYRE SIZE", uid: "tireSize" },

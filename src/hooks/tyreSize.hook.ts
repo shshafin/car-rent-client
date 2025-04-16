@@ -1,4 +1,9 @@
-import { createTyreSize, deleteTyreSize, getTyreSizes, updateTyreSize } from "@/src/services/TyreSize";
+import {
+  createTyreSize,
+  deleteTyreSize,
+  getTyreSizes,
+  updateTyreSize,
+} from "@/src/services/TyreSize";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { toast } from "sonner";
 

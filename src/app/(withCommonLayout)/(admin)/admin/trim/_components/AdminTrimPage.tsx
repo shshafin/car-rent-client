@@ -23,16 +23,35 @@ import { ITrim } from "@/src/types";
 import { useState } from "react";
 import { useGetMakes } from "@/src/hooks/makes.hook";
 import { useGetYears } from "@/src/hooks/years.hook";
-import { DataEmpty, DataError, DataLoading } from "../../_components/DataFetchingStates";
+import {
+  DataEmpty,
+  DataError,
+  DataLoading,
+} from "../../_components/DataFetchingStates";
 import TrimsTable from "./TrimsTable";
-import { useCreateTrim, useDeleteTrim, useGetTrims, useUpdateTrim } from "@/src/hooks/trim.hook";
+import {
+  useCreateTrim,
+  useDeleteTrim,
+  useGetTrims,
+  useUpdateTrim,
+} from "@/src/hooks/trim.hook";
 import { useGetModels } from "@/src/hooks/model.hook";
 
 export default function AdminTrimPage() {
   const queryClient = useQueryClient();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure(); // Modal open state
-  const { isOpen: isEditOpen, onOpen: onEditOpen, onOpenChange: onEditOpenChange, onClose: onEditClose } = useDisclosure();
-  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onDeleteOpenChange, onClose: onDeleteClose } = useDisclosure();
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onOpenChange: onEditOpenChange,
+    onClose: onEditClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onOpenChange: onDeleteOpenChange,
+    onClose: onDeleteClose,
+  } = useDisclosure();
   const methods = useForm(); // Hook form methods
   const { handleSubmit } = methods;
   const [selectedTrim, setSelectedTrim] = useState<ITrim | null>(null);
@@ -96,13 +115,14 @@ export default function AdminTrimPage() {
       {isError && <DataError />}
       {trims?.data?.length === 0 && <DataEmpty />}
 
-      {!isLoading && trims?.data?.length > 0 && 
+      {!isLoading && trims?.data?.length > 0 && (
         <TrimsTable
-          trims={trims} 
-          setSelectedTrim={setSelectedTrim} 
-          onEditOpen={onEditOpen} 
-          onDeleteOpen={onDeleteOpen} 
-        />}
+          trims={trims}
+          setSelectedTrim={setSelectedTrim}
+          onEditOpen={onEditOpen}
+          onDeleteOpen={onDeleteOpen}
+        />
+      )}
 
       {/* Modal for adding a new Trim */}
       <AddTrimModal
@@ -155,15 +175,15 @@ const AddTrimModal = ({
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="max-w-xl mx-auto space-y-6">
-                    {/* Trim */}
-                    <div className="flex flex-wrap gap-2 w-full">
-                      <div className="flex-1 min-w-[150px]">
-                        <FXInput
-                          label="Trim"
-                          name="trim"
-                          required={true}
-                        />
-                      </div>
+                  {/* Trim */}
+                  <div className="flex flex-wrap gap-2 w-full">
+                    <div className="flex-1 min-w-[150px]">
+                      <FXInput
+                        label="Trim"
+                        name="trim"
+                        required={true}
+                      />
+                    </div>
                   </div>
                   <div className="flex flex-wrap gap-4 py-2">
                     {/* Trim & logo Inputs */}
@@ -213,7 +233,7 @@ const EditTrimModal = ({
   onSubmit,
   updateTrimPending,
   defaultValues,
-} : any) => {
+}: any) => {
   if (!defaultValues) return null;
   return (
     <Modal
@@ -231,15 +251,15 @@ const EditTrimModal = ({
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="max-w-xl mx-auto space-y-6">
-                    {/* Trim */}
-                    <div className="flex flex-wrap gap-2 w-full">
-                      <div className="flex-1 min-w-[150px]">
-                        <FXInput
-                          label="Trim"
-                          name="trim"
-                          defaultValue={defaultValues?.trim}
-                        />
-                      </div>
+                  {/* Trim */}
+                  <div className="flex flex-wrap gap-2 w-full">
+                    <div className="flex-1 min-w-[150px]">
+                      <FXInput
+                        label="Trim"
+                        name="trim"
+                        defaultValue={defaultValues?.trim}
+                      />
+                    </div>
                   </div>
                   <div className="flex flex-wrap gap-4 py-2">
                     {/* Trim & logo Inputs */}
@@ -300,8 +320,8 @@ const DeleteTrimModal = ({
 
             <ModalBody>
               <p className="text-sm text-red-500">
-                ⚠️ Are you sure you want to delete this trim? This action
-                cannot be undone.
+                ⚠️ Are you sure you want to delete this trim? This action cannot
+                be undone.
               </p>
             </ModalBody>
 
@@ -336,23 +356,15 @@ const MakeSelectForTrim = ({ defaultValue, register }: any) => {
         {...register("make", { required: true })}
         defaultValue={defaultValue ? defaultValue?._id : ""}
         className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
-          {/* {
+        {/* {
             defaultValue && (
               <option value={defaultValue._id}>{defaultValue.make}</option>
             )
           } */}
         <option value="">Select Make</option>
-        {
-          isLoading && <option value="">Loading Makes...</option>
-        }
-        {
-          isError && <option value="">Failed to load Makes</option>
-        }
-        {
-            makes?.data?.length === 0 && (
-              <option value="">No Makes found</option>
-            )
-        }
+        {isLoading && <option value="">Loading Makes...</option>}
+        {isError && <option value="">Failed to load Makes</option>}
+        {makes?.data?.length === 0 && <option value="">No Makes found</option>}
         {makes?.data?.map((m: any) => (
           <option
             key={m?.make}
@@ -375,17 +387,9 @@ const YearSelectForTrim = ({ defaultValue, register }: any) => {
         defaultValue={defaultValue ? defaultValue?._id : ""}
         className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
         <option value="">Select Year</option>
-        {
-          isLoading && <option value="">Loading Years...</option>
-        }
-        {
-          isError && <option value="">Failed to load Years</option>
-        }
-        {
-            year?.data?.length === 0 && (
-              <option value="">No Years found</option>
-            )
-        }
+        {isLoading && <option value="">Loading Years...</option>}
+        {isError && <option value="">Failed to load Years</option>}
+        {year?.data?.length === 0 && <option value="">No Years found</option>}
         {year?.data?.map((y: any) => (
           <option
             key={y?.year?.numeric}
@@ -408,17 +412,9 @@ const ModelSelectForTrim = ({ defaultValue, register }: any) => {
         defaultValue={defaultValue ? defaultValue?._id : ""}
         className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
         <option value="">Select Model</option>
-        {
-          isLoading && <option value="">Loading Models...</option>
-        }
-        {
-          isError && <option value="">Failed to load Models</option>
-        }
-        {
-            model?.data?.length === 0 && (
-              <option value="">No Models found</option>
-            )
-        }
+        {isLoading && <option value="">Loading Models...</option>}
+        {isError && <option value="">Failed to load Models</option>}
+        {model?.data?.length === 0 && <option value="">No Models found</option>}
         {model?.data?.map((m: any) => (
           <option
             key={m?.model}
@@ -430,4 +426,3 @@ const ModelSelectForTrim = ({ defaultValue, register }: any) => {
     </div>
   );
 };
-

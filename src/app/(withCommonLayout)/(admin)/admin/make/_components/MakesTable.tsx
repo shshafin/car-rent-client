@@ -17,7 +17,12 @@ export const columns = [
   { name: "ACTIONS", uid: "actions" },
 ];
 
-export default function MakesTable({ makes, setSelectedMake, onDeleteOpen, onEditOpen }: any) {
+export default function MakesTable({
+  makes,
+  setSelectedMake,
+  onDeleteOpen,
+  onEditOpen,
+}: any) {
   const renderCell = (make: any, columnKey: any) => {
     const cellValue = make[columnKey];
 

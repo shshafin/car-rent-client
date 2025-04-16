@@ -23,8 +23,17 @@ import { ITyreSize } from "@/src/types";
 import { useState } from "react";
 import { useGetMakes } from "@/src/hooks/makes.hook";
 import { useGetYears } from "@/src/hooks/years.hook";
-import { DataEmpty, DataError, DataLoading } from "../../_components/DataFetchingStates";
-import { useCreateTyreSize, useDeleteTyreSize, useGetTyreSizes, useUpdateTyreSize } from "@/src/hooks/tyreSize.hook";
+import {
+  DataEmpty,
+  DataError,
+  DataLoading,
+} from "../../_components/DataFetchingStates";
+import {
+  useCreateTyreSize,
+  useDeleteTyreSize,
+  useGetTyreSizes,
+  useUpdateTyreSize,
+} from "@/src/hooks/tyreSize.hook";
 import { useGetModels } from "@/src/hooks/model.hook";
 import { useGetTrims } from "@/src/hooks/trim.hook";
 import TyreSizesTable from "./TyreSizesTable";
@@ -32,11 +41,23 @@ import TyreSizesTable from "./TyreSizesTable";
 export default function AdminTyreSizePage() {
   const queryClient = useQueryClient();
   const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure(); // Modal open state
-  const { isOpen: isEditOpen, onOpen: onEditOpen, onOpenChange: onEditOpenChange, onClose: onEditClose } = useDisclosure();
-  const { isOpen: isDeleteOpen, onOpen: onDeleteOpen, onOpenChange: onDeleteOpenChange, onClose: onDeleteClose } = useDisclosure();
+  const {
+    isOpen: isEditOpen,
+    onOpen: onEditOpen,
+    onOpenChange: onEditOpenChange,
+    onClose: onEditClose,
+  } = useDisclosure();
+  const {
+    isOpen: isDeleteOpen,
+    onOpen: onDeleteOpen,
+    onOpenChange: onDeleteOpenChange,
+    onClose: onDeleteClose,
+  } = useDisclosure();
   const methods = useForm(); // Hook form methods
   const { handleSubmit } = methods;
-  const [selectedTyreSize, setSelectedTyreSize] = useState<ITyreSize | null>(null);
+  const [selectedTyreSize, setSelectedTyreSize] = useState<ITyreSize | null>(
+    null
+  );
 
   const { mutate: handleCreateTyreSize, isPending: createTyreSizePending } =
     useCreateTyreSize({
@@ -69,6 +90,7 @@ export default function AdminTyreSizePage() {
       id: selectedTyreSize?._id,
     }); // TyreSize deletion handler
   const { data: tyreSizes, isLoading, isError } = useGetTyreSizes(); // Get existing TyreSizes
+  console.log(tyreSizes);
 
   // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -78,7 +100,7 @@ export default function AdminTyreSizePage() {
   const onEditSubmit: SubmitHandler<FieldValues> = async (data) => {
     handleUpdateTyreSize(data as any);
   };
-  console.log({tyreSizes});
+  console.log({ tyreSizes });
 
   return (
     <div className="p-6">
@@ -98,13 +120,14 @@ export default function AdminTyreSizePage() {
       {isError && <DataError />}
       {tyreSizes?.data?.length === 0 && <DataEmpty />}
 
-      {!isLoading && tyreSizes?.data?.length > 0 && 
+      {!isLoading && tyreSizes?.data?.length > 0 && (
         <TyreSizesTable
-          tyreSizes={tyreSizes} 
-          setSelectedTyreSize={setSelectedTyreSize} 
-          onEditOpen={onEditOpen} 
-          onDeleteOpen={onDeleteOpen} 
-        />}
+          tyreSizes={tyreSizes}
+          setSelectedTyreSize={setSelectedTyreSize}
+          onEditOpen={onEditOpen}
+          onDeleteOpen={onDeleteOpen}
+        />
+      )}
 
       {/* Modal for adding a new TyreSize */}
       <AddTyreSizeModal
@@ -151,21 +174,23 @@ const AddTyreSizeModal = ({
       <ModalContent>
         {() => (
           <>
-            <ModalHeader className="flex flex-col gap-1">Add Tyre Size</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">
+              Add Tyre Size
+            </ModalHeader>
             <ModalBody className="mb-5">
               <FormProvider {...methods}>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="max-w-xl mx-auto space-y-6">
-                    {/* TyreSize */}
-                    <div className="flex flex-wrap gap-2 w-full">
-                      <div className="flex-1 min-w-[150px]">
-                        <FXInput
-                          label="Tyre Size"
-                          name="tireSize"
-                          required={true}
-                        />
-                      </div>
+                  {/* TyreSize */}
+                  <div className="flex flex-wrap gap-2 w-full">
+                    <div className="flex-1 min-w-[150px]">
+                      <FXInput
+                        label="Tyre Size"
+                        name="tireSize"
+                        required={true}
+                      />
+                    </div>
                   </div>
                   <div className="flex flex-wrap gap-4 py-2">
                     {/* TyreSize & logo Inputs */}
@@ -221,7 +246,7 @@ const EditTyreSizeModal = ({
   onSubmit,
   updateTyreSizePending,
   defaultValues,
-} : any) => {
+}: any) => {
   if (!defaultValues) return null;
   return (
     <Modal
@@ -233,21 +258,23 @@ const EditTyreSizeModal = ({
       <ModalContent>
         {() => (
           <>
-            <ModalHeader className="flex flex-col gap-1">Edit Tyre Size</ModalHeader>
+            <ModalHeader className="flex flex-col gap-1">
+              Edit Tyre Size
+            </ModalHeader>
             <ModalBody className="mb-5">
               <FormProvider {...methods}>
                 <form
                   onSubmit={handleSubmit(onSubmit)}
                   className="max-w-xl mx-auto space-y-6">
-                    {/* TyreSize */}
-                    <div className="flex flex-wrap gap-2 w-full">
-                      <div className="flex-1 min-w-[150px]">
-                        <FXInput
-                          label="Tyre Size"
-                          name="tireSize"
-                          defaultValue={defaultValues?.tireSize}
-                        />
-                      </div>
+                  {/* TyreSize */}
+                  <div className="flex flex-wrap gap-2 w-full">
+                    <div className="flex-1 min-w-[150px]">
+                      <FXInput
+                        label="Tyre Size"
+                        name="tireSize"
+                        defaultValue={defaultValues?.tireSize}
+                      />
+                    </div>
                   </div>
                   <div className="flex flex-wrap gap-4 py-2">
                     {/* TyreSize & logo Inputs */}
@@ -350,23 +377,15 @@ const MakeSelectForTyreSize = ({ defaultValue, register }: any) => {
         {...register("make", { required: true })}
         defaultValue={defaultValue ? defaultValue?._id : ""}
         className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
-          {/* {
+        {/* {
             defaultValue && (
               <option value={defaultValue._id}>{defaultValue.make}</option>
             )
           } */}
         <option value="">Select Make</option>
-        {
-          isLoading && <option value="">Loading Makes...</option>
-        }
-        {
-          isError && <option value="">Failed to load Makes</option>
-        }
-        {
-            makes?.data?.length === 0 && (
-              <option value="">No Makes found</option>
-            )
-        }
+        {isLoading && <option value="">Loading Makes...</option>}
+        {isError && <option value="">Failed to load Makes</option>}
+        {makes?.data?.length === 0 && <option value="">No Makes found</option>}
         {makes?.data?.map((m: any) => (
           <option
             key={m?.make}
@@ -389,17 +408,9 @@ const YearSelectForTyreSize = ({ defaultValue, register }: any) => {
         defaultValue={defaultValue ? defaultValue?._id : ""}
         className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
         <option value="">Select Year</option>
-        {
-          isLoading && <option value="">Loading Years...</option>
-        }
-        {
-          isError && <option value="">Failed to load Years</option>
-        }
-        {
-            year?.data?.length === 0 && (
-              <option value="">No Years found</option>
-            )
-        }
+        {isLoading && <option value="">Loading Years...</option>}
+        {isError && <option value="">Failed to load Years</option>}
+        {year?.data?.length === 0 && <option value="">No Years found</option>}
         {year?.data?.map((y: any) => (
           <option
             key={y?.year?.numeric}
@@ -422,17 +433,9 @@ const ModelSelectForTyreSize = ({ defaultValue, register }: any) => {
         defaultValue={defaultValue ? defaultValue?._id : ""}
         className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
         <option value="">Select Model</option>
-        {
-          isLoading && <option value="">Loading Models...</option>
-        }
-        {
-          isError && <option value="">Failed to load Models</option>
-        }
-        {
-            model?.data?.length === 0 && (
-              <option value="">No Models found</option>
-            )
-        }
+        {isLoading && <option value="">Loading Models...</option>}
+        {isError && <option value="">Failed to load Models</option>}
+        {model?.data?.length === 0 && <option value="">No Models found</option>}
         {model?.data?.map((m: any) => (
           <option
             key={m?.model}
@@ -455,17 +458,9 @@ const TrimSelectForTyreSize = ({ defaultValue, register }: any) => {
         defaultValue={defaultValue ? defaultValue?._id : ""}
         className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
         <option value="">Select Trim</option>
-        {
-          isLoading && <option value="">Loading Trims...</option>
-        }
-        {
-          isError && <option value="">Failed to load Trims</option>
-        }
-        {
-            trim?.data?.length === 0 && (
-              <option value="">No Trims found</option>
-            )
-        }
+        {isLoading && <option value="">Loading Trims...</option>}
+        {isError && <option value="">Failed to load Trims</option>}
+        {trim?.data?.length === 0 && <option value="">No Trims found</option>}
         {trim?.data?.map((m: any) => (
           <option
             key={m?.trim}
@@ -477,4 +472,3 @@ const TrimSelectForTyreSize = ({ defaultValue, register }: any) => {
     </div>
   );
 };
-
