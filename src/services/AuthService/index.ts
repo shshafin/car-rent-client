@@ -1,6 +1,7 @@
 "use server";
 
 import { axiosInstance } from "@/src/lib/AxiosInstance";
+import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";
@@ -25,23 +26,55 @@ export const loginUser = async (userData: FieldValues) => {
     const { data } = await axiosInstance.post("/auth/login", userData);
 
     if (data?.success) {
-      (await cookies()).set("access_token", data?.data?.accessToken);
-      (await cookies()).set("refresh_token", data?.data?.refreshToken);
+      // Save the tokens to cookies
+      (await cookies()).set("access_token", data?.data?.accessToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      });
+      (await cookies()).set("refresh_token", data?.data?.refreshToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+      });
     }
     return data;
   } catch (error: any) {
-    throw new Error(error);
+    console.error("Login error: ", error);
+    throw new Error(
+      error?.response?.data?.message || "An error occurred during login."
+    );
   }
 };
 
 // ! Logout User
+
 export const logoutUser = async () => {
-  (await cookies()).delete("access_token");
-  (await cookies()).delete("refresh_token");
+  const cookieStore = await cookies(); // ✅ Await this!
+
+  cookieStore.set("access_token", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    path: "/",
+    expires: new Date(0),
+  });
+
+  cookieStore.set("refresh_token", "", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "strict",
+    path: "/",
+    expires: new Date(0),
+  });
 };
 
-// get user by decoding the access token
+// ! Get Current User
+let cachedUser: any = null; // In-memory cache
+
 export const getCurrentUser = async () => {
+  if (cachedUser) return cachedUser; // Return cached user data if available
+
   const accessToken = (await cookies()).get("access_token")?.value;
 
   if (!accessToken) return null;
@@ -52,8 +85,12 @@ export const getCurrentUser = async () => {
     return null;
   }
 
-  // Use email to fetch user
+  // Fetch the user data from API
   const { data } = await axiosInstance.get(`/users/${decodedToken.userEmail}`);
+
+  if (data?.data) {
+    cachedUser = data.data; // Cache the user data
+  }
 
   return data?.data;
 };
