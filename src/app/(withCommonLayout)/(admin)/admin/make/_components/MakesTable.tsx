@@ -13,6 +13,7 @@ import { IMake } from "@/src/types";
 
 export const columns = [
   { name: "MAKE", uid: "make" },
+  { name: "YEAR", uid: "year" },
   { name: "LOGO", uid: "logo" },
   { name: "ACTIONS", uid: "actions" },
 ];
@@ -28,9 +29,11 @@ export default function MakesTable({
 
     switch (columnKey) {
       case "make":
-        return make.make;
+        return make?.make;
+      case "year":
+        return make?.year?.year?.numeric;
       case "logo":
-        return make.logo;
+        return make?.logo;
 
       case "actions":
         return (

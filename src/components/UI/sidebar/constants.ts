@@ -72,29 +72,29 @@ export const adminLinks = [
     label: "Vehicle Management",
     links: [
       {
+        href: "/admin/year",
+        label: "Year",
+        icon: React.createElement(CalendarCog, { className: "w-5 h-5" }),
+      },
+      {
         href: "/admin/make",
         label: "Make",
-        icon: React.createElement(Settings2, { className: "w-5 h-5" }), // File icon for make
+        icon: React.createElement(Settings2, { className: "w-5 h-5" }),
       },
       {
         href: "/admin/model",
         label: "Model",
-        icon: React.createElement(Blend, { className: "w-5 h-5" }), // File icon for model
-      },
-      {
-        href: "/admin/year",
-        label: "Year",
-        icon: React.createElement(CalendarCog, { className: "w-5 h-5" }), // File icon for year
+        icon: React.createElement(Blend, { className: "w-5 h-5" }),
       },
       {
         href: "/admin/trim",
         label: "Trim",
-        icon: React.createElement(ScissorsLineDashed, { className: "w-5 h-5" }), // File icon for tyre size
+        icon: React.createElement(ScissorsLineDashed, { className: "w-5 h-5" }),
       },
       {
         href: "/admin/tyre-size",
         label: "Tyre Size",
-        icon: React.createElement(LoaderPinwheel, { className: "w-5 h-5" }), // File icon for tyre size
+        icon: React.createElement(LoaderPinwheel, { className: "w-5 h-5" }),
       },
     ],
   },

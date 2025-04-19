@@ -5,6 +5,8 @@ import { useGetModels } from "@/src/hooks/model.hook";
 import { useGetTrims } from "@/src/hooks/trim.hook";
 import { useGetTyreSizes } from "@/src/hooks/tyreSize.hook";
 import { useGetYears } from "@/src/hooks/years.hook";
+import { axiosInstance } from "@/src/lib/AxiosInstance";
+import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -99,10 +101,30 @@ const VehicleSelector = ({setMainStep}: any) => {
       tireSize: '',
     });
   const { data: years, isLoading: isYearsLoading, isError: isYearsError } = useGetYears({});
-  const { data: makes, isLoading: isMakesLoading, isError: isMakesError } = useGetMakes({year: vehicle.year});
-  const { data: models, isLoading: isModelsLoading, isError: isModelsError } = useGetModels({make: vehicle.make});
-  const { data: trims, isLoading: isTrimsLoading, isError: isTrimsError } = useGetTrims({model: vehicle.model});
-  const { data: tireSizes, isLoading: isTireSizesLoading, isError: isTireSizesError } = useGetTyreSizes({trim: vehicle.trim});
+  const { data: makes, isLoading: isMakesLoading, isError: isMakesError } = useGetMakes({});
+  const { data: models, isLoading: isModelsLoading, isError: isModelsError } = useGetModels({});
+  const { data: trims, isLoading: isTrimsLoading, isError: isTrimsError } = useGetTrims({});
+    // Only fetch tire sizes when all previous selections are made
+    const fetchTyreSizes = async (year: any, make: any, model: any, trim: any) => {
+      // if (!year || !make || !model || !trim) return null;
+      try {
+        const response = await axiosInstance.get(`/tire-size?year=${year}&make=${make}&model=${model}&trim=${trim}`)
+        console.log({response})
+        return response.data;
+      } catch (error) {
+        console.log({error})
+      }
+    }
+    const {
+      data: tyreSizes,
+      isLoading: isTyreSizesLoading,
+      isError: isTyreSizesError,
+    } = useQuery({
+      queryKey: ["tyreSizes", vehicle.year, vehicle.make, vehicle.model, vehicle.trim],
+      queryFn: async () => await fetchTyreSizes(vehicle.year, vehicle.make, vehicle.model, vehicle.trim),
+      enabled: !!vehicle.year && !!vehicle.make && !!vehicle.model && !!vehicle.trim, // Only run when all dependencies are available
+      // enabled: true
+    })
 
   const steps = [
     'Year',
@@ -120,6 +142,7 @@ const VehicleSelector = ({setMainStep}: any) => {
     setVehicle({ ...vehicle, [key]: value });
     setStep(step + 1);
   };
+  console.log({tyreSizes, vehicle})
 
   return (
     <div className="mx-auto mt-10 p-5 border rounded-lg shadow-lg">
@@ -147,7 +170,23 @@ const VehicleSelector = ({setMainStep}: any) => {
       <div className="mt-5">
         <h2 className="text-xl font-bold mb-4">{vehicle?.year} {vehicle?.make}</h2>
         <h2 className="text-xl font-bold mb-4">{vehicle?.model} {vehicle?.trim}</h2>
-        <p className="mb-2">What is the <span className="font-bold">model</span> of your vehicle?</p>
+        <p className="mb-2">What is the
+          <span className="font-bold">
+          {
+            step === 1 && " year "
+          }
+          {
+            step === 2 && " make "
+          }
+          {
+            step === 3 && " model "
+          }
+          {
+            step === 4 && " trim "
+          }
+          {
+            step === 5 && " tire size "
+          }</span>of your vehicle?</p>
         {
             step === 1 && (
                 <div>
@@ -157,6 +196,12 @@ const VehicleSelector = ({setMainStep}: any) => {
                         onChange={(e) => handleSelectChange('year', e.target.value)}
                     >
                         <option value="">*Year</option>
+                        {
+                            isYearsLoading && <option value="">Loading Years...</option>
+                        }
+                        {
+                            isYearsError && <option value="">Failed to load Years</option>
+                        }
                         {
                             years?.data?.map((y: any) => (
                                 <option key={y?.year?.numeric} value={y?.year?.numeric}>{y?.year?.numeric}</option>
@@ -177,6 +222,12 @@ const VehicleSelector = ({setMainStep}: any) => {
                     >
                         <option value="">*Make</option>
                         {
+                            isMakesLoading && <option value="">Loading Makes...</option>
+                        }
+                        {
+                            isMakesError && <option value="">Failed to load Makes</option>
+                        }
+                        {
                             makes?.data?.map((m: any) => (
                                 <option key={m?.make} value={m?.make}>{m?.make}</option>
                             ))
@@ -194,6 +245,12 @@ const VehicleSelector = ({setMainStep}: any) => {
                         onChange={(e) => handleSelectChange('model', e.target.value)}
                     >
                         <option value="">*Model</option>
+                        {
+                            isModelsLoading && <option value="">Loading Models...</option>
+                        }
+                        {
+                            isModelsError && <option value="">Failed to load Models</option>
+                        }
                         {
                             models?.data?.map((m: any) => (
                                 <option key={m?.model} value={m?.model}>{m?.model}</option>
@@ -213,6 +270,12 @@ const VehicleSelector = ({setMainStep}: any) => {
                     >
                         <option value="">*Trim</option>
                         {
+                            isTrimsLoading && <option value="">Loading Trims...</option>
+                        }
+                        {
+                            isTrimsError && <option value="">Failed to load Trims</option>
+                        }
+                        {
                             trims?.data?.map((t: any) => (
                                 <option key={t?.trim} value={t?.trim}>{t?.trim}</option>
                             ))
@@ -231,10 +294,17 @@ const VehicleSelector = ({setMainStep}: any) => {
                     >
                         <option value="">*Tire Size</option>
                         {
-                            tireSizes?.data?.map((t: any) => (
+                            isTyreSizesLoading && <option value="">Loading Tire Sizes...</option>
+                        }
+                        {
+                            isTyreSizesError && <option value="">Failed to load Tire Sizes</option>
+                        }
+                        {
+                            tyreSizes?.data?.map((t: any) => (
                                 <option key={t?.tireSize} value={t?.tireSize}>{t?.tireSize}</option>
                             ))
                         }
+                        <option value="">Didn't find your tire size?</option>
                     </select>
                 </div>
             )

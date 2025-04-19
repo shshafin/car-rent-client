@@ -29,6 +29,7 @@ import MakesTable from "./MakesTable";
 import { IMake } from "@/src/types";
 import { useState } from "react";
 import { DataEmpty, DataError, DataLoading } from "../../_components/DataFetchingStates";
+import { useGetYears } from "@/src/hooks/years.hook";
 
 export default function AdminMakePage() {
   const queryClient = useQueryClient();
@@ -76,6 +77,7 @@ export default function AdminMakePage() {
     const makeData: any = {
       make: data.make,
       logo: data.logo,
+      year: data.year,
     };
 
     handleCreateMake(makeData); // Send make data
@@ -84,6 +86,7 @@ export default function AdminMakePage() {
     const makeData: any = {
       make: data.make,
       logo: data.logo,
+      year: data.year,
     };
     handleUpdateMake(makeData); // update make data
   };
@@ -181,6 +184,15 @@ const AddMakeModal = ({
                         />
                       </div>
                     </div>
+                    {/* Year Input */}
+                    <div className="flex flex-wrap gap-2 w-full">
+                      <div className="flex-1 min-w-[150px]">
+                        <YearSelectForMake
+                          defaultValue=""
+                          register={methods.register}
+                        />
+                      </div>
+                    </div>
                   </div>
                   <Button
                     color="primary"
@@ -245,6 +257,15 @@ const EditMakeModal = ({
                         />
                       </div>
                     </div>
+                    {/* Year Input */}
+                    <div className="flex flex-wrap gap-2 w-full">
+                      <div className="flex-1 min-w-[150px]">
+                        <YearSelectForMake
+                          defaultValue={defaultValues.year}
+                          register={methods.register}
+                        />
+                      </div>
+                    </div>
                   </div>
                   <Button
                     color="primary"
@@ -306,6 +327,39 @@ const DeleteMakeModal = ({
         )}
       </ModalContent>
     </Modal>
+  );
+};
+
+const YearSelectForMake = ({ defaultValue, register }: any) => {
+  const { data: year, isLoading, isError } = useGetYears({});
+
+  return (
+    <div className="flex-1 min-w-[150px]">
+      <select
+        {...register("year", { required: true })}
+        defaultValue={defaultValue ? defaultValue?._id : ""}
+        className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
+        <option value="">Select Year</option>
+        {
+          isLoading && <option value="">Loading Years...</option>
+        }
+        {
+          isError && <option value="">Failed to load Years</option>
+        }
+        {
+            year?.data?.length === 0 && (
+              <option value="">No Years found</option>
+            )
+        }
+        {year?.data?.map((y: any) => (
+          <option
+            key={y?.year?.numeric}
+            value={y?._id}>
+            {y?.year?.numeric}
+          </option>
+        ))}
+      </select>
+    </div>
   );
 };
 
