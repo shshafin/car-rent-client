@@ -38,7 +38,7 @@ export default function Landing() {
         </video>
 
         {/* Action Area */}
-        <div className="max-w-5xl mx-auto px-4 pt-12 text-center">
+        {/* <div className="max-w-5xl mx-auto px-4 pt-12 text-center">
           <div className="mb-8 text-center">
             <h3 className="text-[#FF141D] font-semibold uppercase">
               Need Assistance?
@@ -53,7 +53,7 @@ export default function Landing() {
               </span>
             </p>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

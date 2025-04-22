@@ -1,6 +1,6 @@
 "use server";
 
-import { axiosInstance } from "@/src/lib/AxiosInstance";
+import  axiosInstance  from "@/src/lib/AxiosInstance";
 
 export const createPackage = async (PackageData: any): Promise<any> => {
   try {

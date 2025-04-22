@@ -1,6 +1,6 @@
 "use server";
 
-import { axiosInstance } from "@/src/lib/AxiosInstance";
+import  axiosInstance  from "@/src/lib/AxiosInstance";
 
 // Existing functions
 export const createTour = async (tourData: any): Promise<any> => {

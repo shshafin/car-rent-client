@@ -4,7 +4,7 @@ import { envConfig } from "@/src/config/envConfig";
 import axios from "axios";
 import { cookies } from "next/headers";
 
-export const axiosInstance = axios.create({
+const axiosInstance = axios.create({
   baseURL: envConfig.base_Api,
 });
 
@@ -19,3 +19,5 @@ axiosInstance.interceptors.request.use(
   },
   (error) => Promise.reject(error)
 );
+
+export default axiosInstance;

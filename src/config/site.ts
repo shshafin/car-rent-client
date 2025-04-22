@@ -1,9 +1,9 @@
 export type SiteConfig = typeof siteConfig;
 
 export const siteConfig = {
-  name: "TIRESDASH",
+  name: "Transportationthai",
   description:
-    "TiresDash is a website that helps people find their lost tyres.",
+    "Transportationthai is a website that helps people find their lost tyres and drivers.",
   navItems: [
     {
       label: "HOME",
