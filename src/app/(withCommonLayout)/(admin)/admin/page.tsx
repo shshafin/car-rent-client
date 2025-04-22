@@ -1,30 +1,19 @@
 // app/dashboard/page.tsx (or wherever this lives)
 
-import {
-  BarChart3,
-  Users,
-  Layers3,
-  Car,
-  Calendar,
-  Scissors,
-} from "lucide-react"; // <- You'll move your API logic here
+import { Users, PackageCheck, MapPin, CarFront } from "lucide-react"; // <- You'll move your API logic here
 import { DataEmpty, DataError } from "./_components/DataFetchingStates";
-import { getCategories } from "@/src/services/Categories";
-import { getMakes } from "@/src/services/Makes";
-import { getDrivingTypes } from "@/src/services/DrivingTypes";
-import { getYears } from "@/src/services/Years";
+import { getLocation } from "@/src/services/Location";
+import { getCar } from "@/src/services/Car";
 import GlassCard from "./_components/GlassCard";
-import { getTrims } from "@/src/services/Trims";
 import { getUsers } from "@/src/services/Users";
+import { getPackage } from "@/src/services/Package";
 
 const Page = async () => {
   try {
-    const [categories, makes, users, drivingTypes, years] = await Promise.all([
-      getCategories(),
-      getMakes(),
-      getDrivingTypes(),
-      getYears(),
-      getTrims(),
+    const [packages, locations, cars, users] = await Promise.all([
+      getPackage(),
+      getLocation(),
+      getCar(),
       getUsers(),
     ]);
 
@@ -42,34 +31,22 @@ const Page = async () => {
             color="from-indigo-500 to-purple-600"
           />
           <GlassCard
-            title="Vehicle Categories"
-            value={`${categories?.data?.length || 0}`}
-            icon={<Layers3 className="w-6 h-6 text-white" />}
+            title="Packages"
+            value={`${packages?.data?.length || 0}`}
+            icon={<PackageCheck className="w-6 h-6 text-white" />}
             color="from-green-500 to-teal-600"
           />
           <GlassCard
-            title="Car Brands (Makes)"
-            value={`${makes?.data?.length || 0}`}
-            icon={<Car className="w-6 h-6 text-white" />}
+            title="Locations"
+            value={`${locations?.data?.length || 0}`}
+            icon={<MapPin className="w-6 h-6 text-white" />}
             color="from-orange-500 to-pink-600"
           />
           <GlassCard
-            title="Drive Types Available"
-            value={`${drivingTypes?.data?.length || 0}`}
-            icon={<BarChart3 className="w-6 h-6 text-white" />}
+            title="Cars"
+            value={`${cars?.data?.length || 0}`}
+            icon={<CarFront className="w-6 h-6 text-white" />}
             color="from-blue-500 to-cyan-600"
-          />
-          <GlassCard
-            title="Model Years Supported"
-            value={`${years?.data?.length || 0}`}
-            icon={<Calendar className="w-6 h-6 text-white" />}
-            color="from-fuchsia-500 to-rose-500"
-          />
-          <GlassCard
-            title="Model Trims Supported"
-            value={`${years?.data?.length || 0}`}
-            icon={<Scissors className="w-6 h-6 text-white" />}
-            color="from-yellow-400 to-yellow-600"
           />
         </div>
 

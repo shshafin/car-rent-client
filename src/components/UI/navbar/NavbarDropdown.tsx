@@ -94,7 +94,7 @@ const NavbarDropdown: React.FC = () => {
   return (
     <MenuDropdown
       menuItems={menuItems}
-      userName={user?.firstName}
+      userName={user?.fullName}
       onLogout={handleLogout}
     />
   );

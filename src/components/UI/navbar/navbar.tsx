@@ -25,7 +25,7 @@ export const Navbar = () => {
     <HeroUINavbar
       maxWidth="2xl"
       position="sticky"
-      height={150}>
+      height={90}>
       {/* Main navbar layout */}
       <div className="hidden md:flex items-center justify-between w-full px-4">
         {/* Left: Logo */}
@@ -43,18 +43,6 @@ export const Navbar = () => {
 
         {/* Middle: Need Help Button + Nav Items */}
         <div className="hidden md:flex justify-center flex-grow flex-col gap-2">
-          <div className="flex justify-center items-center gap-3 md:gap-2">
-            {/* Need Help Button */}
-            <button className="px-3 py-1 bg-gradient-to-r from-gray-100 to-gray-300 text-gray-700 rounded-md flex items-center space-x-2 shadow-md hover:shadow-lg transition-shadow duration-300 text-sm md:text-xs">
-              <Phone className="h-4 w-4" />
-              <span>Need Help?</span>
-            </button>
-
-            <ThemeSwitch className="hidden sm:block" />
-          </div>
-
-          <div className="border-t border-gray-500 my-2 w-3/4 mx-auto" />
-
           <div className="mx-auto">
             <ul className="flex gap-3 md:gap-2">
               {siteConfig.navItems.map((item) => (
@@ -74,28 +62,9 @@ export const Navbar = () => {
         </div>
 
         {/* Right: Login, My Vehicles, Cart, and Search */}
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex gap-2 items-center">
-            <NavbarLogin />
-            <div className="flex items-center gap-2 border-x border-gray-500 px-2">
-              <Car size={16} />
-              <span className="text-sm md:text-xs md:hidden lg:flex">
-                My Vehicles
-              </span>
-            </div>
-            <div className="flex items-center gap-2">
-              <ShoppingCart size={16} />
-            </div>
-          </div>
-
-          <div className="border-t border-gray-500 w-full" />
-
-          <div className="flex items-center gap-3 md:gap-2">
-            <span className="text-sm md:text-xs md:hidden lg:flex">
-              What can we help you find?
-            </span>
-            <Search size={16} />
-          </div>
+        <div className="flex flex-row items-center gap-2">
+          <ThemeSwitch className="hidden sm:block" />
+          <NavbarLogin />
         </div>
       </div>
 
@@ -127,17 +96,9 @@ export const Navbar = () => {
       {/* Mobile menu */}
       <NavbarMenu>
         <div className="mx-4 mt-2 flex flex-col gap-2">
-          {/* Need Help Button */}
-          <button className="px-3 py-2 bg-gradient-to-r from-gray-100 to-gray-300 text-gray-700 rounded-md flex items-center gap-2 shadow-sm text-sm">
-            <Phone className="h-5 w-5" />
-            <span>Need Help?</span>
-          </button>
-
-          {/* Divider */}
-          <div className="border-t border-gray-500 my-2" />
-
           {siteConfig.navMenuItems.map((item, index) => (
             <NavbarMenuItem key={`${item.label}-${index}`}>
+              <div className="border-t border-gray-500 mb-2" />
               <Link
                 color={
                   index === 2
@@ -152,24 +113,6 @@ export const Navbar = () => {
               </Link>
             </NavbarMenuItem>
           ))}
-
-          {/* My Vehicles */}
-          <div className="flex items-center mt-2 gap-2 px-2">
-            <Car size={16} />
-            <span className="text-sm">My Vehicles</span>
-          </div>
-
-          {/* Cart */}
-          <div className="flex items-center gap-2 px-2">
-            <ShoppingCart size={16} />
-            <span className="text-sm">Cart</span>
-          </div>
-
-          {/* Search */}
-          <div className="flex items-center gap-2 px-2">
-            <Search size={16} />
-            <span className="text-sm">What can we help you find?</span>
-          </div>
         </div>
       </NavbarMenu>
     </HeroUINavbar>

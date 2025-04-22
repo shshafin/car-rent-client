@@ -3,62 +3,50 @@ import { SVGProps } from "react";
 export type IconSvgProps = SVGProps<SVGSVGElement> & {
   size?: number;
 };
-export interface IPost {
+export interface ICar {
   _id: string;
-  title: string;
-  description: string;
-  images: string[];
-  location: string;
-  city: string;
-  dateFound: string;
-  status: string;
-  isReported: boolean;
-  reportCount: number;
-  category: ICategory;
-  user: IUser;
-  questions: string[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  name: string;
+  model: string;
+  seats: number;
+  rate: number;
+  image: string;
 }
 
-export interface ICategory {
+export interface ILocation {
+  _id: string;
+  location: string;
+  country: string;
+  state: string;
+  city: string;
+  zipCode?: string;
+}
+
+export interface IPackage {
   _id: string;
   name: string;
-  slug: string;
   description?: string;
+  pickupLocation: any;
+  dropLocation: any;
+  carPricing: any;
+  features?: string[];
+  createdBy: any;
   image?: string;
-  parentCategory?: {
-    _id: string;
-    name: string;
-  } | null;
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
-};
-export interface IDrivingType {
-  _id: string;
-  title: string;
-  subTitle: string;
-  options: string[];
-  createdAt: string;
-  updatedAt: string;
-  __v: number;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
-export interface IUser {
+
+export type IUser = {
   _id: string;
-  name: string;
-  firstName: string;
-  lastName: string;
   role: string;
+  fullName: string;
   email: string;
-  status: string;
-  mobileNumber: string;
-  profilePhoto: string;
-  createdAt?: string;
-  updatedAt?: string;
-  __v?: number;
-}
+  phone: string;
+  address: string;
+  zipCode: string;
+  city: string;
+  country: string;
+  password: string;
+};
 
 export interface IInput {
   variant?: "flat" | "bordered" | "faded" | "underlined";

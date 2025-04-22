@@ -1,5 +1,4 @@
 import Image from "next/image";
-import ProductsAndServices from "./ProductsAndServices";
 
 export default function Landing() {
   return (
@@ -7,23 +6,20 @@ export default function Landing() {
       {/* Top Banner */}
       <div className="bg-default-900 text-white text-sm px-4 py-2 flex flex-row items-center justify-center gap-2 sm:gap-4 text-center sm:text-left">
         <Image
-          src="/promo.webp"
+          src="/promo.jpg"
           alt="Promo Icon"
           width={40}
           height={40}
         />
         <div className="flex flex-wrap items-center justify-center gap-1 text-default-900 text-xs sm:text-lg font-medium">
-          <strong className="font-bold text-default-50">
-            5% Off All Tires and Wheels
+          <strong className="font-bold text-default-50 text-base sm:text-xl">
+            Welcome to{" "}
+            <span className="text-[#AE1215]">Transportationthai!</span>
           </strong>
-          <span className="text-default-50">totaling $599+. Limited Time.</span>
-          <span className="text-sm sm:text-2xl text-default-50">†</span>
+          <span className="text-default-50 text-sm sm:text-lg">
+            Book rides, share journeys & travel smarter.
+          </span>
         </div>
-        <a
-          href="#"
-          className="text-yellow-500 text-sm sm:text-lg font-semibold underline">
-          Learn more.
-        </a>
       </div>
 
       {/* Hero Section */}
@@ -57,8 +53,6 @@ export default function Landing() {
               </span>
             </p>
           </div>
-
-          <ProductsAndServices />
         </div>
       </div>
     </div>

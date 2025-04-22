@@ -1,7 +1,6 @@
 "use server";
 
 import { axiosInstance } from "@/src/lib/AxiosInstance";
-import Cookies from "js-cookie";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
 import { FieldValues } from "react-hook-form";

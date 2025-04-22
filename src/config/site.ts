@@ -6,62 +6,38 @@ export const siteConfig = {
     "TiresDash is a website that helps people find their lost tyres.",
   navItems: [
     {
-      label: "TIRES",
-      href: "/tires",
+      label: "HOME",
+      href: "/",
     },
     {
-      label: "WHEELS",
-      href: "/wheels",
+      label: "ABOUT US",
+      href: "/about-us",
     },
     {
-      label: "APPOINTMENTS",
-      href: "/appointments",
+      label: "FEEDBACK",
+      href: "/feedback",
     },
     {
-      label: "TIPS & GUIDE",
-      href: "/tips-guide",
-    },
-    {
-      label: "FINANCING",
-      href: "/financing",
-    },
-    {
-      label: "FLEET",
-      href: "/fleet",
-    },
-    {
-      label: "DEALS",
-      href: "/deals",
+      label: "GUIDE",
+      href: "/guide",
     },
   ],
   navMenuItems: [
     {
-      label: "TIRES",
-      href: "/tires",
+      label: "HOME",
+      href: "/",
     },
     {
-      label: "WHEELS",
-      href: "/wheels",
+      label: "ABOUT US",
+      href: "/about-us",
     },
     {
-      label: "APPOINTMENTS",
-      href: "/appointments",
+      label: "FEEDBACK",
+      href: "/feedback",
     },
     {
-      label: "TIPS & GUIDE",
-      href: "/tips-guide",
-    },
-    {
-      label: "FINANCING",
-      href: "/financing",
-    },
-    {
-      label: "FLEET",
-      href: "/fleet",
-    },
-    {
-      label: "DEALS",
-      href: "/deals",
+      label: "GUIDE",
+      href: "/guide",
     },
   ],
   links: {

@@ -11,6 +11,12 @@ import {
   Grid2X2Plus,
   LoaderPinwheel,
   User,
+  Home,
+  Users,
+  Car,
+  MapPin,
+  Package,
+  Calendar,
 } from "lucide-react"; // Import necessary icons
 import React from "react";
 
@@ -38,8 +44,8 @@ export const adminLinks = [
     links: [
       {
         href: "/admin",
-        label: "Admin Home",
-        icon: React.createElement(HomeIcon, { className: "w-5 h-5" }), // Home icon for dashboard
+        label: "Dashboard Home",
+        icon: React.createElement(Home, { className: "w-5 h-5" }), // Home icon for dashboard
       },
     ],
   },
@@ -48,53 +54,48 @@ export const adminLinks = [
     links: [
       {
         href: "/admin/users",
-        label: "Users",
-        icon: React.createElement(User, { className: "w-5 h-5" }), // File icon for category
+        label: "Manage Users",
+        icon: React.createElement(Users, { className: "w-5 h-5" }), // Users icon for user management
       },
     ],
   },
   {
-    label: "Category Management",
+    label: "System Management",
     links: [
       {
-        href: "/admin/category",
-        label: "Category",
-        icon: React.createElement(Grid2X2Plus, { className: "w-5 h-5" }), // File icon for category
+        href: "/admin/car",
+        label: "Manage Vehicles",
+        icon: React.createElement(Car, { className: "w-5 h-5" }), // Car icon for vehicle management
       },
       {
-        href: "/admin/driving-type",
-        label: "Driving Type",
-        icon: React.createElement(TruckIcon, { className: "w-5 h-5" }), // Truck icon for driving type
+        href: "/admin/location",
+        label: "Manage Locations",
+        icon: React.createElement(MapPin, { className: "w-5 h-5" }), // Location icon for location management
       },
     ],
   },
   {
-    label: "Vehicle Management",
+    label: "Booking & Packages",
     links: [
       {
-        href: "/admin/year",
-        label: "Year",
-        icon: React.createElement(CalendarCog, { className: "w-5 h-5" }),
+        href: "/admin/package",
+        label: "Manage Packages",
+        icon: React.createElement(Package, { className: "w-5 h-5" }), // Package icon for package management
       },
       {
-        href: "/admin/make",
-        label: "Make",
-        icon: React.createElement(Settings2, { className: "w-5 h-5" }),
+        href: "/admin/booking",
+        label: "Manage Bookings",
+        icon: React.createElement(Calendar, { className: "w-5 h-5" }), // Calendar icon for booking management
       },
+    ],
+  },
+  {
+    label: "Tour Management",
+    links: [
       {
-        href: "/admin/model",
-        label: "Model",
-        icon: React.createElement(Blend, { className: "w-5 h-5" }),
-      },
-      {
-        href: "/admin/trim",
-        label: "Trim",
-        icon: React.createElement(ScissorsLineDashed, { className: "w-5 h-5" }),
-      },
-      {
-        href: "/admin/tyre-size",
-        label: "Tyre Size",
-        icon: React.createElement(LoaderPinwheel, { className: "w-5 h-5" }),
+        href: "/admin/adminTour",
+        label: "Manage Tours",
+        icon: React.createElement(Package, { className: "w-5 h-5" }), // Package icon for package management
       },
     ],
   },

@@ -12,8 +12,8 @@ export const Logo: React.FC<IconSvgProps> = ({
   <>
     <Image
       src={"/logo.png"}
-      height={150}
-      width={150}
+      height={120}
+      width={120}
       alt="logo"
     />
   </>

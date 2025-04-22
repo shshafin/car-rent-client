@@ -9,6 +9,7 @@ import { FieldValues, SubmitHandler } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { registerSchema } from "@/src/schemas/register.schema";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 const RegisterPage = () => {
   const { mutate: handleUserRegistration, isSuccess: registerSuccess } =
@@ -24,9 +25,11 @@ const RegisterPage = () => {
     handleUserRegistration(userData);
   };
 
-  if (registerSuccess) {
-    router.push("/login");
-  }
+  useEffect(() => {
+    if (registerSuccess) {
+      router.push("/login");
+    }
+  }, [registerSuccess, router]);
 
   return (
     <div className="flex w-full flex-col items-center justify-center px-4 h-[calc(100vh-100px)]">
@@ -37,30 +40,20 @@ const RegisterPage = () => {
           onSubmit={onSubmit}
           resolver={zodResolver(registerSchema)}
           defaultValues={{
-            firstName: "Fahim",
-            lastName: "Hossain",
+            fullName: "Fahim Hossain",
             email: "fahim@examplea.com",
             phone: "01876543210",
-            addressLine1: "Flat 5B, Green City",
-            addressLine2: "Dhanmondi",
+            address: "Flat 5B, Green City, Dhanmondi, Dhaka",
             zipCode: "1209",
             city: "Dhaka",
-            state: "Dhaka",
             country: "Bangladesh",
-            password: "12345678", // ✅ Updated: min 8 characters
+            password: "12345678",
           }}>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="py-2">
               <FXInput
-                name="firstName"
-                label="First Name"
-                required
-              />
-            </div>
-            <div className="py-2">
-              <FXInput
-                name="lastName"
-                label="Last Name"
+                name="fullName"
+                label="Full Name"
                 required
               />
             </div>
@@ -76,60 +69,40 @@ const RegisterPage = () => {
               <FXInput
                 name="phone"
                 label="Phone Number"
-                required
               />
             </div>
             <div className="py-2">
               <FXInput
-                name="addressLine1"
-                label="Address Line 1"
-                required
-              />
-            </div>
-            <div className="py-2">
-              <FXInput
-                name="addressLine2"
-                label="Address Line 2"
-                required
+                name="address"
+                label="Address"
               />
             </div>
             <div className="py-2">
               <FXInput
                 name="zipCode"
                 label="ZIP Code"
-                required
               />
             </div>
             <div className="py-2">
               <FXInput
                 name="city"
                 label="City"
-                required
-              />
-            </div>
-            <div className="py-2">
-              <FXInput
-                name="state"
-                label="State"
-                required
               />
             </div>
             <div className="py-2">
               <FXInput
                 name="country"
                 label="Country"
+              />
+            </div>
+            <div className="py-2">
+              <FXInput
+                name="password"
+                label="Password"
+                type="password"
                 required
               />
             </div>
-          </div>
-
-          <div className="py-2 w-full">
-            <FXInput
-              name="password"
-              label="Password"
-              type="password"
-              required
-            />
           </div>
 
           <Button

@@ -21,9 +21,12 @@ const Sidebar = () => {
   }
 
   const getInitials = () => {
-    const first = user?.firstName?.[0] || "";
-    const last = user?.lastName?.[0] || "";
-    return `${first}${last}`.toUpperCase();
+    if (!user?.fullName) return "";
+
+    const names = user.fullName.trim().split(" ");
+    const first = names[0]?.[0] || "";
+
+    return `${first}`.toUpperCase();
   };
 
   return (
@@ -40,7 +43,7 @@ const Sidebar = () => {
 
           {/* Name */}
           <h2 className="text-xl font-semibold text-zinc-800 dark:text-white capitalize">
-            {user?.firstName} {user?.lastName}
+            {user?.fullName}
           </h2>
 
           {/* Email */}

@@ -11,12 +11,12 @@ import { DeleteIcon, EditIcon } from "@/src/icons";
 import { Tooltip } from "@heroui/tooltip";
 
 export const columns = [
-  { name: "FIRST NAME", uid: "firstName" },
-  { name: "LAST NAME", uid: "lastName" },
+  { name: "FULL NAME", uid: "fullName" },
   { name: "EMAIL", uid: "email" },
   { name: "PHONE", uid: "phone" },
-  { name: "ADDRESS LINE1", uid: "addressLine1" },
-  { name: "ADDRESS LINE2", uid: "addressLine2" },
+  { name: "COUNTRY", uid: "country" },
+  { name: "CITY", uid: "city" },
+  { name: "ADDRESS", uid: "address" },
   // { name: "ACTIONS", uid: "actions" },
 ];
 
@@ -30,18 +30,18 @@ export default function UsersTable({
     const cellValue = user[columnKey];
 
     switch (columnKey) {
-      case "firstName":
-        return user.firstName;
-      case "lastName":
-        return user.lastName;
+      case "fullName":
+        return user.fullName;
       case "email":
         return user.email;
       case "phone":
         return user.phone;
-      case "addressLine1":
-        return user.addressLine1;
-      case "addressLine2":
-        return user.addressLine2;
+      case "country":
+        return user.country;
+      case "city":
+        return user.city;
+      case "address":
+        return user.address;
 
       // case "actions":
       //   return (

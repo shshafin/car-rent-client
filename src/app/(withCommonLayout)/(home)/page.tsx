@@ -10,12 +10,12 @@ export default function Home() {
   return (
     <>
       <Landing />
-      <Deals />
+      {/* <Deals />
       <ShopCategory />
       <TreadWellSection />
       <ShopByBrandSection />
       <FinancingSection />
-      <BlogSection />
+      <BlogSection /> */}
     </>
   );
 }
