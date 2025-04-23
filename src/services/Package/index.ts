@@ -45,12 +45,25 @@ export const deletePackage = async (id: string): Promise<any> => {
   }
 };
 
-export const getPackage = async () => {
-  try {
-    const { data } = await axiosInstance.get("/package", {});
+// export const getPackage = async () => {
+//   try {
+//     const { data } = await axiosInstance.get("/package", {});
 
-    return data;
+//     return data;
+//   } catch (error: any) {
+//     throw new Error(error.message);
+//   }
+// };
+
+export const getPackage = async (pickupId: string, dropId: string) => {
+  if (!pickupId || !dropId) return {}; // early return if params are missing
+
+  try {
+    console.log({pickupId, dropId});
+    const res = await axiosInstance.get(`/package?pickupLocation=${pickupId}&dropLocation=${dropId}`);
+    return res.data;
   } catch (error: any) {
-    throw new Error(error.message);
+    throw new Error(error.message || "Something went wrong while fetching packages.");
   }
 };
+
