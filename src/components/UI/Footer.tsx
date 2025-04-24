@@ -7,14 +7,15 @@ const Footer = () => {
         {/* Logo Section */}
         <div className="flex flex-col items-center md:items-start">
           <Image
-            src="/logo.png"
+            src="/lg.png"
             alt="Company Logo"
             width={120}
-            height={50}
+            height={100}
             className="object-contain mb-3"
           />
           <p className="text-sm text-center md:text-left">
-            Driving financial ease and flexibility—your journey starts here.
+            Empowering your travels with flexible payments—ride your way, your
+            terms.
           </p>
         </div>
 
@@ -22,8 +23,9 @@ const Footer = () => {
         <div>
           <h4 className="text-lg font-semibold text-white mb-3">About Us</h4>
           <p className="text-sm">
-            We provide flexible financing solutions tailored to meet your needs.
-            Explore our plans and take control of your payments today.
+            We offer flexible payment options to make your ride experience
+            seamless. Choose a plan that suits your journey—pay upfront or in
+            parts, the control is yours.
           </p>
         </div>
 
@@ -40,23 +42,23 @@ const Footer = () => {
             </li>
             <li>
               <a
-                href="#"
+                href="about-us"
                 className="hover:text-blue-400 transition duration-200">
-                Financing Options
+                About Us
               </a>
             </li>
             <li>
               <a
-                href="#"
+                href="feedback"
                 className="hover:text-blue-400 transition duration-200">
-                FAQs
+                Feedback
               </a>
             </li>
             <li>
               <a
-                href="#"
+                href="guide"
                 className="hover:text-blue-400 transition duration-200">
-                Contact Us
+                Guide
               </a>
             </li>
           </ul>
@@ -73,35 +75,36 @@ const Footer = () => {
               <a
                 href="mailto:info@company.com"
                 className="hover:text-blue-400 transition duration-200">
-                info@company.com
+                thanawat142518@gmail.com
               </a>
             </li>
             <li>
               <span className="font-semibold">Phone:</span>{" "}
               <a
-                href="tel:+18001234567"
+                href="tel:+6656043616"
                 className="hover:text-blue-400 transition duration-200">
-                +1 (800) 123-4567
+                +6656043616
               </a>
             </li>
             <li>
-              <span className="font-semibold">Address:</span> 123 Finance
-              Street, City, Country
+              <span className="font-semibold">Address:</span> 11/212 Village No.
+              7, Kingkaew Villa, Soi Kingkaew 56, Racha Thewa Subdistrict, Bang
+              Phli District, Samut Prakan Province 10540
             </li>
           </ul>
         </div>
       </div>
       <div className="border-t border-gray-700 mt-8 pt-4 text-center text-sm">
-        <p>© 2025 Tires Dash. All rights reserved.</p>
+        <p>© 2025 Transportationthai. All rights reserved.</p>
         <p>
           <a
-            href="#"
+            href="/privacy-policy"
             className="hover:text-blue-400 transition duration-200">
             Privacy Policy
           </a>{" "}
           |{" "}
           <a
-            href="#"
+            href="/terms-conditions"
             className="hover:text-blue-400 transition duration-200">
             Terms of Service
           </a>

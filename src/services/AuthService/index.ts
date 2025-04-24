@@ -3,6 +3,7 @@
 import { axiosInstance } from "@/src/lib/AxiosInstance";
 import { jwtDecode } from "jwt-decode";
 import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { FieldValues } from "react-hook-form";
 
 // ! Register User
@@ -48,24 +49,15 @@ export const loginUser = async (userData: FieldValues) => {
 
 // ! Logout User
 
+// Updated logout function in your actions file
 export const logoutUser = async () => {
-  const cookieStore = await cookies(); // ✅ Await this!
+  const cookieStore = cookies();
 
-  cookieStore.set("access_token", "", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    path: "/",
-    expires: new Date(0),
-  });
+  (await cookieStore).set("access_token", "", { expires: new Date(0) });
+  (await cookieStore).set("refresh_token", "", { expires: new Date(0) });
 
-  cookieStore.set("refresh_token", "", {
-    httpOnly: true,
-    secure: true,
-    sameSite: "strict",
-    path: "/",
-    expires: new Date(0),
-  });
+  // Redirect to login page after logout
+  redirect("/login");
 };
 
 // ! Get Current User

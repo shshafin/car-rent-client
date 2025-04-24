@@ -39,6 +39,15 @@ import {
 
 import PackageTable from "./PackageTable";
 import { useGetCars } from "@/src/hooks/car.hook";
+import { Input } from "@heroui/input";
+
+type IInputProps = {
+  name: string;
+  label: string;
+  type?: string;
+  required?: boolean;
+  register?: any; // Optional register prop for manual registration
+};
 
 export default function AdminPackagePage() {
   const queryClient = useQueryClient();
@@ -352,13 +361,13 @@ const EditPackageModal = ({
                           />
                         </div>
                         <div className="flex-1 min-w-[150px]">
-                          <FXInput
+                          <Input
                             label="Fare"
                             name={`carPricing[${index}].fare`}
-                            defaultValue={field.fare}
                             type="number"
-                            register={register}
+                            defaultValue={field.fare}
                             required
+                            {...register(`carPricing[${index}].fare`)}
                           />
                         </div>
                         <button
@@ -468,15 +477,30 @@ const PickupLocationSelect = ({ label }: any) => {
     </div>
   );
 };
-const DropLocationSelect = () => {
+type DropLocationSelectProps = {
+  label?: string;
+  name: string;
+  required?: boolean;
+  defaultValue?: any; // Optional default value prop
+  register?: any; // Optional register prop for manual registration
+};
+
+const DropLocationSelect = ({
+  label,
+  name,
+  required,
+  defaultValue,
+}: DropLocationSelectProps) => {
   const { register } = useFormContext();
   const { data: locations, isLoading, isError } = useGetLocations();
 
   return (
     <div className="flex-1 min-w-[150px]">
+      {label && <label className="block mb-1">{label}</label>}
       <select
-        {...register("dropLocation")}
-        required
+        {...register(name)}
+        required={required}
+        defaultValue={defaultValue}
         className="w-full border-2 border-[#71717ab3] bg-default-50 rounded-lg px-2 py-3.5">
         <option value="">Drop Location</option>
         {isLoading && <option value="">Loading...</option>}
@@ -502,6 +526,8 @@ const CarSelect = ({
 }: {
   name: string;
   defaultValue?: string; // Optional default value prop
+  required?: boolean;
+  register?: any; // Optional register prop for manual registration
 }) => {
   const { register } = useFormContext();
   const { data: cars, isLoading, isError } = useGetCars();

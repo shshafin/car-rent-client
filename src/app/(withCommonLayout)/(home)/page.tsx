@@ -10,6 +10,13 @@ export default function Home() {
   return (
     <>
       <Landing />
+      <h1 className="text-2xl bg-gray-700 p-4 my-5 text-center">
+        Booking part Coming soon
+      </h1>
+      <h1 className="text-2xl bg-gray-700 p-4 my-5 text-center">
+        Tour Part coming soon
+      </h1>
+      {/* <BookingForm /> */}
       {/* <Deals />
       <ShopCategory />
       <TreadWellSection />

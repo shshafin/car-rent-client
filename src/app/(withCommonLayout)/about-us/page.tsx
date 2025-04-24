@@ -158,7 +158,7 @@ export default function AboutUsPage() {
               className="rounded-full shadow-lg hover:scale-105 transition-all ease-in-out duration-300"
             />
             <h3 className="text-2xl font-bold text-gray-900">
-              Mr. Thanawat Kitchaman
+              Mr. Thanawat Kitchamnan
             </h3>
             <p className="text-gray-700 max-w-xl">
               Driven by a vision to transform transportation in Thailand, Mr.

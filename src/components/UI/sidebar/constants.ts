@@ -75,26 +75,11 @@ export const adminLinks = [
     ],
   },
   {
-    label: "Booking & Packages",
+    label: "Package Management",
     links: [
       {
         href: "/admin/package",
         label: "Manage Packages",
-        icon: React.createElement(Package, { className: "w-5 h-5" }), // Package icon for package management
-      },
-      {
-        href: "/admin/booking",
-        label: "Manage Bookings",
-        icon: React.createElement(Calendar, { className: "w-5 h-5" }), // Calendar icon for booking management
-      },
-    ],
-  },
-  {
-    label: "Tour Management",
-    links: [
-      {
-        href: "/admin/adminTour",
-        label: "Manage Tours",
         icon: React.createElement(Package, { className: "w-5 h-5" }), // Package icon for package management
       },
     ],

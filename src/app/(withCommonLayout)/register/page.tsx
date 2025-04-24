@@ -33,7 +33,9 @@ const RegisterPage = () => {
 
   return (
     <div className="flex w-full flex-col items-center justify-center px-4 h-[calc(100vh-100px)]">
-      <h3 className="my-2 text-2xl font-bold">Register with TyreDash</h3>
+      <h3 className="my-2 text-2xl font-bold">
+        Register with Transportationthai
+      </h3>
       <p className="mb-4">Help Lost Items Find Their Way Home</p>
       <div className="w-full max-w-3xl">
         <FXForm

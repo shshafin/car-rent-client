@@ -12,12 +12,10 @@ import { Link } from "@heroui/link";
 import { link as linkStyles } from "@heroui/theme";
 import NextLink from "next/link";
 import clsx from "clsx";
-
 import { siteConfig } from "@/src/config/site";
 import { ThemeSwitch } from "@/src/components/UI/theme-switch";
 import { Logo } from "@/src/components/icons";
 import { NavbarLogin, NavbarLoginMobile } from "./NavbarLogin";
-import { Car, Phone, Search, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 
 export const Navbar = () => {
@@ -78,7 +76,7 @@ export const Navbar = () => {
               href="/"
               className="flex items-center gap-1">
               <Image
-                src={"/logo.png"}
+                src={"/lg.png"}
                 height={80}
                 width={80}
                 alt="logo"
