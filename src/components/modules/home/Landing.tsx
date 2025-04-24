@@ -2,7 +2,7 @@ import Image from "next/image";
 
 export default function Landing() {
   return (
-    <div className="pb-0">
+    <div className="pb-5">
       {/* Top Banner */}
       <div className="bg-default-900 text-white text-sm px-4 py-2 flex flex-row items-center justify-center gap-2 sm:gap-4 text-center sm:text-left">
         <Image
@@ -36,6 +36,24 @@ export default function Landing() {
           />
           Your browser does not support the video tag.
         </video>
+
+        {/* Action Area */}
+        {/* <div className="max-w-5xl mx-auto px-4 pt-12 text-center">
+          <div className="mb-8 text-center">
+            <h3 className="text-[#FF141D] font-semibold uppercase">
+              Need Assistance?
+            </h3>
+            <h2 className="downtext-gradient text-3xl md:text-5xl font-bold tracking-tight mb-4">
+              What Can We Help You With Today?
+            </h2>
+            <p className="downtext-gradient max-w-2xl mx-auto text-base md:text-lg">
+              Whether you're looking for the perfect product or expert support,
+              <span className="font-bold">
+                we're here to guide you every step of the way.
+              </span>
+            </p>
+          </div>
+        </div> */}
       </div>
     </div>
   );

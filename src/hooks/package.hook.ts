@@ -40,9 +40,17 @@ export const useDeletePackage = ({ onSuccess, id }: any) => {
   });
 };
 
-export const useGetPackages = () => {
+// export const useGetPackages = () => {
+//   return useQuery({
+//     queryKey: ["GET_PACKAGE"],
+//     queryFn: async () => await getPackage(),
+//   });
+// };
+
+export const useGetPackages = (pickupId?: string, dropId?: string) => {
   return useQuery({
-    queryKey: ["GET_PACKAGE"],
-    queryFn: async () => await getPackage(),
+    queryKey: ["GET_PACKAGE", pickupId, dropId],
+    queryFn: () => getPackage(pickupId!, dropId!), // Non-null because of `enabled`
+    enabled: !!pickupId && !!dropId, // Only fetch when both IDs exist
   });
 };

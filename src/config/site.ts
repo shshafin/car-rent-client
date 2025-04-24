@@ -4,6 +4,7 @@ export const siteConfig = {
   name: "Transportationthai",
   description:
     "Transportationthai is a website that helps people find their ride.",
+
   navItems: [
     {
       label: "HOME",

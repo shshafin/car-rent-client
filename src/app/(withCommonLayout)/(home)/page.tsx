@@ -1,4 +1,6 @@
 import BlogSection from "@/src/components/modules/home/Blog";
+import BookingPage from "@/src/components/modules/home/Booking";
+import BookingPageTwo from "@/src/components/modules/home/BookingPageTwo";
 import Deals from "@/src/components/modules/home/Deals";
 import FinancingSection from "@/src/components/modules/home/Financing";
 import Landing from "@/src/components/modules/home/Landing";
@@ -10,13 +12,8 @@ export default function Home() {
   return (
     <>
       <Landing />
-      <h1 className="text-2xl bg-gray-700 p-4 my-5 text-center">
-        Booking part Coming soon
-      </h1>
-      <h1 className="text-2xl bg-gray-700 p-4 my-5 text-center">
-        Tour Part coming soon
-      </h1>
-      {/* <BookingForm /> */}
+      {/* <BookingPage /> */}
+      <BookingPageTwo />
       {/* <Deals />
       <ShopCategory />
       <TreadWellSection />

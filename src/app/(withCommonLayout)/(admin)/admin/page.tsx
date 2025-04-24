@@ -11,7 +11,7 @@ import { getPackage } from "@/src/services/Package";
 const Page = async () => {
   try {
     const [packages, locations, cars, users] = await Promise.all([
-      getPackage(),
+      getPackage("pickupId", "dropId"), // Replace with actual IDs or logic to get them
       getLocation(),
       getCar(),
       getUsers(),
