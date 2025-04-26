@@ -14,6 +14,7 @@ import { loadStripe } from "@stripe/stripe-js"
 import { PayPalScriptProvider } from "@paypal/react-paypal-js"
 import StripePaymentForm from "../_components/stripe-payment-form"
 import PayPalPaymentButton from "../_components/paypal-payment-button"
+import { useUser } from "@/src/context/user.provider"
 
 // Initialize Stripe (in a real app, you would use your actual publishable key)
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
@@ -24,7 +25,11 @@ const paypalOptions = {
   currency: "USD",
   intent: "capture",
 }
-
+const createMongoDate = (date: string, time: string) => {
+  const [year, month, day] = date.split("-")
+  const [hour, minute] = time.split(":")
+  return new Date(`${year}-${month}-${day}T${hour}:${minute}:00Z`)
+}
 export default function CheckoutPage() {
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -41,10 +46,14 @@ export default function CheckoutPage() {
   const numBags = searchParams.get("bags")
   const numSeats = searchParams.get("seats")
   const paymentMethod = searchParams.get("paymentMethod") as string | null
+  const pickupDateObj = createMongoDate(pickupDate || "", pickupTime || "")
+  const dropDateObj = createMongoDate(dropoffDate || "", dropoffTime || "")
+
 
   const [isBookingConfirmed, setIsBookingConfirmed] = useState(false)
   const [isConfirmModalOpen, setIsConfirmModalOpen] = useState(false)
   const [isProcessingPayment, setIsProcessingPayment] = useState(false)
+  const {user}= useUser();
 
   // Fetch data
   const { data: locations } = useGetLocations()
@@ -329,6 +338,22 @@ export default function CheckoutPage() {
                         amount={paymentAmount}
                         onSuccess={handlePaymentSuccess}
                         isProcessing={isProcessingPayment}
+                        bookingData={
+                          {
+                            user: user?._id,
+                            package: packageId,
+                            car: carId,
+                            pickupLocation,
+                            dropLocation,
+                            pickUpTime: pickupDateObj,
+                            dropOffTime: dropDateObj,
+                            totalAmount: selectedPackageDetails?.fare,
+                            paymentMethod,
+                            amountPaid: paymentAmount,
+                            paymentStatus: "pending",
+                            paymentType: isPartialPayment ? "partial" : "full",
+                          }
+                        }
                       />
                     </Elements>
                   )}

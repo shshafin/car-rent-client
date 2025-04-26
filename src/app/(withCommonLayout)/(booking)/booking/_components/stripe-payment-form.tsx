@@ -6,20 +6,69 @@ import { useState } from "react"
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { Button } from "@heroui/button"
 import { Spinner } from "@heroui/spinner"
+import { useCreatePackage } from "@/src/hooks/package.hook"
+import { v4 as uuidv4 } from "uuid";
+import { toast } from "sonner"
+import { useCreateBooking } from "@/src/hooks/booking.hook"
+import { useCreatePayment } from "@/src/hooks/payment.hook"
 
 interface StripePaymentFormProps {
   amount: number
   onSuccess: () => void
   isProcessing: boolean
+  bookingData: any
 }
 
-export default function StripePaymentForm({ amount, onSuccess, isProcessing }: StripePaymentFormProps) {
+export default function StripePaymentForm({ amount, onSuccess, isProcessing, bookingData }: StripePaymentFormProps) {
   const stripe = useStripe()
   const elements = useElements()
   const [error, setError] = useState<string | null>(null)
   const [loading, setLoading] = useState(false)
+  const {mutate: handleCreatePayment} = useCreatePayment({
+    onSuccess: async(data: any) => {
+      // queryClient.invalidateQueries({ queryKey: ["GET_CAR"] });
+      // toast.success("Car created successfully");
+      // methods.reset();
+      // onClose();
+      console.log({data}, 'hidata2') //data.data._id
+    },
+  })
+  const {mutate: handleCreateBooking} = useCreateBooking({
+    onSuccess: async(data: any) => {
+      // queryClient.invalidateQueries({ queryKey: ["GET_CAR"] });
+      // toast.success("Car created successfully");
+      // methods.reset();
+      // onClose();
+      console.log({data}, 'hidata') //data.data._id
+      const cardElement = elements?.getElement(CardElement);
+    
+    if (!cardElement) {
+      setError("Card element not found");
+      setLoading(false);
+      return;
+    }
+
+    const { error, paymentMethod } = await stripe?.createPaymentMethod({
+      type: 'card',
+      card: cardElement,
+    });
+
+    if (error) {
+      setError(error.message || "Payment failed");
+      setLoading(false);
+    } else {
+      // Send paymentMethod.id to your server for processing
+      handleCreatePayment({
+        paymentMethodId: paymentMethod?.id,
+        amount: data?.data?.amountPaid * 100, // Stripe uses cents
+      })
+      setLoading(false);
+    }
+    },
+  });
 
   const handleSubmit = async (event: React.FormEvent) => {
+    const trId = 'txn_'+uuidv4();
     event.preventDefault()
 
     if (!stripe || !elements) {
@@ -36,7 +85,11 @@ export default function StripePaymentForm({ amount, onSuccess, isProcessing }: S
     // Simulate payment processing
     setTimeout(() => {
       setLoading(false)
-      onSuccess()
+      handleCreateBooking({
+        ...bookingData,
+        transactionId: trId,
+      });
+      onSuccess();
     }, 2000)
 
     // Real implementation would look something like this:

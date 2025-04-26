@@ -4,7 +4,7 @@ import axiosInstance from "@/src/lib/AxiosInstance";
 
 export const createBooking = async (BookingData: any): Promise<any> => {
   try {
-    const { data } = await axiosInstance.post("/", BookingData, {
+    const { data } = await axiosInstance.post("/booking", BookingData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -22,7 +22,7 @@ export const updateBooking = async (
   BookingData: any
 ): Promise<any> => {
   try {
-    const { data } = await axiosInstance.patch(`/${id}`, BookingData, {
+    const { data } = await axiosInstance.patch(`/booking/${id}`, BookingData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -37,7 +37,7 @@ export const updateBooking = async (
 
 export const deleteBooking = async (id: string): Promise<any> => {
   try {
-    const { data } = await axiosInstance.delete(`/${id}`);
+    const { data } = await axiosInstance.delete(`/booking/${id}`);
     return data;
   } catch (error) {
     console.error(error);
@@ -47,7 +47,7 @@ export const deleteBooking = async (id: string): Promise<any> => {
 
 export const getBooking = async () => {
   try {
-    const { data } = await axiosInstance.get("/", {});
+    const { data } = await axiosInstance.get("/booking", {});
 
     return data;
   } catch (error: any) {
