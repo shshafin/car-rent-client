@@ -13,7 +13,7 @@ export default function Home() {
     <>
       <Landing />
       {/* <BookingPage /> */}
-      <BookingPageTwo />
+      {/* <BookingPageTwo /> */}
       {/* <Deals />
       <ShopCategory />
       <TreadWellSection />

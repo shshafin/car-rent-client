@@ -9,7 +9,7 @@ import { Button } from "@heroui/button";
 
 export const NavbarLogin = () => {
   const { user } = useUser();
-  console.log(user);
+  // console.log(user);
   return (
     <>
       {user?.email ? (

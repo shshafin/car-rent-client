@@ -18,8 +18,8 @@ export default function PaymentMethodPage() {
   const dropLocation = searchParams.get("drop")
   const pickupDate = searchParams.get("pickupDate")
   const pickupTime = searchParams.get("pickupTime")
-  const dropoffDate = searchParams.get("dropoffDate")
-  const dropoffTime = searchParams.get("dropoffTime")
+  // const dropoffDate = searchParams.get("dropoffDate")
+  // const dropoffTime = searchParams.get("dropoffTime")
   const numBags = searchParams.get("bags")
   const numSeats = searchParams.get("seats")
 
@@ -37,8 +37,8 @@ export default function PaymentMethodPage() {
       drop: dropLocation || "",
       pickupDate: pickupDate || "",
       pickupTime: pickupTime || "",
-      dropoffDate: dropoffDate || "",
-      dropoffTime: dropoffTime || "",
+      // dropoffDate: dropoffDate || "",
+      // dropoffTime: dropoffTime || "",
       bags: numBags || "1",
       seats: numSeats || "1",
       paymentMethod: method,
@@ -129,12 +129,12 @@ export default function PaymentMethodPage() {
                           {pickupDate} {pickupTime}
                         </span>
                       </div>
-                      <div className="flex justify-between">
+                      {/* <div className="flex justify-between">
                         <span className="text-gray-600">Dropoff:</span>
                         <span className="font-medium">
                           {dropoffDate} {dropoffTime}
                         </span>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
 

@@ -18,10 +18,17 @@ export default function CarBooking() {
   const [selectedPackage, setSelectedPackage] = useState<string>("")
 
   // State for additional fields
-  const [pickupDate, setPickupDate] = useState<string>("")
-  const [pickupTime, setPickupTime] = useState<string>("")
-  const [dropoffDate, setDropoffDate] = useState<string>("")
-  const [dropoffTime, setDropoffTime] = useState<string>("")
+  // Get current date in YYYY-MM-DD format
+  const currentDate = new Date().toISOString().split("T")[0]
+  // Get current time in HH:MM format
+  const currentHour = new Date().getHours().toString().padStart(2, "0")
+  const currentMinute = new Date().getMinutes().toString().padStart(2, "0")
+  const currentTime = `${currentHour}:${currentMinute}`
+
+  const [pickupDate, setPickupDate] = useState<string>(currentDate)
+  const [pickupTime, setPickupTime] = useState<string>(currentTime)
+  // const [dropoffDate, setDropoffDate] = useState<string>("")
+  // const [dropoffTime, setDropoffTime] = useState<string>("")
   const [numBags, setNumBags] = useState<string>("1")
   const [numSeats, setNumSeats] = useState<string>("1")
 
@@ -57,8 +64,8 @@ export default function CarBooking() {
     setSelectedPackage("")
     setPickupDate("")
     setPickupTime("")
-    setDropoffDate("")
-    setDropoffTime("")
+    // setDropoffDate("")
+    // setDropoffTime("")
     setNumBags("1")
     setNumSeats("1")
   }
@@ -78,8 +85,8 @@ export default function CarBooking() {
       drop: selectedDrop,
       pickupDate,
       pickupTime,
-      dropoffDate,
-      dropoffTime,
+      // dropoffDate,
+      // dropoffTime,
       bags: numBags,
       seats: numSeats,
     })
@@ -235,9 +242,9 @@ export default function CarBooking() {
                 </div>
 
                 {/* Dropoff Date and Time */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4"> */}
                   {/* Dropoff Date */}
-                  <div>
+                  {/* <div>
                     <label htmlFor="dropoffDate" className="block text-sm font-medium text-gray-700 mb-2">
                       Dropoff Date
                     </label>
@@ -252,10 +259,10 @@ export default function CarBooking() {
                         onChange={(e) => setDropoffDate(e.target.value)}
                       />
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Dropoff Time */}
-                  <div>
+                  {/* <div>
                     <label htmlFor="dropoffTime" className="block text-sm font-medium text-gray-700 mb-2">
                       Dropoff Time
                     </label>
@@ -269,8 +276,8 @@ export default function CarBooking() {
                         onChange={(e) => setDropoffTime(e.target.value)}
                       />
                     </div>
-                  </div>
-                </div>
+                  </div> */}
+                {/* </div> */}
 
                 {/* Bags and Seats Selection */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

@@ -41,13 +41,13 @@ export default function CheckoutPage() {
   const dropLocation = searchParams.get("drop")
   const pickupDate = searchParams.get("pickupDate")
   const pickupTime = searchParams.get("pickupTime")
-  const dropoffDate = searchParams.get("dropoffDate")
-  const dropoffTime = searchParams.get("dropoffTime")
+  // const dropoffDate = searchParams.get("dropoffDate")
+  // const dropoffTime = searchParams.get("dropoffTime")
   const numBags = searchParams.get("bags")
   const numSeats = searchParams.get("seats")
   const paymentMethod = searchParams.get("paymentMethod") as string | null
   const pickupDateObj = createMongoDate(pickupDate || "", pickupTime || "")
-  const dropDateObj = createMongoDate(dropoffDate || "", dropoffTime || "")
+  // const dropDateObj = createMongoDate(dropoffDate || "", dropoffTime || "")
 
 
   const [isBookingConfirmed, setIsBookingConfirmed] = useState(false)
@@ -114,7 +114,7 @@ export default function CheckoutPage() {
 
   // Handle booking another ride
   const handleBookAnother = () => {
-    router.push("/booking")
+    router.push("/")
   }
 
   return (
@@ -284,12 +284,12 @@ export default function CheckoutPage() {
                       </p>
                     </div>
 
-                    <div>
+                    {/* <div>
                       <h4 className="text-sm font-medium text-gray-600 mb-1">Dropoff Date & Time</h4>
                       <p className="font-medium">
                         {dropoffDate} at {dropoffTime}
                       </p>
-                    </div>
+                    </div> */}
 
                     <div>
                       <h4 className="text-sm font-medium text-gray-600 mb-1">Number of Bags</h4>
@@ -346,7 +346,7 @@ export default function CheckoutPage() {
                             pickupLocation,
                             dropLocation,
                             pickUpTime: pickupDateObj,
-                            dropOffTime: dropDateObj,
+                            // dropOffTime: dropDateObj,
                             totalAmount: selectedPackageDetails?.fare,
                             paymentMethod,
                             amountPaid: paymentAmount,
@@ -364,6 +364,20 @@ export default function CheckoutPage() {
                         amount={paymentAmount}
                         onSuccess={handlePaymentSuccess}
                         isProcessing={isProcessingPayment}
+                        bookingData={{
+                          user: user?._id,
+                            package: packageId,
+                            car: carId,
+                            pickupLocation,
+                            dropLocation,
+                            pickUpTime: pickupDateObj,
+                            // dropOffTime: dropDateObj,
+                            totalAmount: selectedPackageDetails?.fare,
+                            paymentMethod,
+                            amountPaid: paymentAmount,
+                            paymentStatus: "pending",
+                            paymentType: isPartialPayment ? "partial" : "full",
+                        }}
                       />
                     </PayPalScriptProvider>
                   )}

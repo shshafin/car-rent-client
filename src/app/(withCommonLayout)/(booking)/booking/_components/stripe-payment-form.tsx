@@ -26,32 +26,23 @@ export default function StripePaymentForm({ amount, onSuccess, isProcessing, boo
   const [loading, setLoading] = useState(false)
   const {mutate: handleCreatePayment} = useCreatePayment({
     onSuccess: async(data: any) => {
-      // queryClient.invalidateQueries({ queryKey: ["GET_CAR"] });
-      // toast.success("Car created successfully");
-      // methods.reset();
-      // onClose();
-      console.log({data}, 'hidata2') //data.data._id
+      onSuccess();
     },
   })
   const {mutate: handleCreateBooking} = useCreateBooking({
     onSuccess: async(data: any) => {
-      // queryClient.invalidateQueries({ queryKey: ["GET_CAR"] });
-      // toast.success("Car created successfully");
-      // methods.reset();
-      // onClose();
-      console.log({data}, 'hidata') //data.data._id
-      const cardElement = elements?.getElement(CardElement);
-    
+    const cardElement = elements?.getElement(CardElement);
     if (!cardElement) {
       setError("Card element not found");
       setLoading(false);
       return;
     }
 
-    const { error, paymentMethod } = await stripe?.createPaymentMethod({
+    const { error, paymentMethod } : any = await stripe?.createPaymentMethod({
       type: 'card',
       card: cardElement,
     });
+    console.log({error, paymentMethod});
 
     if (error) {
       setError(error.message || "Payment failed");
@@ -59,7 +50,11 @@ export default function StripePaymentForm({ amount, onSuccess, isProcessing, boo
     } else {
       // Send paymentMethod.id to your server for processing
       handleCreatePayment({
+        user: data?.data.user,
+        booking: data?.data._id,
+        transactionId: data?.data.transactionId,
         paymentMethodId: paymentMethod?.id,
+        paymentMethod: 'stripe',
         amount: data?.data?.amountPaid * 100, // Stripe uses cents
       })
       setLoading(false);
@@ -78,63 +73,10 @@ export default function StripePaymentForm({ amount, onSuccess, isProcessing, boo
 
     setLoading(true)
     setError(null)
-
-    // In a real implementation, you would create a payment intent on your server
-    // and pass the client secret to the frontend
-
-    // Simulate payment processing
-    setTimeout(() => {
-      setLoading(false)
-      handleCreateBooking({
-        ...bookingData,
-        transactionId: trId,
-      });
-      onSuccess();
-    }, 2000)
-
-    // Real implementation would look something like this:
-    /*
-    const cardElement = elements.getElement(CardElement);
-    
-    if (!cardElement) {
-      setError("Card element not found");
-      setLoading(false);
-      return;
-    }
-
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: 'card',
-      card: cardElement,
+    handleCreateBooking({
+      ...bookingData,
+      transactionId: trId,
     });
-
-    if (error) {
-      setError(error.message || "Payment failed");
-      setLoading(false);
-    } else {
-      // Send paymentMethod.id to your server for processing
-      try {
-        const response = await fetch('/api/process-payment', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ 
-            paymentMethodId: paymentMethod.id,
-            amount: amount * 100 // Stripe uses cents
-          }),
-        });
-        
-        const result = await response.json();
-        
-        if (result.success) {
-          onSuccess();
-        } else {
-          setError(result.error || "Payment failed");
-        }
-      } catch (err) {
-        setError("Network error. Please try again.");
-      }
-      setLoading(false);
-    }
-    */
   }
 
   const cardElementOptions = {
