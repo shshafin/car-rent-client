@@ -4,6 +4,7 @@ import {
   createBooking,
   deleteBooking,
   getBooking,
+  getUserAllBookings,
   updateBooking,
 } from "../services/Booking";
 
@@ -44,5 +45,12 @@ export const useGetBookings = () => {
   return useQuery({
     queryKey: ["GET_BOOKING"],
     queryFn: async () => await getBooking(),
+  });
+};
+
+export const useGetUserAllBookings = () => {
+  return useQuery({
+    queryKey: ["GET_USER_ALL_BOOKING"],
+    queryFn: async () => await getUserAllBookings(),
   });
 };

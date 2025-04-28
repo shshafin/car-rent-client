@@ -54,3 +54,13 @@ export const getBooking = async () => {
     throw new Error(error.message);
   }
 };
+
+export const getUserAllBookings = async () => {
+  try {
+    const { data } = await axiosInstance.get("/booking/user/bookings", {});
+
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+}

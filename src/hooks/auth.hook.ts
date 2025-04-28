@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import { loginUser, registerUser } from "../services/AuthService";
+import { changePassword, loginUser, registerUser } from "../services/AuthService";
 import { toast } from "sonner";
 import { FieldValues } from "react-hook-form";
 import Cookies from "js-cookie";
@@ -38,5 +38,16 @@ export const useUserLogin = () => {
     onError: (error) => {
       toast.error(error?.message || "Login Failed!");
     },
+  });
+};
+
+export const useChangePassword = ({ onSuccess }: any) => {
+  return useMutation<any, Error, any>({
+    mutationKey: ["CHANGE_PASSWORD"],
+    mutationFn: async (passwordData) => await changePassword(passwordData),
+    onError: (error) => {
+      toast.error(error.message);
+    },
+    onSuccess,
   });
 };

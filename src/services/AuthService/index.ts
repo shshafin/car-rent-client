@@ -85,3 +85,18 @@ export const getCurrentUser = async () => {
 
   return data?.data;
 };
+
+export const changePassword = async (passwordData: any): Promise<any> => {
+  try {
+    const { data } = await axiosInstance.post("/auth/change-password", passwordData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    return data;
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to change password");
+  }
+};
