@@ -19,6 +19,7 @@ import {
   Calendar,
   CarIcon,
   TimerReset,
+  Plane,
 } from "lucide-react"; // Import necessary icons
 import React from "react";
 
@@ -98,6 +99,21 @@ export const adminLinks = [
         href: "/admin/package",
         label: "Manage Packages",
         icon: React.createElement(Package, { className: "w-5 h-5" }), // Package icon for package management
+      },
+    ],
+  },
+  {
+    label: "Bookings & Tours",
+    links: [
+      {
+        href: "/admin/package-bookings",
+        label: "Package Bookings",
+        icon: React.createElement(Package, { className: "w-5 h-5" }), // Package icon for package management
+      },
+      {
+        href: "/admin/tour-bookings",
+        label: "Tour Bookings",
+        icon: React.createElement(Plane, { className: "w-5 h-5" }), // Package icon for package management
       },
     ],
   },

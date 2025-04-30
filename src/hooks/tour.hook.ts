@@ -10,7 +10,7 @@ import {
 } from "../services/Tour";
 
 interface TourHookProps {
-  onSuccess?: () => void;
+  onSuccess?: any;
   id?: string;
 }
 
@@ -38,7 +38,7 @@ export const useUpdateTourStatus = ({ onSuccess }: TourHookProps) => {
 
 // Updated existing hooks with TypeScript improvements
 export const useCreateTour = ({ onSuccess }: TourHookProps) => {
-  return useMutation<any, Error, FormData>({
+  return useMutation<any, Error, any>({
     mutationKey: ["CREATE_TOUR"],
     mutationFn: createTour,
     onError: (error) => {

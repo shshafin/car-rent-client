@@ -61,6 +61,7 @@ export const getUserAllBookings = async () => {
 
     return data;
   } catch (error: any) {
+    console.log({error}, 'booking error')
     throw new Error(error.message);
   }
 }

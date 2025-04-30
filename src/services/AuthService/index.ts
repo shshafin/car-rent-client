@@ -55,7 +55,7 @@ export const logoutUser = async () => {
 
   (await cookieStore).set("access_token", "", { expires: new Date(0) });
   (await cookieStore).set("refresh_token", "", { expires: new Date(0) });
-
+  
   // Redirect to login page after logout
   redirect("/login");
 };

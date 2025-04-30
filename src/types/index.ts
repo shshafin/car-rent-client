@@ -112,3 +112,99 @@ export interface ITyreSize {
   updatedAt: string;
   __v: number;
 }
+
+export interface IBooking {
+  _id: string
+  user: User
+  car: Car
+  pickupLocation: PickupLocation
+  dropLocation: DropLocation
+  package: string
+  pickUpTime: string
+  totalAmount: number
+  paymentStatus: string
+  paymentType: string
+  amountPaid: number
+  transactionId: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+  id: string
+}
+
+export interface User {
+  _id: string
+  role: string
+  fullName: string
+  email: string
+  phone: string
+  address: string
+  zipCode: string
+  city: string
+  country: string
+  needsPasswordChange: boolean
+  createdAt: string
+  updatedAt: string
+  __v: number
+  id: string
+}
+
+export interface Car {
+  _id: string
+  name: string
+  model: string
+  seats: number
+  bags: number
+  image: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+  id: string
+}
+
+export interface PickupLocation {
+  _id: string
+  location: string
+  country: string
+  state: string
+  city: string
+  zipCode: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+  id: string
+}
+
+export interface DropLocation {
+  _id: string
+  location: string
+  country: string
+  state: string
+  city: string
+  zipCode: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+  id: string
+}
+
+export interface ITourBooking {
+  _id: string
+  name: string
+  description: string
+  pickupLocation: string
+  dropoffLocation: string
+  pickupDate: string
+  dropoffDate: string
+  pickupTime: string
+  dropoffTime: string
+  numberOfPeople: number
+  address: string
+  phoneNumber: string
+  email: string
+  status: string
+  createdAt: string
+  updatedAt: string
+  __v: number
+  id: string
+}

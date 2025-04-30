@@ -236,11 +236,11 @@ export default function CheckoutPage() {
                     </div>
 
                     {/* Textual Info */}
-                    <div className="text-white space-y-1">
+                    <div className="space-y-1">
                       <h4 className="flex items-center gap-2 text-xl font-semibold">
                         <Car size={20} /> {selectedPackageDetails.car.name}
                       </h4>
-                      <p className="text-sm text-white/70 flex items-center gap-2">
+                      <p className="text-sm flex items-center gap-2">
                         <Info size={16} /> Model: {selectedPackageDetails.car.model}
                       </p>
                       <div className="flex items-center gap-2 text-lg font-bold text-amber-300 mt-2">

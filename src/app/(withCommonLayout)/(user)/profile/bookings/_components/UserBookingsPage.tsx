@@ -6,6 +6,7 @@ import BookingsTable from "./BookingsTable";
 
 const UserBookingPage = () =>{
     const {data: bookings, isLoading, isError}  = useGetUserAllBookings();
+    console.log(bookings);
     return(
     <div className="px-1 py-6">
       <div className="flex justify-between items-center mb-6">

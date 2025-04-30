@@ -5,7 +5,7 @@ import  axiosInstance  from "@/src/lib/AxiosInstance";
 // Existing functions
 export const createTour = async (tourData: any): Promise<any> => {
   try {
-    const { data } = await axiosInstance.post("/", tourData, {
+    const { data } = await axiosInstance.post("/tour-booking", tourData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -19,7 +19,7 @@ export const createTour = async (tourData: any): Promise<any> => {
 
 export const updateTour = async (id: string, tourData: any): Promise<any> => {
   try {
-    const { data } = await axiosInstance.patch(`/tour/${id}`, tourData, {
+    const { data } = await axiosInstance.patch(`/tour-booking/${id}`, tourData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -33,7 +33,7 @@ export const updateTour = async (id: string, tourData: any): Promise<any> => {
 
 export const deleteTour = async (id: string): Promise<any> => {
   try {
-    const { data } = await axiosInstance.delete(`/tour/${id}`);
+    const { data } = await axiosInstance.delete(`/tour-booking/${id}`);
     return data;
   } catch (error) {
     console.error("Failed to delete tour:", error);
@@ -43,7 +43,7 @@ export const deleteTour = async (id: string): Promise<any> => {
 
 export const getTour = async () => {
   try {
-    const { data } = await axiosInstance.get("/tour");
+    const { data } = await axiosInstance.get("/tour-booking");
     return data;
   } catch (error: any) {
     console.error("Failed to fetch tours:", error);
@@ -54,7 +54,7 @@ export const getTour = async () => {
 // New status-related functions
 export const getToursByStatus = async (status: string): Promise<any> => {
   try {
-    const { data } = await axiosInstance.get(`/status/${status}`);
+    const { data } = await axiosInstance.get(`/tour-booking/status/${status}`);
     return data;
   } catch (error) {
     console.error("Failed to fetch tours by status:", error);
@@ -68,7 +68,7 @@ export const updateTourStatus = async (
 ): Promise<any> => {
   try {
     const { data } = await axiosInstance.patch(
-      `/${id}/status`,
+      `/tour-booking/${id}/status`,
       { status },
       {
         headers: {

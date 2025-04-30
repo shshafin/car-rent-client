@@ -6,7 +6,7 @@ const layout = ({ children }: { children: ReactNode }) => {
   return (
     <Container>
       <div
-        className="my-3 flex w-full gap-12 flex-col md:flex-row "
+        className="my-3 flex w-full gap-12 flex-col md:flex-row overflow-y-auto pb-5"
         style={{ height: "calc(100vh - 200px)" }}>
         {/* Sidebar */}
         <div className="w-full md:w-1/3">

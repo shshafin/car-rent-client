@@ -2,6 +2,7 @@
 
 import Image from "next/image"
 import CarBooking from "./CarBooking"
+import TourBookingBanner from "./TourBookingBanner"
 
 export default function Landing() {
   return (
@@ -40,17 +41,26 @@ export default function Landing() {
 
         {/* Booking Card - Positioned to overlap the hero video */}
         <div className="container mx-auto px-4 relative z-10">
-          <div className="absolute left-0 right-0 -top-32 md:-top-40">
-            <div className="bg-white rounded-lg shadow-xl mx-auto max-w-4xl p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 text-center">Book Your Ride</h2>
+          <div className="absolute left-0 right-0 -top-32 md:-top-40 lg:-top-48">
+            <div className="bg-white rounded-lg shadow-xl mx-auto max-w-4xl">
               <CarBooking />
             </div>
           </div>
         </div>
       </div>
 
-      {/* Content below the booking card - Add padding to account for the overlapping card */}
-      <div className="pt-[600px] md:pt-[650px] lg:pt-[700px]">{/* Your additional content can go here */}</div>
+      {/* Content below the booking card - Calculate height dynamically */}
+      <div className="relative">
+        {/* This spacer div ensures proper spacing after the hero section */}
+        <div className="h-[700px] md:h-[600px] lg:h-[500px]"></div>
+
+        {/* Tour booking banner */}
+        <div className="container mx-auto px-4 mb-12">
+          <TourBookingBanner />
+        </div>
+
+        {/* Additional content can go here */}
+      </div>
     </div>
   )
 }

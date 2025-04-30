@@ -94,16 +94,16 @@ export default function PaymentMethodPage() {
         <CardBody className="p-6">
           <div className="flex flex-col gap-6">
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 p-5 rounded-xl bg-white/10 border border-white/20 backdrop-blur-md shadow-lg">
-              <h3 className="text-xl font-semibold text-white flex items-center gap-2">
+              <h3 className="text-xl font-semibold flex items-center gap-2">
                 <CreditCard className="w-5 h-5 text-primary" />
                 Choose Payment Method
               </h3>
 
-              <div className="flex items-center gap-2 text-sm text-white/80">
+              <div className="flex items-center gap-2 text-sm">
                 <MapPin className="w-4 h-4 text-primary" />
                 <span className="whitespace-nowrap">
                   {locations?.data?.find((l: any) => l._id === pickupLocation)?.location}
-                  <span className="mx-1 text-white/40">→</span>
+                  <span className="mx-1">→</span>
                   {locations?.data?.find((l: any) => l._id === dropLocation)?.location}
                 </span>
               </div>
@@ -129,12 +129,6 @@ export default function PaymentMethodPage() {
                           {pickupDate} {pickupTime}
                         </span>
                       </div>
-                      {/* <div className="flex justify-between">
-                        <span className="text-gray-600">Dropoff:</span>
-                        <span className="font-medium">
-                          {dropoffDate} {dropoffTime}
-                        </span>
-                      </div> */}
                     </div>
                   </div>
 
@@ -175,7 +169,7 @@ export default function PaymentMethodPage() {
             )}
 
             <div className="grid grid-cols-1 gap-4 mt-4">
-              <h4 className="font-medium text-white mb-2">Online Payment</h4>
+              <h4 className="font-medium mb-2">Online Payment</h4>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <Card
                   isPressable
@@ -190,12 +184,12 @@ export default function PaymentMethodPage() {
 
                     {/* Text (centered) */}
                     <div className="flex-1 flex flex-col">
-                      <h4 className="text-white font-semibold text-base">Stripe - Partial Payment</h4>
-                      <p className="text-sm text-white/70">Pay 50% now and the rest later</p>
+                      <h4 className="font-semibold text-base">Stripe - Partial Payment</h4>
+                      <p className="text-sm">Pay 50% now and the rest later</p>
                     </div>
 
                     {/* Chevron */}
-                    <ChevronRight className="h-5 w-5 text-white/40" />
+                    <ChevronRight className="h-5 w-5" />
                   </CardBody>
                 </Card>
 
@@ -212,12 +206,12 @@ export default function PaymentMethodPage() {
 
                     {/* Payment Info */}
                     <div className="flex-1 flex flex-col">
-                      <h4 className="text-white font-semibold text-base">Stripe - Full Payment</h4>
-                      <p className="text-sm text-white/70">Pay the entire amount now</p>
+                      <h4 className="font-semibold text-base">Stripe - Full Payment</h4>
+                      <p className="text-sm">Pay the entire amount now</p>
                     </div>
 
                     {/* Chevron */}
-                    <ChevronRight className="h-5 w-5 text-white/40" />
+                    <ChevronRight className="h-5 w-5" />
                   </CardBody>
                 </Card>
               </div>
@@ -236,12 +230,12 @@ export default function PaymentMethodPage() {
 
                     {/* Payment Info */}
                     <div className="flex-1 flex flex-col">
-                      <h4 className="text-white font-semibold text-base">PayPal - Partial Payment</h4>
-                      <p className="text-sm text-white/70">Pay 50% now and the rest later</p>
+                      <h4 className="font-semibold text-base">PayPal - Partial Payment</h4>
+                      <p className="text-sm">Pay 50% now and the rest later</p>
                     </div>
 
                     {/* Chevron */}
-                    <ChevronRight className="h-5 w-5 text-white/40" />
+                    <ChevronRight className="h-5 w-5" />
                   </CardBody>
                 </Card>
 
@@ -258,17 +252,17 @@ export default function PaymentMethodPage() {
 
                     {/* Text */}
                     <div className="flex-1 flex flex-col">
-                      <h4 className="text-white font-semibold text-base">PayPal - Full Payment</h4>
-                      <p className="text-sm text-white/70">Pay the entire amount now</p>
+                      <h4 className="font-semibold text-base">PayPal - Full Payment</h4>
+                      <p className="text-sm">Pay the entire amount now</p>
                     </div>
 
                     {/* Chevron */}
-                    <ChevronRight className="h-5 w-5 text-white/40" />
+                    <ChevronRight className="h-5 w-5" />
                   </CardBody>
                 </Card>
               </div>
 
-              <h4 className="font-medium text-white mt-4 mb-2">Pay Later</h4>
+              <h4 className="font-medium mt-4 mb-2">Pay Later</h4>
               <Card
                 isPressable
                 onPress={() => handlePaymentMethodSelect("cash")}
@@ -282,12 +276,12 @@ export default function PaymentMethodPage() {
 
                   {/* Text */}
                   <div className="flex-1 flex flex-col">
-                    <h4 className="text-white font-semibold text-base">Cash Payment</h4>
-                    <p className="text-sm text-white/70">Pay in cash upon arrival</p>
+                    <h4 className="font-semibold text-base">Cash Payment</h4>
+                    <p className="text-sm">Pay in cash upon arrival</p>
                   </div>
 
                   {/* Chevron */}
-                  <ChevronRight className="h-5 w-5 text-white/40" />
+                  <ChevronRight className="h-5 w-5" />
                 </CardBody>
               </Card>
             </div>
