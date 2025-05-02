@@ -7,8 +7,8 @@ const AuthRoutes = ["/login", "/register"];
 type Role = keyof typeof roleBasedRoutes;
 
 const roleBasedRoutes = {
-  user: [/^\/profile/],
-  admin: [/^\/admin/],
+  user: [/^\/profile/, /^\/booking/],
+  admin: [/^\/admin/, /^\/booking/],
 };
 
 // This function can be marked `async` if using `await` inside
@@ -16,7 +16,6 @@ export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const user = await getCurrentUser();
-  console.log({user}, 'from middlewate');
 
   if (!user) {
     if (AuthRoutes.includes(pathname)) {
