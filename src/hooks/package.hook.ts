@@ -2,6 +2,7 @@ import {
   createPackage,
   deletePackage,
   getPackage,
+  getPackagesForAdmin,
   updatePackage,
 } from "@/src/services/Package";
 import { useMutation, useQuery } from "@tanstack/react-query";
@@ -40,12 +41,12 @@ export const useDeletePackage = ({ onSuccess, id }: any) => {
   });
 };
 
-// export const useGetPackages = () => {
-//   return useQuery({
-//     queryKey: ["GET_PACKAGE"],
-//     queryFn: async () => await getPackage(),
-//   });
-// };
+export const useGetPackagesForAdmin = () => {
+  return useQuery({
+    queryKey: ["GET_PACKAGE_ADMIN"],
+    queryFn: async () => await getPackagesForAdmin(),
+  });
+};
 
 export const useGetPackages = (pickupId?: string, dropId?: string) => {
   return useQuery({

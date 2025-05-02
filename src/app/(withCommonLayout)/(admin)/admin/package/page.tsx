@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import AdminPackagePage from "./_components/AdminPackagePage";
 
 export const metadata: Metadata = {
-  title: "Tyre Size - Admin",
+  title: "Package Management - Admin",
 };
 
 const page = () => {

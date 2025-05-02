@@ -34,6 +34,7 @@ import {
   useCreatePackage,
   useDeletePackage,
   useGetPackages,
+  useGetPackagesForAdmin,
   useUpdatePackage,
 } from "@/src/hooks/package.hook";
 
@@ -84,7 +85,7 @@ export default function AdminPackagePage() {
   const { mutate: handleUpdatePackage, isPending: updatePackagePending } =
     useUpdatePackage({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["GET_PACKAGE"] });
+        queryClient.invalidateQueries({ queryKey: ["GET_PACKAGE_FOR_ADMIN"] });
         toast.success("Package updated successfully");
         methods.reset();
         setSelectedPackage(null);
@@ -95,14 +96,14 @@ export default function AdminPackagePage() {
   const { mutate: handleDeletePackage, isPending: deletePackagePending } =
     useDeletePackage({
       onSuccess: () => {
-        queryClient.invalidateQueries({ queryKey: ["GET_PACKAGE"] });
+        queryClient.invalidateQueries({ queryKey: ["GET_PACKAGE_FOR_ADMIN"] });
         toast.success("Package deleted successfully");
         setSelectedPackage(null);
         onDeleteClose();
       },
       id: selectedPackage?._id,
     }); // Package deletion handler
-  const { data: Packages, isLoading, isError } = useGetPackages(); // Get existing Packages
+  const { data: Packages, isLoading, isError } = useGetPackagesForAdmin(); // Get existing Packages
 
   // Handle form submission
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
@@ -456,6 +457,7 @@ const PickupLocationSelect = ({ label }: any) => {
 
   return (
     <div className="flex-1 min-w-[150px]">
+      {label && <label className="block mb-1">{label}</label>}
       <select
         {...register("pickupLocation")}
         required

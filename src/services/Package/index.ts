@@ -45,15 +45,15 @@ export const deletePackage = async (id: string): Promise<any> => {
   }
 };
 
-// export const getPackage = async () => {
-//   try {
-//     const { data } = await axiosInstance.get("/package", {});
+export const getPackagesForAdmin = async () => {
+  try {
+    const { data } = await axiosInstance.get("/package", {});
 
-//     return data;
-//   } catch (error: any) {
-//     throw new Error(error.message);
-//   }
-// };
+    return data;
+  } catch (error: any) {
+    throw new Error(error.message);
+  }
+};
 
 export const getPackage = async (pickupId: string, dropId: string) => {
   if (!pickupId || !dropId) return {}; // early return if params are missing
