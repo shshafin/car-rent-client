@@ -9,7 +9,6 @@ import { Button } from "@heroui/button";
 
 export const NavbarLogin = () => {
   const { user, isLoading } = useUser();
-  console.log({user, isLoading});
   return (
     <>
       {user?.email ? (

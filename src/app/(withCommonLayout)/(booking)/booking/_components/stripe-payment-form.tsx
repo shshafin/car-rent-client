@@ -6,9 +6,7 @@ import { useState } from "react"
 import { CardElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { Button } from "@heroui/button"
 import { Spinner } from "@heroui/spinner"
-import { useCreatePackage } from "@/src/hooks/package.hook"
 import { v4 as uuidv4 } from "uuid";
-import { toast } from "sonner"
 import { useCreateBooking } from "@/src/hooks/booking.hook"
 import { useCreatePayment } from "@/src/hooks/payment.hook"
 

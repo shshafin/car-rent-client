@@ -59,7 +59,6 @@ export const getPackage = async (pickupId: string, dropId: string) => {
   if (!pickupId || !dropId) return {}; // early return if params are missing
 
   try {
-    console.log({ pickupId, dropId });
     const res = await axiosInstance.get(
       `/package?pickupLocation=${pickupId}&dropLocation=${dropId}`
     );

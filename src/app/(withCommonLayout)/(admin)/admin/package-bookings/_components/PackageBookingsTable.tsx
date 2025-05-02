@@ -14,6 +14,7 @@ import { Badge } from "@heroui/badge";
 import { Chip } from "@heroui/chip";
 
 export const columns = [
+  { name: "USER", uid: "user" },
   { name: "CAR", uid: "car" },
   { name: "PICKUP", uid: "pickup" },
   { name: "DROPOFF", uid: "dropoff" },
@@ -35,6 +36,13 @@ export default function PackageBookingsTable({
     const cellValue = booking[columnKey];
 
     switch (columnKey) {
+          case "user":
+            return (
+              <div>
+                <p className="font-medium text-sm">{booking.user.fullName}</p>
+                <p className="text-xs text-default-500">{booking.user.phone}</p>
+              </div>
+            )
           case "car":
             return (
               <div className="flex items-center gap-3">

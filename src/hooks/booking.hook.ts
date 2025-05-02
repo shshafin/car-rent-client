@@ -9,7 +9,7 @@ import {
 } from "../services/Booking";
 
 export const useCreateBooking = ({ onSuccess }: any) => {
-  return useMutation<any, Error, FormData>({
+  return useMutation<any, Error, any>({
     mutationKey: ["CREATE_BOOKING"],
     mutationFn: async (BookingData) => await createBooking(BookingData),
     onError: (error) => {

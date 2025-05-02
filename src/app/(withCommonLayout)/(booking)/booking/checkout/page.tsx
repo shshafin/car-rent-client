@@ -15,6 +15,8 @@ import { PayPalScriptProvider } from "@paypal/react-paypal-js"
 import StripePaymentForm from "../_components/stripe-payment-form"
 import PayPalPaymentButton from "../_components/paypal-payment-button"
 import { useUser } from "@/src/context/user.provider"
+import { useCreatePayment } from "@/src/hooks/payment.hook"
+import { useCreateBooking } from "@/src/hooks/booking.hook"
 
 // Initialize Stripe (in a real app, you would use your actual publishable key)
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string);
@@ -41,13 +43,10 @@ export default function CheckoutPage() {
   const dropLocation = searchParams.get("drop")
   const pickupDate = searchParams.get("pickupDate")
   const pickupTime = searchParams.get("pickupTime")
-  // const dropoffDate = searchParams.get("dropoffDate")
-  // const dropoffTime = searchParams.get("dropoffTime")
   const numBags = searchParams.get("bags")
   const numSeats = searchParams.get("seats")
   const paymentMethod = searchParams.get("paymentMethod") as string | null
   const pickupDateObj = createMongoDate(pickupDate || "", pickupTime || "")
-  // const dropDateObj = createMongoDate(dropoffDate || "", dropoffTime || "")
 
 
   const [isBookingConfirmed, setIsBookingConfirmed] = useState(false)
@@ -96,8 +95,7 @@ export default function CheckoutPage() {
   // Handle payment confirmation
   const handleConfirmPayment = () => {
     if (paymentMethod === "cash") {
-      setIsConfirmModalOpen(false)
-      setIsBookingConfirmed(true)
+      handleCashPayment();
       return
     }
 
@@ -116,7 +114,31 @@ export default function CheckoutPage() {
   const handleBookAnother = () => {
     router.push("/")
   }
+  const {mutate: handleCreateBooking} = useCreateBooking({
+    onSuccess: async(data: any) => {
+      handlePaymentSuccess();
+      setIsConfirmModalOpen(false);
+    }
+    });
 
+  const handleCashPayment = async () => {
+    const bookingData = {
+      user: user?._id,
+      package: packageId,
+      car: carId,
+      pickupLocation,
+      dropLocation,
+      pickUpTime: pickupDateObj,
+      totalAmount: selectedPackageDetails?.fare,
+      paymentMethod,
+      amountPaid: paymentAmount,
+      paymentStatus: "pending",
+      paymentType: isPartialPayment ? "partial" : "full",
+    }
+    handleCreateBooking({
+      ...bookingData
+    });
+  }
   return (
     <div className="container mx-auto py-8 px-4">
       <h1 className="text-2xl font-bold mb-6 text-center">Checkout</h1>
@@ -283,14 +305,6 @@ export default function CheckoutPage() {
                         {locations?.data?.find((l: any) => l._id === dropLocation)?.location}
                       </p>
                     </div>
-
-                    {/* <div>
-                      <h4 className="text-sm font-medium text-gray-600 mb-1">Dropoff Date & Time</h4>
-                      <p className="font-medium">
-                        {dropoffDate} at {dropoffTime}
-                      </p>
-                    </div> */}
-
                     <div>
                       <h4 className="text-sm font-medium text-gray-600 mb-1">Number of Bags</h4>
                       <p className="font-medium">{numBags}</p>
@@ -346,7 +360,6 @@ export default function CheckoutPage() {
                             pickupLocation,
                             dropLocation,
                             pickUpTime: pickupDateObj,
-                            // dropOffTime: dropDateObj,
                             totalAmount: selectedPackageDetails?.fare,
                             paymentMethod,
                             amountPaid: paymentAmount,
