@@ -69,7 +69,7 @@ export default function PaymentMethodPage() {
   // If no package or car is selected, redirect back to booking
   useEffect(() => {
     if (!packageId || !carId) {
-      router.push("/booking")
+      router.push("/")
     }
   }, [packageId, carId, router])
 

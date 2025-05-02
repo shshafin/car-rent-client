@@ -7,8 +7,11 @@ import Landing from "@/src/components/modules/home/Landing";
 import ShopByBrandSection from "@/src/components/modules/home/ShopBrand";
 import ShopCategory from "@/src/components/modules/home/ShopCategory";
 import TreadWellSection from "@/src/components/modules/home/Treadwall";
+import { cookies } from "next/headers";
 
-export default function Home() {
+export default async function Home() {
+    const cookieStore = await cookies();
+    console.log(cookieStore.getAll(), 'all cookies');
   return (
     <>
       <Landing />

@@ -75,13 +75,15 @@ import { useUser } from "@/src/context/user.provider"; // User context
 import { logoutUser } from "@/src/services/AuthService"; // Logout service
 import { menuConfig } from "./menuConfig";
 import MenuDropdown from "./menuDropdown";
+import { getCurrentUser } from "@/src/lib/getCurrentUser";
 
 const NavbarDropdown: React.FC = () => {
-  const { setIsLoading: userLoading, user } = useUser();
+  const { setIsLoading: userLoading, user, setUser } = useUser();
 
-  const handleLogout = () => {
-    logoutUser();
+  const handleLogout = async() => {
     userLoading(true);
+    setUser(null);
+    await logoutUser();
     // Redirect to home or perform other actions as needed
   };
 

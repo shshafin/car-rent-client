@@ -1,4 +1,4 @@
-"use client";
+'use client'
 
 import { NavbarItem } from "@heroui/navbar";
 import React from "react";
@@ -8,8 +8,8 @@ import Link from "next/link";
 import { Button } from "@heroui/button";
 
 export const NavbarLogin = () => {
-  const { user } = useUser();
-  console.log(user);
+  const { user, isLoading } = useUser();
+  console.log({user, isLoading});
   return (
     <>
       {user?.email ? (
@@ -28,7 +28,7 @@ export const NavbarLogin = () => {
 };
 
 export const NavbarLoginMobile = () => {
-  const { user }: any = useUser();
+  const {user} = useUser();
   return (
     <>
       {user?.email ? (

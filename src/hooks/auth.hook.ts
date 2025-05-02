@@ -24,15 +24,15 @@ export const useUserLogin = () => {
     mutationKey: ["LOGIN_USER"],
     mutationFn: async (userData) => await loginUser(userData),
     onSuccess: async (data) => {
-      // Save tokens after login using js-cookie
-      Cookies.set("access_token", data.accessToken, {
-        secure: true,
-        sameSite: "strict",
-      });
-      Cookies.set("refresh_token", data.refreshToken, {
-        secure: true,
-        sameSite: "strict",
-      });
+      // // Save tokens after login using js-cookie
+      // Cookies.set("access_token", data.accessToken, {
+      //   secure: true,
+      //   sameSite: "strict",
+      // });
+      // Cookies.set("refresh_token", data.refreshToken, {
+      //   secure: true,
+      //   sameSite: "strict",
+      // });
       toast.success("Login Successful!");
     },
     onError: (error) => {

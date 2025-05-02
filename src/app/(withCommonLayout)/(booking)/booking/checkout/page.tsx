@@ -89,7 +89,7 @@ export default function CheckoutPage() {
   // If no package, car, or payment method is selected, redirect back
   useEffect(() => {
     if (!packageId || !carId || !paymentMethod) {
-      router.push("/booking")
+      router.push("/")
     }
   }, [packageId, carId, paymentMethod, router])
 
